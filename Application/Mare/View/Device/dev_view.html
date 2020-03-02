@@ -1,0 +1,107 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>查看设备</h4>
+							</div>
+							<div class="block-body">
+								<form class="form-vertical" action="#" method="post">
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">设备名称</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="{$devic.devname}" />
+										</div>
+									</div>
+					
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">平台操作</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="{$devic.devplatform}" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">IP</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="{$devic.devip}" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">MAC</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="{$devic.devmac}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">绑定用户</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="{$devic.realname}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">最近登录时间</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value='2016-07-29' />
+										</div>
+									</div>
+                                                                    <div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">任务状态</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="正在检测..." />
+										</div>
+									</div>
+									
+									<div class="form-group clearfix">
+								
+                                                                                <a href ="{:U('Device/dev_index')}" class="btn btn-blue pull-right" >返回</a>
+									</div>
+										
+								</form>
+								
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+			<include file="Layout/script"/>
+	<script type="text/javascript">
+		
+	</script>
+<include file="Layout/footer"/>

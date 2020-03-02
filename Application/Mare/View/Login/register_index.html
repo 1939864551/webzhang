@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/css/bootstrap/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/css/font-awesome-ie7.min.css"/>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/css/style.css"/>
+        <link rel="stylesheet/less" type="text/css" href="__PUBLIC__/mars/less/style.less" />
+        <link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/mars/css/timepicker/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/css/timepicker/jquery-ui-timepicker-addon.css"/>
+        
+        <script src="__PUBLIC__/mars/js/lib/less-1.3.3.min.js" type="text/javascript" charset="utf-8"></script>
+        <!-- HTML5 shim for IE8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <![endif]-->
+        <!--[if IE 7]>
+        <link rel="stylesheet" href="__TMPL__Public/simpleboot/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
+        <![endif]-->
+        <!--[if lte IE 6]>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/bootstrap/css/bootstrap-ie6.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mars/bootstrap/css/ie.css">
+        <![endif]-->
+        <title>{$Think.config.TITLE_TEXT}</title>
+    </head>
+    <body>
+        <!--边栏-->
+        <div class="sidebar-container navbar-fixed-left" style="position:inherit;width:100%;margin-left: 0 !important;">
+            <h3 class="navbar-brand-m">
+                {$Think.config.TOP_TEXT}
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <!--边栏-->
+        
+        <!--主体-->
+        <div class="wrapper" style="margin-left: 0 !important;">
+            <div class="block-wrapper" >
+                <div class="container-fluid">
+                    <div class="col-md-5 col-md-offset-4">
+                        <div class="block-content">
+                            <div class="block-head">
+                                <h3>用户注册</h3>
+                            </div>
+                            <div class="block-body">
+                                <form class="form-horizontal" action="#" method="post">
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="name">登录的帐号<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="text" name="loginemail" id="loginemail" value="" placeholder="请输入用户登录的帐号" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="name">姓名<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="text" name="realname" id="name" value="" placeholder="请输入用户姓名" />
+                                              
+                                                                                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="phone">手机号码<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="text" name="phone" id="phone" value="" placeholder="请输入用户手机号码" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="email">邮箱地址<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="text" name="email" id="email" value="" placeholder="请输入用户邮箱地址" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="pwd">密码<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="password" name="pwd" id="pwd" value="" placeholder="请输入用户密码" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="pwd2">确认密码<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="password" name="pwd2" id="pwd2" value="" placeholder="确认密码" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12">                                
+                                            <button type="button" id="upgrade-info" class="btn btn-blue">提交</button>
+                                            <a href="{:U('Login/login_user')}" class="btn btn-blue pull-right">返回</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <include file="Layout/script"/>
+    <script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+    /**
+     弹出信息提示错误
+    */    
+    function alert_msg(msg, obj){
+        var mimaerr = '<div id="action-tips"  style="margin:-4px !important;"  class="alert fade in alert-danger global-tips" role="alert">'+msg+'</div>';
+        $(".block-wrapper").append(mimaerr);
+        setTimeout(function(){
+            $("#action-tips").alert("close");
+        },3000)
+        obj.focus();
+    }
+   
+        
+    $(window).ready(function(){ 
+        $("#upgrade-info").on("click",function(){
+        var reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; //邮箱正则
+        var phone = /^1\d{10}$/gi;//检测手机号码是否符合要求                  
+        var loginemail  =  $.trim($('input[name=loginemail]').val());
+        var realname    =  $.trim($('input[name=realname]').val());
+        var pwd         =   $.trim($('input[name=pwd]').val());
+        var pwd2        =  $.trim($('input[name=pwd2]').val());
+        var phone2      =   $.trim($('input[name=phone]').val());
+        var email       =   $.trim($('input[name=email]').val());
+        if(loginemail == ''){      
+           alert_msg('登录帐号不能为空', $('input[name=loginemail]'));return false;
+        }
+            
+        if(realname == ''){   
+            alert_msg('姓名不能为空', $('input[name=realname]'));return false;
+        } 
+            
+        if(phone2 == ''){      
+            alert_msg('手机号码不能为空', $('input[name=phone]'));return false;
+        } else if(phone.test(phone2) == false){
+             alert_msg('手机号码的格式不正确', $('input[name=phone]'));return false;     
+        }
+            
+        if(email == ''){      
+           alert_msg('邮箱不能为空', $('input[name=email]'));return false;
+        } else if (!reg.test(email)){
+           alert_msg('邮箱不合法', $('input[name=email]'));return false;
+        }   
+            
+        if($.trim(pwd) == ''){      
+            alert_msg('密码不能为空', $('input[name=pwd]'));return false;
+        } else if(pwd.length < 8) {
+            alert_msg('密码处,请输入8位(含8位)以上的字符串', $('input[name=pwd]'));return false;    
+        }
+            
+        if($.trim(pwd2) == ''){
+            alert_msg('确认密码不能为空', $('input[name=pwd2]'));return false;
+        } else if(pwd2.length < 8) {
+            alert_msg('确认密码处,请输入8位(含8位)以上字符串', $('input[name=pwd2]'));return false;      
+        } else if(pwd != pwd2) {
+            alert_msg('密码与确认密码不一致', $('input[name=pwd]'));return false;      
+        }
+
+        var formData = {
+               'loginemail': loginemail,
+               'realname': realname,
+               'phone':phone2,
+               'pwd':pwd,
+               'pwd2':pwd2,
+               'email':email,
+       };        
+   
+       $.ajax({
+            type:"post",
+            url:"{:U('Login/register_user')}",
+            data:formData,
+            async:true,
+            success:function(data){
+                if(data.status =='success'){
+                    var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg.info+'</div>';                   
+                    $(".block-wrapper").append(successTips);
+                    setTimeout(function(){
+                        $("#action-tips").alert("close");
+                        location.href="{:U('Mare/Login/login_user')}";
+                    },3000)
+                }
+                if(data.status =='error'){
+                    alert_msg(data.msg.info, $('input[name='+data.msg.obj+']'));   
+                }
+            }
+        });            
+        });
+    });
+    </script>
+<include file="Layout/footer"/>

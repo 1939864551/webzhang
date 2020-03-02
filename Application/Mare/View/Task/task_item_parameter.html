@@ -1,0 +1,389 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+							  <li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  <li><a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  <li class="active">任务信息概要</li>
+							</ol>
+						</div>
+					</div>
+					
+					<include file="Task/task_menu"/>
+					
+					<div class="col-xs-12">
+						<if condition="$taskinfo['tasktype'] neq 'web' AND $taskinfo['tasktype'] neq 'awvs' ">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>应用信息</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												文件名
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['sourcename']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用图标
+											</div>
+											<div class="col-sm-9">
+												<img src="__ROOT__/{$taskinfo['icon']}" width="30px" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用名
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['realname']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用包名
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['package']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用版本
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['version']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用api版本
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['apilevel']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用检测状态
+											</div>
+											<div class="col-sm-9">
+												<!-- {$taskinfo['appstatustrans']} -->
+											<?php 
+											if($vo['status'] <10){
+												echo $appstatus[$taskinfo['status']];
+											}else{
+												echo "停止检测";
+											}
+											?>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用MD5
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['md5']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用大小
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['size']}
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用证书
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['cert']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												应用类型
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['type']}
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="block-content">
+							<div class="block-head">
+								<h4>任务参数</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												任务名
+											</div>
+											<div class="col-sm-9">
+												<?php echo explode('_',$taskname)[0]; ?>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												被测服务器域名
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['test_domain']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												任务创建时间
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['uploadtime']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												被测服务器IP地址
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['test_serverip']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												测试员
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['tester_name']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												测试应用的帐号和密码
+											</div>
+											<div class="col-sm-9">
+												<?php 
+													$tmp = explode(',',$taskinfo['test_username_pwd']); 
+													foreach($tmp as $kt => $vt){
+														$tmp1 = explode('/',$vt);
+														echo "测试应用帐号:".$tmp1[0]."  密码:".$tmp1[1]."<br/>";
+													}
+												?>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												接收手机短信手机号码
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['test_phone']}
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<else />
+						<?php 
+						$rulelist = array(
+							'sql'=>'SQL注入',
+							'xxe'=>'XML注入',
+							'code_injection'=>'代码注入',
+							'os_cmd_injection'=>'系统命令执行',
+							'xss'=>'XSS漏洞',
+							'backup_file'=>'备份文件检测',
+							'csrf'=>'csrf漏洞',
+							'file_inclusion'=>'文件包含漏洞',
+							'path_traversal'=>'文件下载漏洞',
+							'directory_listing'=>'目录遍历',
+							'backdoors'=>'后门检测',
+							'source_code_disclosure'=>'源代码泄漏',
+							'sensitive_info'=>'信息泄漏',
+							'weaker_ciphers'=>'弱口令检测'
+						); ?>
+						<div class="block-content">
+							<div class="block-head">
+								<h4>任务参数</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												任务名
+											</div>
+											<div class="col-sm-9">
+												<?php echo explode('_',$taskname)[0]; ?>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												扫描目标网站
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['targeturl']}
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-3">
+												任务创建时间
+											</div>
+											<div class="col-sm-9">
+												{$taskinfo['uploadtime']}
+											</div>
+										</div>
+									</div>
+									<?php 
+									$scanoption 			= json_decode($taskinfo['scanoption'],1);
+									$scanoptionChecks 		= $scanoption['checks'];
+									$scanoptionChecksLen 	= count($scanoption['checks']); 
+									?>
+									<if condition="$taskinfo['tasktype'] eq 'awvs'">
+										<if condition="$scanoptionChecksLen gt 0">
+											<div class="col-sm-6">
+												<div class="row">
+													<div class="col-sm-3">
+														扫描规则
+													</div>
+													<div class="col-sm-9">
+														<volist name="scanoptionChecks" id="sc">
+															<span style="margin-left: 5px;">{$rulelist[$sc]}</span>
+														</volist>
+													</div>
+												</div>
+											</div>
+										</if>
+									</if>
+									<if condition="$taskinfo['tasktype'] eq 'web'">
+										<div class="col-sm-6">
+											<div class="row">
+												<div class="col-sm-3">
+													测试员
+												</div>
+												<div class="col-sm-9">
+													{$taskinfo['tester_name']}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="row">
+												<div class="col-sm-3">
+													测试应用的帐号和密码
+												</div>
+												<div class="col-sm-9">
+													<?php 
+														$tmp = explode(',',$taskinfo['test_username_pwd']); 
+														foreach($tmp as $kt => $vt){
+															$tmp1 = explode('/',$vt);
+															if($tmp1[0] == null){
+																$tmp1[0] ="无";
+															}
+															if($tmp1[1] == null){
+																$tmp1[1] ="无";
+															}
+															echo "测试应用帐号:".$tmp1[0]."  密码:".$tmp1[1]."<br/>";
+														}
+													?>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="row">
+												<div class="col-sm-3">
+													接收手机短信手机号码
+												</div>
+												<div class="col-sm-9">
+													{$taskinfo['test_phone']}
+												</div>
+											</div>
+										</div>
+									</if>
+								</div>
+							</div>
+						</div>
+						</if>
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+	</script>
+<include file="Layout/footer"/>

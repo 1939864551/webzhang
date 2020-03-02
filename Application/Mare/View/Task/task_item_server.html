@@ -1,0 +1,93 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+							  <li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  <li><a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  <li class="active">服务器端安全</li>
+							</ol>
+						</div>
+					</div>
+					
+					<include file="Task/task_menu"/>
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>检测项</h4>
+							</div>
+							<div class="block-body">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>检测项</th>
+											<th>风险级别</th>
+											<th>数量</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php if(count($detecitme) == 0):?>
+											<tr><td colspan="4" style="text-align: center;">本次检测未发现相关安全问题</td></tr>
+										<?php endif; ?>
+										<volist name="detecitme"  id="vd">
+											<tr>
+												<td>{$i+$star}</td>
+												<td><a href="{:U('Mare/Task/task_item_detial',array('detectionid'=>$vd['detectionid'],'appid'=>$_GET['appid']))}">{$vd['case_name']}</a></td>
+												<td>
+												<?php 
+												$num_to_zh	= array('0'=>'暂未评级','1'=>'安全','2'=>'低','3'=>'中','4'=>'高');
+													if($vd['risk_level'] == 4){
+														echo "<span style='color: #f44336;'>".$num_to_zh[$vd['risk_level']]."</span>";
+													}elseif($vd['risk_level'] == 3){
+														echo "<span style='color: #ff9800;'>".$num_to_zh[$vd['risk_level']]."</span>";
+													}else{
+														echo "<span style='color: #4fca81;'>".$num_to_zh[$vd['risk_level']]."</span>";
+													}
+												 ?>
+												</td>
+												<td>{$vd['issues_count']}</td>
+												<td><a href="{:U('Mare/Task/task_item_detial',array('detectionid'=>$vd['detectionid'],'appid'=>$_GET['appid']))}" class="btn-sm btn-blue-border">详情</a></td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div style="text-align: center;">{$pageshow}</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+	</script>
+<include file="Layout/footer"/>

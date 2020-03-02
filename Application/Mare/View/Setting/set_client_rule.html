@@ -1,0 +1,364 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-sm-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>客户端自定义规则 <span class="tool-icon plus" id="add_rule" data-toggle="modal" data-target="#rule_modal"><i class="fa fa-plus"></i> 新增</span></h4>
+							</div>
+							<div class="block-body" style="">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>规则名称</th>
+											<th>类型</th>
+											<th>规则正则内容</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        <foreach name='result_rule_info' item ='v'>
+										<tr>
+											<td>{$v['id']}</td>
+											<td>{$v.rule_name}</td>
+											<td>{$v.rule_type}</td>
+											<td>{$v.rule_content}</td>
+											<td>
+											<php>
+											if($v['status'] == 1){
+												echo "启用";
+											}else{
+												echo '禁用';
+											}
+											</php>
+											</td>
+											<td>
+												<a id="check_the_rule" data-toggle="modal" url="{:U('Mare/Setting/get_client_rule',array('id'=>$v['id']))}" data-target="#check_rule" onclick="getRuleInfo($(this).attr('url'));" class="btn-sm btn-blue-border" data-toggle="tooltip" data-placement="top" title="编辑">
+													<i class="fa fa-pencil" aria-hidden="true"></i>
+												</a>
+												<if condition="$v['status'] eq 1">
+												<a  onclick="stoptask('{$v[id]}')" class="btn-sm btn-blue-border" data-toggle="tooltip" data-placement="top" title="停用">
+													<i class="fa fa-stop" aria-hidden="true"></i>
+												</a>
+												<else/>
+												<a  onclick="stoptask('{$v[id]}')" class="btn-sm btn-blue-border" data-toggle="tooltip" data-placement="top" title="启用">
+													<i class="fa fa-play" aria-hidden="true"></i>
+												</a>
+												</if>
+												<if condition="$_SESSION[$_SESSION['randomstr']]['tid'] eq 5">
+												<a  onclick="deletetask('{$v[id]}')" class="btn-sm btn-red-border" data-toggle="tooltip" data-placement="top" title="删除">
+													<i class="fa fa-trash-o"></i>
+												</a>
+												</if>
+
+											</td>
+										</tr>
+                                        </foreach>
+									</tbody>
+								</table>
+								<div style="text-align: center;">{$pageshow}</div>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+		</div>
+		<!--主体-->
+
+		<!-- Modal -->
+		<div class="modal fade" id="rule_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">添加客户端规则</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form action="#" class="form-vertical" method="post">
+		        	<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel" for="test_phone">类型 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<select class="form-control" name="rule_type">
+								<option value="">请选择规则类型</option>
+								<foreach name="client_rule_info" item="vo" >
+								<option value="{$key}">{$vo}</option>
+								</foreach>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel" for="rules_name">规则名 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<input class="input" type="text" name="rules_name" id="rules_name" value="" placeholder="规则名" required="required" aria-required="true">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel" for="rule_content">正则匹配内容 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<!-- <input class="input" type="text" name="rule_content" id="rule_content" value="" placeholder="abc.png" required="required" aria-required="true"> -->
+							<textarea class="form-control" name="rule_content" placeholder="正则匹配内容" id="rule_content"  rows="3"></textarea>
+						</div>
+					</div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <span class="btn btn-blue-border" data-dismiss="modal">关闭</span>
+		        <a href="javascript:;" class="btn btn-blue" data-dismiss="modal" id="add_client_rule">提交</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="check_rule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">规则名称</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form action="#" class="form-vertical" method="post">
+		        	<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel">类型 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<select class="form-control" id="lookruletypename">
+								<option value="">请选择规则类型</option>
+								<foreach name="client_rule_info" item="vo" >
+									<option value="{$key}">{$vo}</option>
+								</foreach>
+							</select>
+						</div>
+					</div>
+					<input type="hidden" id="ruleid"/>
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel">规则名 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<input class="input" type="text" id="lookrulename" placeholder="请输入规则名称">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label class="inputlabel">规则内容 <font color="red">*</font> </label>
+						</div>
+						<div class="col-md-9">
+							<!-- <input class="input" type="text" name="rulesinfo" id="lookrulesinfo" placeholder="请输入规则内容文字"> -->
+							<textarea class="form-control" id="lookrulesinfo" placeholder="请输入规则内容文字" rows="3"></textarea>
+						</div>
+					</div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <span class="btn btn-blue-border" data-dismiss="modal">关闭</span>
+		        <a href="javascript:;" class="btn btn-blue" data-dismiss="modal" id="updateruleinfo">修改</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	<include file="Layout/script"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+		var errorTips 	= '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">修改失败</div>';
+		var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改成功</div>';
+		function deletetask(id){
+			$.ajax({
+		        type: "get",
+		        url: "{:U('Mare/Setting/delete_client_rule')}",
+		        async: true,
+		        data: {id:id},
+		        dataType: "json",
+		        success: function (data) {
+                    if(data.status == 'error'){
+                        var successTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.msg+'</div>';
+                    }else{
+                        var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg+'</div>';
+                    }
+
+                    $(".block-wrapper").append(successTips);
+                    setTimeout(function(){
+                        $("#action-tips").alert("close");
+                        location.reload();
+                    },3000)
+
+		        },
+		        error: function () {
+		            console.log('系统代码异常');
+		        }
+		    });
+		}
+		function stoptask(id){
+			var r = confirm('确定执行操作吗?');
+			if(r){
+				$.ajax({
+			        type: "get",
+			        url: "{:U('Mare/Setting/stop_client_rule')}",
+			        async: true,
+			        data: {id:id},
+			        dataType: "json",
+			        success: function (data) {
+			        	if(data.status == 'error'){
+			        		var successTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.msg+'</div>';
+			        	}else{
+			        		var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg+'</div>';
+			        	}
+
+			        	$(".block-wrapper").append(successTips);
+			          	setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+
+			        },
+			        error: function () {
+			             console.log('系统代码异常');
+			        }
+			    });
+			}
+		}
+		function getRuleInfo(url){
+			$.ajax({
+	        	type:"post",
+				url:url,
+				async:false,
+				success: function (data) { //表单提交后更新页面显示的数据
+					if (data.status == "success") {
+						$("#lookruletypename [value="+data.info.rule_type+"]").attr("selected",true);
+						$('#lookrulename').val(data.info.rule_name);
+						$('#lookrulesinfo').val(data.info.rule_content);
+                        $('#ruleid').val(data.info.id);
+					}
+				}
+			});
+		}
+		$("#updateruleinfo").on('click',function(){
+			//规则类型
+			var ruletype 			= $("#lookruletypename").val();
+			var rulesname 			= $("#lookrulename").val();
+			var rule_content 		= $("#lookrulesinfo").val();
+			var id  				= $("#ruleid").val();
+			if(ruletype == ''){
+				alert('请选择规则类型');
+				return false;
+			}
+			if(rulesname == ''){
+				alert('请填写规则名');
+				return false;
+			}
+			if(rule_content == ''){
+				alert('请填写规则内容');
+				return false;
+			}
+			if(id == ''){
+				alert('信息错误');
+				return false;
+			}
+
+			var getFormData = {id:id,rule_type:ruletype,rule_name:rulesname,rule_content:rule_content};
+			var url = "{:U('Mare/Setting/update_client_rule')}";
+	        $.ajax({
+	        	type:"post",
+				url:url,
+				data:getFormData,
+				async:true,
+				success: function (data) { //表单提交后更新页面显示的数据
+					var errorTips 	= '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.msg+'</div>';
+					var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg+'</div>';
+					if (data.status == "success") {
+					$(".block-wrapper").append(successTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+					}else{
+						$(".block-wrapper").append(errorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+					}
+				}
+			});
+		});
+
+		$("#add_client_rule").on('click',function(){
+			//规则类型
+			var rule_type 			= $("select[name=rule_type]").find("option:selected").val();
+			var rules_name 			= $("input[name=rules_name]").val();
+			var rule_content 		= $("textarea[name=rule_content]").val();
+			if(rule_type == ''){
+				alert('请选择规则类型');
+				return false;
+			}
+			if(rules_name == ''){
+				alert('请填写规则名');
+				return false;
+			}
+			if(rule_content == ''){
+				alert('请填写正则匹配内容');
+				return false;
+			}
+
+			var getFormData = {rule_type:rule_type,rules_name:rules_name,rule_content:rule_content};
+//			console.log(getFormData);return false;
+			var url = "{:U('Mare/Setting/add_client_rule')}";
+	        $.ajax({
+	        	type:"post",
+				url:url,
+				data:getFormData,
+				async:true,
+				success: function (data) { //表单提交后更新页面显示的数据
+					var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg+'</div>';
+					if (data.status == "success") {
+					$(".block-wrapper").append(successTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+					}else{
+                        var errorTips 	= '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+ data.msg+'</div>';
+						$(".block-wrapper").append(errorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+					}
+				}
+			});
+		});
+	</script>
+<include file="Layout/footer"/>

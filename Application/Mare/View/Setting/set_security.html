@@ -1,0 +1,168 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-sm-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>安全设置</h4>
+							</div>
+							<div class="block-body" style="">
+								<form id="update_security">
+									<div class="form-group">
+										<div class="row form-group">
+											<div class="col-md-3">
+												<label class="inputlabel" for="captcha">登录验证码</label>
+											</div>
+											<div class="col-md-9 form-group-input">
+												<div class="form-group" style="float: left;" >
+													<label class="c-input c-input-radio" for="normaltask">
+														<input class="c-radio" type="radio" name="captcha" id="normaltask" <if condition="$login_captcha eq 'on' OR $login_captcha eq null"> checked=""</if> value="on">
+														<span class="c-icon-radio"></span>
+														开启
+													</label>
+												</div>
+												<div class="form-group" style="float: left;" >
+													<label class="c-input c-input-radio" for="webtask">
+														<input class="c-radio" type="radio" name="captcha" id="webtask" <if condition="$login_captcha eq 'off'"> checked=""</if> value="off">
+														<span class="c-icon-radio"></span>
+														关闭
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-md-3">
+												<label class="inputlabel" for="loginlimit">登录限制</label>
+											</div>
+											<div class="col-md-2 form-group-input">
+												<div class="form-group" style="float: left;" >
+													<label class="c-input c-input-radio" for="loginlimit1">
+														<input class="c-radio" type="radio" name="loginlimit" id="loginlimit1" <if condition="$login_limit['login_limit'] eq 'on'"> checked=""</if>  value="on">
+														<span class="c-icon-radio"></span>
+														开启
+													</label>
+												</div>
+												<div class="form-group" style="float: left;" >
+													<label class="c-input c-input-radio" for="loginlimit2">
+														<input class="c-radio" type="radio" name="loginlimit" id="loginlimit2" <if condition="$login_limit['login_limit'] eq 'off' OR $login_limit['login_limit'] eq null"> checked=""</if>  value="off">
+														<span class="c-icon-radio"></span>
+														关闭
+													</label>
+												</div>
+											</div>
+											<div class="col-md-7">
+												<div style="float: left;">
+												<span >用户登录密码错误<input class="input" style="width: 50px;text-align: center;" type="text" name="mimaerrornum"  <if condition="$login_limit['login_limit'] eq 'on'"> value="{$login_limit['error_num']}"</if> />
+												次</span>
+												</div>
+												<div style="float: left;margin-left: 20px;">
+												<span>,冻结账号登录<input  class="input" style="width: 50px;text-align: center;" type="text" name="limitlogintime" <if condition="$login_limit['login_limit'] eq 'on'"> value="{$login_limit['login_time_limit']}"</if>/>分钟</span>
+												</div>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-md-3">
+												<label class="inputlabel" for="complexity">密码复杂度</label>
+											</div>
+											<div class="col-md-9 form-group-input">
+												<div class="form-group">
+													<label class="c-input c-input-radio" for="pwdcomplex1">
+														<input class="c-radio" type="radio" name="complexity" id="pwdcomplex1" <if condition="$passwd_complexity eq '1' OR $passwd_complexity eq null"> checked="" </if>  value="1">
+														<span class="c-icon-radio"></span>
+														8(含8位)位以上大、小写字母密码组合
+													</label>
+												</div>
+												<div class="form-group">
+													<label class="c-input c-input-radio" for="pwdcomplex12">
+														<input class="c-radio" type="radio" name="complexity" id="pwdcomplex12" <if condition="$passwd_complexity eq '2'"> checked="" </if>  value="2">
+														<span class="c-icon-radio"></span>
+														8(含8位)位以上大、小写字母+数字密码组合
+													</label>
+												</div>
+												<div class="form-group">
+													<label class="c-input c-input-radio" for="pwdcomplex13">
+														<input class="c-radio" type="radio" name="complexity" id="pwdcomplex13" <if condition="$passwd_complexity eq '3'"> checked="" </if>  value="3">
+														<span class="c-icon-radio"></span>
+														8(含8位)位以上大、小写字母+数字+特殊字符密码组合
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group clearfix">
+											<button class="btn btn-blue pull-center" type="button" id="updatainfo">确认&应用</button>
+											<button class="btn btn-blue pull-right" type="button" onclick="history.go(-1);">返回</button>
+										</div>		
+									</div>
+								</form>
+							</div>
+						</div>					
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+	<include file="Layout/script"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+		var errorTips 	= '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">修改失败</div>';
+		var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改成功</div>';
+		$('#updatainfo').click(function(){
+			var getFormData = $("#update_security").serialize();
+			var url = "{:U('Mare/Setting/set_security_info')}";
+	        $.ajax({
+	        	type:"post",
+				url:url,
+				data:getFormData,
+				async:true,
+				success: function (data) { //表单提交后更新页面显示的数据
+					if (data.code == "success") {
+					$(".block-wrapper").append(successTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+					}else if(data.code == "false" && data.info != null && data.href == null){
+						var errorNewTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.info+'</div>';
+				  		$(".block-wrapper").append(errorNewTips);
+			          	setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+					}else if(data.info == 'reportsubmit'){
+						$(".block-wrapper").append(reporterrorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+					}else{
+						$(".block-wrapper").append(errorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+					}
+				}
+			});
+		});
+		
+	</script>
+<include file="Layout/footer"/>

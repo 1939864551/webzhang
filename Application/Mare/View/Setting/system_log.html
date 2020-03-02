@@ -1,0 +1,123 @@
+<include file="Layout/header"/>
+<body>
+<!--边栏-->
+<div class="sidebar-container navbar-fixed-left">
+    <h3 class="navbar-brand-m">
+        {$Think.config.TOP_TEXT}
+    </h3>
+    <div class="clearfix"></div>
+    <include file="Layout/left_tab"/>
+</div>
+<!--边栏-->
+
+<!--主体-->
+<div class="wrapper">
+    <!--顶栏-->
+    <include file="Layout/header_container" />
+    <!--顶栏-->
+
+    <div class="block-wrapper">
+        <div class="container-fluid">
+            <div class="col-sm-12">
+                <div class="block-content">
+                    <div class="block-head">
+                        <h4>日志设置</h4>
+                    </div>
+                    <div class="block-body" style="">
+                        <form id="update_security">
+                            <div class="form-group">
+                                <div class="row form-group">
+                                    <div class="col-md-2">
+                                        <label class="inputlabel" for="iplist">服务器地址</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="input width300" type="text" name="iplist" id="iplist" value="{$syslog_type['ip']}" placeholder="" required="required" autocomplete="off" aria-required="true">
+                                        <span style="color: red">(只允许单个IP地址和单个端口号)</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-2">
+                                        <label class="inputlabel" for="iplist">服务器端口</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="input width300" type="text" name="port" id="port" value="{$syslog_type['port']}" placeholder="" required="required" autocomplete="off" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-2">
+                                        <label class="inputlabel" for="status">状态</label>
+                                    </div>
+                                    <div class="col-md-10 form-group-input">
+                                        <div class="form-group" style="float: left;" >
+                                            <label class="c-input c-input-radio" for="status1">
+                                                <input class="c-radio" type="radio" name="status" id="status1" <if condition="$syslog_type['status'] neq '#'"> checked=""</if>  value="on">
+                                                <span class="c-icon-radio"></span>
+                                                开启
+                                            </label>
+                                        </div>
+                                        <div class="form-group" style="float: left;" >
+                                            <label class="c-input c-input-radio" for="status2">
+                                                <input class="c-radio" type="radio" name="status" id="status2" <if condition="$syslog_type['status'] eq '#' OR $syslog_type['status'] eq null"> checked=""</if>  value="off">
+                                                <span class="c-icon-radio"></span>
+                                                关闭
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="row form-group">-->
+                                    <!--<div class="col-md-2">-->
+                                        <!--<label class="inputlabel" for="iplist">日志级别</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-10">-->
+                                        <!--<select class="form-control width300" name="log_level">-->
+                                            <!--<option value="1">调式</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group clearfix">
+                                    <div class="col-md-8">
+                                        <button class="btn btn-blue" type="button" id="updatainfo">应用</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+</div>
+<!--主体-->
+<include file="Layout/script"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+<script type="text/javascript">
+    var errorTips 	= '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">修改失败</div>';
+    var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改成功</div>';
+    $('#updatainfo').click(function(){
+        var getFormData = $("#update_security").serialize();
+        console.log(getFormData);
+        var url = "{:U('Mare/Setting/system_log')}";
+        $.ajax({
+            type:"post",
+            url:url,
+            data:getFormData,
+            async:true,
+            success: function (data) {
+                if(data.status == 'success') {
+                    alert_msg(data.info,'',2)
+                } else {
+                    alert_msg(data.info,'',1)
+                }
+            }
+            ,error:function () {
+                alert_msg('系统异常，请稍后再试！','',1)
+            }
+        });
+    });
+
+</script>
+<include file="Layout/footer"/>

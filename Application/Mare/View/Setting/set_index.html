@@ -1,0 +1,466 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-4 col-sm-4">
+						
+						<div class="block-content">
+							<div class="block-head" style="position: relative;">
+								<h4>网络配置 <!--<a href="javascript:;" onclick="$('#tipspic').toggle();"><i id="tipsicon" data-toggle="tooltip" data-placement="right" title="Tooltip on right" class="fa fa-question-circle"></i></a>--> </h4>
+									<!--<div id="tipspic" style="position:absolute;top:18px;left:150px;text-align: center;display: none;"><span>必须手动设置网络IP地址</span></div>--> 
+							<!-- </div>
+							<div class="block-head"> -->
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" id="networkset" action="{:U('Mare/Setting/set_network')}" method="post">
+									<div class="form-group">
+										<div class="col-md-6">
+											<p style="font-weight: bold;">当前连接方式： <span id="connect-type">获取中</span></p>
+										</div>
+										<div class="col-md-6">
+											<p style="font-weight: bold;">当前连接IP地址： <span id="connect-ip">获取中</span></p>
+										</div>
+									</div>
+									<hr />
+									<div class="form-group">
+										<div class="col-md-6">
+											<label class="c-input c-input-radio" for="cable"  onclick="requestNetInfo('cable');$('#wifimodule').hide();">
+												<input class="c-radio" type="radio" id="cable" name="connect" style="margin-left: 30px;" <php>if( $currentnet == 'eth0'){ echo "checked='checked'"; }</php>>
+												<span class="c-icon-radio"></span>
+												有线连接
+											</label>
+										</div>
+										<?php if(strpos($systeminfo['wifi_online'],'1') !== false): ?>
+										<div class="col-md-6">
+											<label class="c-input c-input-radio" for="wifi" onclick="requestNetInfo('wifi');$('#wifimodule').show();">
+												<input type="radio" id="wifi" class="c-radio" name="connect"  value="wifi" <if condition="$currentnet eq 'wlan0'">checked</if> >
+												<span class="c-icon-radio"></span>
+												WiFi连接
+											</label>
+										</div>
+										<?php endif; ?>
+									</div>
+									<hr />
+									<div class="form-group">
+										<div class="col-md-6">
+											<label class="c-input c-input-radio" for="auto-get">
+												<input type="radio" id="auto-get" class="c-radio" name="setting" value="auto" <if condition="$isauto eq 'auto'">checked</if>>
+												<span class="c-icon-radio"></span>
+												DHCP获取IP地址
+											</label>
+										</div>
+										<div class="col-md-6">
+											<label class="c-input c-input-radio" for="handle">
+												<input type="radio" id="handle" class="c-radio" name="setting" value="hand" <if condition="$isauto eq 'hand'">checked</if>>
+												<span class="c-icon-radio"></span>
+												手工配置IP地址
+											</label>
+										</div>
+									</div>
+									<div id="ip-group" style="display: none;">
+										<input type="hidden" name="cable_wifi" >
+										<div class="form-group">
+											<div class="col-md-4">
+												<label class="inputlabel" for="ipv4address">IPV4 地址</label>
+											</div>
+											<div class="col-md-8">
+												<input class="input" type="text" name="ipv4address" id="ipv4address" value="" placeholder="类似 192.168.199.44" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<label class="inputlabel" for="ipv4mask">IPV4 子网掩码</label>
+											</div>
+											<div class="col-md-8">
+												<input class="input" type="text" name="ipv4mask" id="ipv4netmask" value="" placeholder="类似 255.255.255.0"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<label class="inputlabel" for="ipv4gateway">IPV4 默认网关</label>
+											</div>
+											<div class="col-md-8">
+												<input class="input" type="text" name="ipv4gateway" id="ipv4gateway" value="" placeholder="类似 192.168.199.1"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<label class="inputlabel" for="ipv4server1">IPV4 DNS服务器</label>
+											</div>
+											<div class="col-md-8">
+												<input class="input" type="text" name="ipv4server1" id="ipv4server1" value="" placeholder="类似 114.114.114.114"/>
+											</div>
+										</div>
+										<!--
+										<div class="form-group">
+											<div class="col-md-4">
+												<label class="inputlabel" for="ipv4server2">IPV4 DNS服务器二</label>
+											</div>
+											<div class="col-md-8">
+												<input class="input" type="text" name="ipv4server2" id="ipv4server2" value="" placeholder="类似 114.114.114.114" />
+											</div>
+										</div>
+										-->
+									</div>
+									<div class="form-group" style="text-align: right;">
+										<div class="col-md-12">
+										<!--<button class="btn btn-blue btn-shadow" type="reset" >重置</button>-->
+											<button class="btn btn-blue btn-shadow push-right" type="button" onclick="$('input[name=cable_wifi]').val($('input[name=connect]:checked').val());$('#networkset').submit();">保存&应用</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<div class="block-content">
+							<div class="block-head" style="position: relative;">
+								<h4>网络Ping检测</h4>
+							</div>
+							<div class="block-body">
+								<div class="form-horizontal">
+									<div class="form-group">
+										<div class="col-md-9">
+											<input class="input" type="text" id="pingval" value="" placeholder="输入IP/域名地址 例如:192.168.1.1" />
+										</div>
+										<div class="col-md-3">
+											
+											<button class="btn btn-blue btn-shadow push-right" onclick="clickPing($('#pingval').val())" >PING</button>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12" id="pinginfo">
+											
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="col-md-8 col-sm-8" id='wifimodule' 
+					<php>
+						if($currentnet == 'wlan0'){
+							echo 'style="display:block;"';
+						}elseif($currentnet == 'eth0'){
+							echo 'style="display:none;"';
+						}else{
+							echo 'style="display:none;"';
+						}
+					</php>
+					>
+						<div class="block-content">
+							<div class="block-head">
+								<h4>连接WiFi</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="row">
+											<div class="col-md-8">
+												<h5>当前连接：<span id="wifiname">无</span></h5>
+												<span id="success-tips">已连接</span>
+											</div>
+											<div class="col-md-4">
+												<h5>连接状态：<span id="connect_static"><i class="fa fa-close danger-color"></i></span></h5>
+											</div>
+											
+										</div>
+
+										<div class="form-inline" style="margin-bottom: 30px;">
+										  <div class="form-group">
+										    <div class="input-group">
+										      <input class="input" type="text" name="" id="wifipwd" placeholder="请输入Wi-Fi 密码">
+										      <div class="input-group-addon btn-blue" style="display: table-cell;" id="submit-wifi">连接</div>
+										    </div>
+										  </div>
+										</div>
+										
+										<h5 style="position: relative;">Wi-Fi列表：<span class="tool-icon refresh"><i class="fa fa-refresh"></i></span></h5>
+										<table class="table table-hover wifi-group" id="wifirefesh">
+											<thead>
+												<tr>
+													<th>wifi名</th>
+													<th>信号强度</th>
+													<th>加密方式</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>					
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<input type="hidden" id="tip" value="{$_GET['tip']}"/>
+		</div>
+		<!--主体-->
+		<include file="Layout/script"/>
+	
+	<script type="text/javascript">
+		
+		var isauto ='<?php echo $isauto;?>';
+		
+		if(isauto=='hand'){
+			$("#ip-group").show();
+		}
+		
+		function initIP(){
+			$.ajax({
+				type:"post",
+				url:"{:U('Mare/Setting/get_ip')}",
+				async:true,
+				dataType:"json",
+				success:function(data){
+					$("#connect-type").text(data.methd);
+					$("#connect-ip").text(data.ip);
+				},
+				error:function(){
+					
+				}
+			});
+		}
+		
+		var tip = $('#tip').val();
+		if(tip){
+			var info='';
+			if(tip == 'no_choice_wlan0_eth0'){
+				info = '没有选择网线连接或者无线连接';
+			}
+			if(tip == 'ipv4maskerror'){
+				info = '子网掩码格式错误';
+			}
+			if(tip == 'ipv4server2error'){
+				info = 'DNS服务器二格式错误';
+			}
+			if(tip == 'ipv4server1error'){
+				info = 'DNS服务器一格式错误';
+			}
+			if(tip == 'ipv4gatewayerror'){
+				info = '默认网关格式错误';
+			}
+			if(tip == 'ipv4addresserror'){
+				info = 'IP地址格式错误';
+			}
+			var errorTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+info+'</div>';
+			$(".block-wrapper").append(errorTips);
+			setTimeout(function(){
+				$("#action-tips").alert("close");
+			},3000)
+			
+		}
+		
+		var loadWifi = function(e){
+			var h4text = "<h4 class='text-center'>正在读取可用wifi列表 <i class='fa fa-spinner fa-spin'></i></h4>";
+			$('#wifirefesh').find("tbody").html(h4text);
+			$.ajax({
+				type:"get",
+				url:"{:U('Mare/Setting/wifilist')}",
+				async:true,
+				success:function(data){
+					//console.log(data);
+					if (data[0].SSID != "") {
+						var wifihtml = "";
+						for(var i =0;i < data.length; i++){
+							wifihtml += "<tr id="+ data[i]['SSID'] +"><td style='width:30px;'>"+ data[i]['SSID'] +"</td><td style='margin-left:20px;width:10px;'>"+ data[i]['SIGNAL'] +"</td><td style='margin-left:20px;width:30px;'>"+ data[i]['SECURITY'] +"</td></tr>";
+						}
+						 
+						$('#wifirefesh').find("tbody").html(wifihtml);
+						// alert("成功读取wifi列表");
+					}
+				},
+				error:function(){
+					alert("服务器出错");
+				}
+			});
+		}
+
+		$(".refresh").on("click",loadWifi);
+		
+		
+		//点击切换wifi按钮
+		$("input[name=connect]").on("change",function(e){
+			var thisKey = $(this).val();
+			if ( thisKey=="wifi" ) {
+				loadWifi();
+				//setTimeoutFn(8000);
+			}
+			else if ( thisKey=="on" ) {
+				stopTimeFn();
+			}
+		});
+		
+		var timesOut
+		
+		var setTimeoutFn = function(time){
+			timesOut = setInterval(loadWifi,time);
+		}
+		
+		var stopTimeFn = function(){
+			clearInterval(timesOut)
+		}
+		
+		
+		$(".wifi-group tbody").on("click","tr",function(e){
+			$(this).addClass("active");
+			$(this).siblings().removeClass("active");
+			$("#success-tips").removeClass("show");
+			$("#wifipwd").val("");
+		});
+		
+		var linkTo = function(t){
+			var submitID = $(".wifi-group tbody active").attr("id");
+			$("#wifiname").text(submitID);
+		}
+		
+		//点击连接 wifi 按钮
+		$("#submit-wifi").on("click",function(){
+			linkTo();
+			var wifiPwd = $("#wifipwd").val();
+			var wifiID = $(".wifi-group .active").children("td").eq(0).text();
+			console.log("%s",wifiID);
+			var wifidata = {};
+			wifidata = {"id":wifiID,"pwd":wifiPwd};
+			if (wifiID=="undefined") {
+				alert("请输入选中要连接的wifi");
+				return false;
+			}
+			else if (wifiPwd == "") {
+				alert("请输入wifi密码");
+				return false;
+			}else if ($("#success-tips").hasClass("show")) {
+				alert("当前wifi已在连接状态");
+				return false;
+			}
+
+			$.ajax({
+				type:"post",
+				url:"{:U('Mare/Setting/connect_wifi_new')}",
+				async:true,
+				data:wifidata,
+				success:function(data){
+					// $("#success-tips").addClass("show");
+					$('#wifiname').html('连接中 <i class="fa fa-spinner fa-spin"></i>');
+				}
+			});
+			
+			//3秒后判断是否连接成功网络
+			setTimeout(loopExecution,3000);
+		});
+		
+		var loopExecution = setInterval(confirmConnectIsInNet,3000);
+		//确认是否联网
+		
+		var successTip = '<i class="fa fa-check success-color"></i>';
+		var failedTip = '<i class="fa fa-close danger-color"></i>';
+		
+		function confirmConnectIsInNet(){
+			$.ajax({
+				type:"post",
+				//url:"{:U('Mare/Setting/isConnectNetExistFile')}",
+				url: "{:U('Mare/Setting/wifi_status')}",
+				dataType:"json",
+				async:true,
+				success:function(data){
+					//console.log(data,"123");
+					if(data.code == 'success'){
+						// $("#success-tips").html('联网成功');
+						$("#wifiname").html( data.info );
+						$("#connect_static").html(successTip);
+					}else{
+						//clearInterval(loopExecution);
+						$("#wifiname").html('未连接');
+						$("#connect_static").html(failedTip);
+					}
+				}
+			});
+		}
+		
+		var pingTips = '<span id="ping-tips">PING命令正在执行中  <i class="fa fa-spinner fa-spin"></i></span>';
+		function clickPing(val){
+			$('#pinginfo').html(pingTips);
+			var partern 	= /^[a-zA-Z0-9][\.a-zA-Z0-9]{3,25}$/;
+			var ippartern 	= /^[0-9][\.0-9]{0,15}$/;
+			if(ippartern.test(val) || partern.test(val)){
+				$.ajax({
+					type:"post",
+					url:"{:U('Mare/Setting/pingtest')}",
+					async:true,
+					dataType:"json",
+					data:{paramar:val},
+					success:function(data){
+						$('#pinginfo').html(data);
+					},
+				});
+			}else{
+				alert('请输入合适的PING的IP或地址');
+			}
+		}
+		//获取内置的ip地址信息和dns代理信息	
+		function requestNetInfo(wifi_cable){
+			$.ajax({
+				type:"get",
+				url:"__CONTROLLER__/requestNetInfo/wifi_cable/"+wifi_cable,
+				async:true,
+				dataType:"json",
+				success:function(data){
+					if(data.code == 'success'){
+						if(data.wifi_ssid != ''){
+							$('#wifiname').html(data.wifi_ssid);
+						}else{
+							$('#wifiname').html('连接错误,请重新选择wifi');
+						}
+					}
+					$('#ipv4netmask').val(data.netmask);
+					$('#ipv4address').val(data.address);
+					$('#ipv4gateway').val(data.gateway);
+					$('#ipv4server1').val(data.nameserver[0]);
+					$('#ipv4server2').val(data.nameserver[1]);
+				}
+			});
+		}
+		$(document).ready(function(){
+			if($('#cable').length >0 && $('#cable').attr('checked') == 'checked'){
+				requestNetInfo('cable');
+			}
+			if($('#wifi').length >0 && $('#wifi').attr('checked') == 'checked'){
+				requestNetInfo('wifi');
+			}
+			$("input[name=setting]").on("change",function(){
+				var activeItem = $(this).val();
+				if ( activeItem=="auto" ) {
+					$("#ip-group").hide();
+				}
+				else{
+					$("#ip-group").show();
+				}
+			});
+			
+			initIP();
+			loadWifi();
+			
+			setInterval(initIP,2000)
+		});
+	</script>
+<include file="Layout/footer"/>

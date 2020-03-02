@@ -1,0 +1,489 @@
+[ 2019-11-26T15:10:03+08:00 ] 192.168.199.249 /mare/index.php/Mare/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000128s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000049s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000095s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0006s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Undefined index: randomstr /var/www/html/mare/Application/Mare/Controller/CommonController.class.php 第 25 行.
+NOTIC: [8] Undefined index:  /var/www/html/mare/Application/Mare/Controller/CommonController.class.php 第 25 行.
+
+[ 2019-11-26T15:10:03+08:00 ] 192.168.199.249 /mare/index.php/Mare/Login/login_user.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000051s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000025s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000051s ]
+NOTIC: [8] Undefined index: HTTP_REFERER /var/www/html/mare/Application/Mare/Controller/LoginController.class.php 第 11 行.
+NOTIC: [8] Undefined index: randomstr /var/www/html/mare/Application/Mare/Controller/LoginController.class.php 第 22 行.
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0006s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'login_captcha' LIMIT 1   [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000088s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000122s ]
+NOTIC: [8] Undefined index: tip /var/www/html/mare/Application/Runtime/Cache/Mare/7dcc18852b9e4372c352581c26ae41a5.php 第 283 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.004154s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.004183s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000033s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000054s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000034s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000061s ]
+
+[ 2019-11-26T15:10:13+08:00 ] 192.168.199.249 /mare/index.php/Mare/Layout/verify_captcha.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000062s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000024s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000048s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0004s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'login_captcha' LIMIT 1   [ RunTime:0.0001s ]
+
+[ 2019-11-26T15:10:13+08:00 ] 192.168.199.249 /mare/index.php/Mare/Login/login_user.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000049s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000022s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000045s ]
+NOTIC: [8] Undefined index: randomstr /var/www/html/mare/Application/Mare/Controller/LoginController.class.php 第 22 行.
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0008s ]
+NOTIC: [8] Undefined index: captcha /var/www/html/mare/Application/Mare/Controller/LoginController.class.php 第 39 行.
+SQL: SELECT * FROM `at_user` left join at_userauth on  at_userauth.uid= at_user.userid  WHERE `loginemail` = 'marsamds' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `loginemail` = 'marsamds' AND `password` = '52d006111b10a5a64bd9bcbe974895ac' LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'login_limit' LIMIT 1   [ RunTime:0.0001s ]
+SQL: UPDATE `at_user` SET `lasttime`='1574752213',`ip`='192.168.199.249',`errcount`='0',`lockstarttime`='0' WHERE `userid` = 1 [ RunTime:0.0163s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `at_log` [ RunTime:0.0006s ]
+SQL: SELECT * FROM `at_log` WHERE `username` = '超级管理员' AND `handleurl` = 'Mare/Login/login_user' AND `handlecontent` = '登录' AND `handleresult` = '成功' AND `handleremarks` = '用户登录成功' AND `date` = '2019-11-26' AND `handleip` = '192.168.199.249' AND `handletime` = '2019-11-26 15:10:13'  [ RunTime:0.0014s ]
+SQL: INSERT INTO `at_log` (`username`,`handleurl`,`handlecontent`,`handleresult`,`handleremarks`,`date`,`handleip`,`handletime`) VALUES ('超级管理员','Mare/Login/login_user','登录','成功','用户登录成功','2019-11-26','192.168.199.249','2019-11-26 15:10:13') [ RunTime:0.0016s ]
+
+[ 2019-11-26T15:10:13+08:00 ] 192.168.199.249 /mare/index.php/Mare/Login/login_user.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000064s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000027s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000054s ]
+
+[ 2019-11-26T15:10:13+08:00 ] 192.168.199.249 /mare/index.php/Mare/Index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000059s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000025s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000052s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0006s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0005s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0004s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0004s ]
+SQL: SELECT `task_sum`,`max_task`,`grand_appnumber` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_apprecord` [ RunTime:0.0004s ]
+SQL: SELECT count(*) as count FROM `at_apprecord`  [ RunTime:0.0001s ]
+SQL: UPDATE `at_user` SET `lasttime`='1574752213' WHERE `userid` = 1 [ RunTime:0.0024s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000115s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000150s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012492s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012525s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000038s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000058s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000032s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000057s ]
+
+[ 2019-11-26T15:10:15+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/task_list.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000106s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000043s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000074s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0006s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0004s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\AppinfoModel
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Undefined variable: page /var/www/html/mare/Application/Mare/Controller/TaskController.class.php 第 675 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT at_appinfo.appid,at_appinfo.realname as app,at_appinfo.uploadtime,at_appinfo.task_name,at_user.realname,at_appinfo.status,at_appinfo.icon,at_appinfo.type,at_appinfo.task_execute_ip,at_appinfo.tasktype,at_appinfo.dexdump,at_appinfo.dexfile,at_appinfo.task_status,at_appinfo.sensitive FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  ORDER BY appid desc LIMIT 0,12   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `at_vulinfo` [ RunTime:0.0005s ]
+SQL: SELECT `appid`,count(*) as count FROM `at_vulinfo` WHERE `detectionid` = 5 AND `appid` IN ('102','101','100','99','98','97','96','95','94','93','92','91') GROUP BY appid  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  WHERE at_appinfo.status IN ('3','4','5','6','7','8','9')  [ RunTime:0.0005s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'appteststatus2' LIMIT 1   [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000202s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000252s ]
+NOTIC: [8] Undefined index: starttime /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 314 行.
+NOTIC: [8] Undefined index: endtime /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 319 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 327 行.
+NOTIC: [8] Use of undefined constant task - assumed 'task' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 327 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 331 行.
+NOTIC: [8] Use of undefined constant app - assumed 'app' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 331 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 335 行.
+NOTIC: [8] Use of undefined constant member - assumed 'member' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 335 行.
+NOTIC: [8] Undefined variable: tasktype /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 338 行.
+NOTIC: [8] Undefined index: condition /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 344 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0000s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022732s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022764s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000047s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000067s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000047s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000076s ]
+
+[ 2019-11-26T15:10:16+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/get_status_list.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000095s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000039s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000082s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0006s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0006s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\MaintainModel
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0003s ]
+SQL: SELECT `value` FROM `at_maintain` WHERE `key` = 'appteststatus2' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\AppinfoModel
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0010s ]
+SQL: SELECT `appid`,`status`,`task_status`,`realname`,`tasktype`,`icon` FROM `at_appinfo` WHERE ( appid=102 or appid=101 or appid=100 or appid=99 or appid=98 or appid=97 or appid=96 or appid=95 or appid=94 or appid=93 or appid=92 or appid=91 ) ORDER BY appid desc LIMIT 12   [ RunTime:0.0001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000055s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000104s ]
+
+[ 2019-11-26T15:10:21+08:00 ] 192.168.199.249 /mare/index.php/Mare/Index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000085s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000041s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000086s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0006s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0004s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0008s ]
+SQL: SELECT `task_sum`,`max_task`,`grand_appnumber` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_apprecord` [ RunTime:0.0004s ]
+SQL: SELECT count(*) as count FROM `at_apprecord`  [ RunTime:0.0001s ]
+SQL: UPDATE `at_user` SET `lasttime`='1574752221' WHERE `userid` = 1 [ RunTime:0.0547s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000159s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000231s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021513s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021571s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000068s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000103s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000057s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000105s ]
+
+[ 2019-11-26T15:11:22+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/task_list.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000103s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000044s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000092s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0010s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0008s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0005s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\AppinfoModel
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0014s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0005s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0002s ]
+NOTIC: [8] Undefined variable: page /var/www/html/mare/Application/Mare/Controller/TaskController.class.php 第 675 行.
+SQL: SELECT COUNT(*) AS tp_count FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT at_appinfo.appid,at_appinfo.realname as app,at_appinfo.uploadtime,at_appinfo.task_name,at_user.realname,at_appinfo.status,at_appinfo.icon,at_appinfo.type,at_appinfo.task_execute_ip,at_appinfo.tasktype,at_appinfo.dexdump,at_appinfo.dexfile,at_appinfo.task_status,at_appinfo.sensitive FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  ORDER BY appid desc LIMIT 0,12   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `at_vulinfo` [ RunTime:0.0007s ]
+SQL: SELECT `appid`,count(*) as count FROM `at_vulinfo` WHERE `detectionid` = 5 AND `appid` IN ('102','101','100','99','98','97','96','95','94','93','92','91') GROUP BY appid  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_appinfo` left join at_user on at_user.userid = at_appinfo.test_userid  WHERE at_appinfo.status IN ('3','4','5','6','7','8','9')  [ RunTime:0.0005s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'appteststatus2' LIMIT 1   [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000188s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000246s ]
+NOTIC: [8] Undefined index: starttime /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 314 行.
+NOTIC: [8] Undefined index: endtime /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 319 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 327 行.
+NOTIC: [8] Use of undefined constant task - assumed 'task' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 327 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 331 行.
+NOTIC: [8] Use of undefined constant app - assumed 'app' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 331 行.
+NOTIC: [8] Undefined index: type /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 335 行.
+NOTIC: [8] Use of undefined constant member - assumed 'member' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 335 行.
+NOTIC: [8] Undefined variable: tasktype /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 338 行.
+NOTIC: [8] Undefined index: condition /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 344 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0003s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+SQL: SELECT * FROM `at_maintain` WHERE `key` = 'private_or_public' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [8] Use of undefined constant appid - assumed 'appid' /var/www/html/mare/Application/Runtime/Cache/Mare/44c56c20df1ea931f2e1ab09dfd564f7.php 第 453 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.023645s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023678s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000064s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000086s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000040s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000068s ]
+
+[ 2019-11-26T15:11:22+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/get_status_list.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000067s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000025s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000051s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0009s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0004s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\MaintainModel
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0004s ]
+SQL: SELECT `value` FROM `at_maintain` WHERE `key` = 'appteststatus2' LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: D方法实例化没找到模型类Mare\Model\AppinfoModel
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0015s ]
+SQL: SELECT `appid`,`status`,`task_status`,`realname`,`tasktype`,`icon` FROM `at_appinfo` WHERE ( appid=102 or appid=101 or appid=100 or appid=99 or appid=98 or appid=97 or appid=96 or appid=95 or appid=94 or appid=93 or appid=92 or appid=91 ) ORDER BY appid desc LIMIT 12   [ RunTime:0.0001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000064s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000108s ]
+
+[ 2019-11-26T15:11:25+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/task_detial/appid/102.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000101s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000045s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000088s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0008s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0008s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0006s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0015s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_exploit_db` [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `at_vulinfo` [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `at_analysis_results` [ RunTime:0.0007s ]
+SQL: SELECT `task_name` FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `id` FROM `at_exploit_db` WHERE `hvtypeid` = 1  [ RunTime:0.0151s ]
+SQL: SELECT `id` FROM `at_exploit_db` WHERE `hvtypeid` = 2  [ RunTime:0.0004s ]
+SQL: SELECT `id` FROM `at_exploit_db` WHERE `hvtypeid` = 3  [ RunTime:0.0011s ]
+SQL: SELECT `id` FROM `at_exploit_db` WHERE `hvtypeid` = 4  [ RunTime:0.0002s ]
+SQL: SELECT * FROM `at_analysis_results` WHERE `detectionid` IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','137','143','2001','2002','144','145','146','147','148','149','150','151','152','153','154','155','156','157','158','159','160','161','162','163','164','165','166') AND `appid` = 102  [ RunTime:0.6238s ]
+SQL: SELECT * FROM `at_analysis_results` WHERE `detectionid` IN ('88','89','90','91','92','93','97','98','2003') AND `appid` = 102  [ RunTime:0.0060s ]
+SQL: SELECT * FROM `at_analysis_results` WHERE `detectionid` IN ('94','95','96','136','1001','1002','1003') AND `appid` = 102  [ RunTime:0.0059s ]
+SQL: SELECT * FROM `at_analysis_results` WHERE `detectionid` IN ('99','100','101','102','103','104','105','106','107','108','109','110','111','112','113','114','115','116','117','118','119','120','121','122','123','124','125','126','127','128','129','130','131','132','133','134','135','138','139','140','141','142') AND `appid` = 102  [ RunTime:0.0061s ]
+SQL: SELECT * FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000330s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000413s ]
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 360 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 360 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 361 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 361 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 363 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 363 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 365 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 365 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 386 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 386 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 387 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 387 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 389 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 389 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 391 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 391 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 412 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 412 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 413 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 413 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 415 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 415 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 417 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 417 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 438 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 438 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 439 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 439 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 441 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 441 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 443 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 443 行.
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0002s ]
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 465 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 465 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 466 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 466 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 468 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 468 行.
+NOTIC: [8] Undefined index: risk_level /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 470 行.
+NOTIC: [8] Undefined index: vulrisklevel /var/www/html/mare/Application/Runtime/Cache/Mare/22187462c02284aa5c0d7d1b4ffcf52f.php 第 470 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.037099s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.037151s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000085s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000108s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000058s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000094s ]
+
+[ 2019-11-26T15:11:25+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/statisticalChart/appid/102
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000067s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000027s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000051s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0005s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0003s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0012s ]
+SQL: SHOW COLUMNS FROM `at_exploit_db` [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `at_analysis_results` [ RunTime:0.0004s ]
+SQL: SELECT * FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT *,sum(issues_count) as itemcount,`detectionid` FROM `at_analysis_results` left join at_exploit_db on at_exploit_db.id = at_analysis_results.detectionid  WHERE `appid` = 102 AND at_exploit_db.hvtypeid IN ('2','3','4') GROUP BY detectionid ORDER BY detectionid  [ RunTime:0.0132s ]
+SQL: SELECT * FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+
+[ 2019-11-26T15:11:27+08:00 ] 192.168.199.249 /mare/index.php/Mare/Task/task_item_business/appid/102.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000064s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000028s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000056s ]
+SQL: SHOW COLUMNS FROM `at_licinfo` [ RunTime:0.0007s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_user` [ RunTime:0.0006s ]
+SQL: SELECT `userid`,`tid`,`loginemail`,`check_status`,`status`,realname as nickname,at_usertype.name as authname,`lockstarttime` FROM `at_user` left join at_userauth on at_userauth.uid = at_user.userid left join at_usertype on at_usertype.id = at_userauth.tid  WHERE `userid` = '1' LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_device` [ RunTime:0.0004s ]
+SQL: SELECT `devtask`,`devid` FROM `at_device`  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `at_licinfo` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_appinfo` [ RunTime:0.0015s ]
+SQL: SHOW COLUMNS FROM `at_maintain` [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `at_exploit_db` [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `at_analysis_results` [ RunTime:0.0005s ]
+SQL: SELECT * FROM `at_user` WHERE `userid` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT `task_name` FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT `id` FROM `at_exploit_db` WHERE `hvtypeid` = 2  [ RunTime:0.0001s ]
+NOTIC: [8] Undefined variable: page /var/www/html/mare/Application/Mare/Controller/TaskController.class.php 第 1545 行.
+SQL: SELECT * FROM `at_analysis_results` left join at_exploit_db on at_exploit_db.id = at_analysis_results.detectionid  WHERE `detectionid` IN ('88','89','90','91','92','93','97','98','2003') AND `appid` = 102 AND `issues_count` > 0 AND `risk_level` > 1 GROUP BY detectionid desc  [ RunTime:0.0063s ]
+SQL: SELECT `detectionid`,sum(issues_count) as issues_count,`risk_level`,`case_name` FROM `at_analysis_results` left join at_exploit_db on at_exploit_db.id = at_analysis_results.detectionid  WHERE `detectionid` IN ('88','89','90','91','92','93','97','98','2003') AND `appid` = 102 AND `issues_count` > 0 AND `risk_level` > 1 GROUP BY detectionid asc ORDER BY risk_level DESC,issues_count DESC,detectionid ASC LIMIT 0,15   [ RunTime:0.0029s ]
+SQL: SELECT * FROM `at_appinfo` WHERE `appid` = 102 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `at_scanrule` [ RunTime:0.0005s ]
+SQL: SELECT * FROM `at_scanrule` WHERE `appid` = 102  [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `at_requesttemp` [ RunTime:0.0004s ]
+SQL: SELECT * FROM `at_requesttemp` WHERE `appid` = 102  [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000123s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000177s ]
+SQL: SELECT `set_mode` FROM `at_licinfo` LIMIT 1   [ RunTime:0.0001s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.039677s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.039718s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000050s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000070s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000034s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000058s ]
+

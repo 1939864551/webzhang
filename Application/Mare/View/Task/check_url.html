@@ -1,0 +1,42 @@
+<div class="block-head">
+    <div class="row">
+        <div class="col-md-4"><h4>URL匹配配置</h4></div>
+        <div class="col-md-8" style="margin-top: 5px;">
+            <input class="checkbox" type="checkbox" name="check_url_action" id="check_url_action"/>
+        </div>
+    </div>
+
+</div>
+<div class="block-body">
+    <!--<div class="form-group row" style="margin-top: 15px;">-->
+        <!--<div class="col-md-3">-->
+            <!--<label class="inputlabel" for="check_url">URL匹配配置选项</label>-->
+        <!--</div>-->
+        <!--<div class="col-md-9">-->
+            <!--<input class="checkbox" type="checkbox" name="check_url_action" id="check_url_action"/>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div id="check_url"  style="display: none">
+        <foreach name="check_url_info" item="vo_url" key="key_url">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="inputlabel"  for="">{$vo_url}URL：</label>
+                </div>
+                <div class="col-md-9">
+                    <input class="input" type="text" name="{$key_url}" id="{$key_url}" value="" autocomplete="off"/>
+                </div>
+            </div>
+        </foreach>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#check_url_action").on("change",function(){
+                if ($(this).is(":checked")) {
+                    $("#check_url").fadeIn();
+                } else{
+                    $("#check_url").fadeOut();
+                }
+            });
+        });
+    </script>
+</div>

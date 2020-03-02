@@ -1,0 +1,25 @@
+{
+  "draw": 1,
+  "recordsTotal": 0,
+  "recordsFiltered": 0,
+  "data": [
+    {
+	    "ID":"1",
+		"姓名":"张杰",
+		"角色":"分析员",
+		"公司名":"b哎哎哎me1",
+		"手机号码":"dsaVersion11",
+		"电子邮箱":"dsad1321321321132",
+		"操作":"<div class='btn-group' role='group'><button type='button' class='btn btn-primary'>编辑</button><button type='button' class='btn btn-default'>删除</button></div>"
+    },
+    {
+		"ID":"2",
+		"姓名":"陈奕迅",
+		"角色":"测试用户",
+		"公司名":"啦啦噜",
+		"手机号码":"Version212311",
+		"电子邮箱":"132132132dsadsa1132",
+		"操作":"<div class='btn-group' role='group'><button type='button' class='btn btn-primary'>编辑</button><button type='button' class='btn btn-default'>删除</button></div>"
+    }
+  ]
+}

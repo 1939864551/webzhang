@@ -1,0 +1,194 @@
+<include file="Layout/header"/>
+<style type="text/css">
+	.title{
+		font-weight: bold;
+		font-size: 1.2rem;
+	}
+	.lead{
+		font-size: 1.2rem;
+		font-weight: normal;
+	}
+</style>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+						<div class="col-md-6 col-md-offset-3">
+						<div class="block-content" id="output-report">
+							<div class="block-head">
+								<h4>报告页眉</h4>只支持Word报告页眉设置
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="{:U('Mare/Report/rep_down')}" id="downloadreport" method="post" enctype='multipart/form-data'>
+									<div class="row-bottom">
+										<div class="form-group">
+											<label class="control-label col-md-3">公司名称</label>
+											<div class="col-md-9">
+												<input class="input" type="text" name="header" value="{$expandinfo['header']}" id="header"  placeholder="输入页眉" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3">公司网站</label>
+											<div class="col-md-9">
+													<input class="input" type="text" name="footer" value="{$expandinfo['footer']}" id="footer"  placeholder="输入页脚" />
+											</div>
+										</div>
+										
+										<if condition="is_file($expandinfo['watermark']) eq true">
+										<div class="form-group">
+											<label class="control-label col-md-3">公司LOGO</label>
+											<div class="col-md-9">
+								                <img src="__ROOT__/{$expandinfo['watermark']}" width="100px">
+											</div>	
+										</div>
+										</if>
+										
+										<div class="clearfix"></div>
+										
+										<div class="form-group">
+											<label class="control-label col-md-3">水印</label>
+											<div class="col-md-9 ">
+								                  <div class="input-group input-group-file">
+								                  	<span class="input-group-btn">
+								                      <span class="btn btn-primary btn-file">
+								                        <i class="fa fa-upload" aria-hidden="true"></i>
+								                        <input type="file" name="watermark" multiple="">
+								                      </span>
+								                    </span>
+								                    <div id="watermarkprogress" style="width: 200px;display: none;" class="form-control">
+										                <div class="progress-bar progress-bar-success" > </div>
+										          	</div>
+										          	<input type="hidden" name="watermarkpath"/>
+								                  </div>
+											</div>	
+										</div>
+										
+										<div class="form-group">
+											<label class="control-label col-md-3">备注</label>
+											<div class="col-md-9">
+								                <input type="text" class="input" name="remarks" value="{$expandinfo['remarks']}" />
+											</div>	
+										</div>
+									</div>
+									<div class="form-group" style="margin-top: 15px;text-align: center;">
+										<button type="button" onclick="history.go(-1);" style="margin-left: 15em;" class="btn btn-blue">返回</button>
+										<button type="button" style="margin-left: 5em;" onclick="updatewatermark({$expandinfo['id']})" class="btn btn-blue">修改</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<include file="Layout/script"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+<script type="text/javascript">
+	var uploadErrorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">上传失败，请重试</div>';
+	var uploadSuccessTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">上传成功</div>';
+	var errorTips  = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">修改失败</div>';
+	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改成功</div>';
+	function implement(url){
+		var r = confirm("确定执行操作吗");
+		if(r){
+			$.ajax({
+	        	type:"get",
+				url:url,
+				success: function (data) { //表单提交后更新页面显示的数据
+				}
+			});
+		}
+	}
+	function updatewatermark(id){
+		var getFormData = $("#downloadreport").serialize();
+		var url = "__CONTROLLER__/set_updatewatermarkinfo/id/"+parseInt(id)+".html";
+        $.ajax({
+        	type:"post",
+			url:url,
+			data:getFormData,
+			async:true,
+			success: function (data) { //表单提交后更新页面显示的数据
+				if (data.code == "success") {
+				$(".block-wrapper").append(successTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+						location.href="{:U('Mare/Setting/set_watermark')}";
+					},3000)
+				}else{
+					console.log(data);
+					$(".block-wrapper").append(errorTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+					},3000)
+				}
+			}
+		});
+	}
+		
+		var url = "{:U('Mare/Setting/set_uploadwaterpic')}";
+		// $('#fileupload').fileupload({
+		$('input[type=file]').fileupload({
+		  url: url,
+		  // dataType: 'json',
+		  autoUpload:true,
+		  sequentialUploads: true,
+		  done: function (e, data) {
+		  	if(data.result.code == 'false'){
+		  		alert(data.result.info);
+		  	}
+		  	if(data.result.code == 'success'){
+		  		$(".block-wrapper").append(uploadSuccessTips);
+		          	setTimeout(function(){
+						$("#action-tips").alert("close");
+					},3000)
+		  		var filepath = $(this).attr('name')+'path';
+		  		$('input[name='+filepath+']').val(data.result.info);
+		  	}
+		  },
+		  progressall: function (e, data) {
+		      var progress = parseInt(data.loaded / data.total * 100, 10);
+		      var goalprogress  = $(this).attr('name')+'progress';
+		      $('#'+goalprogress).show();
+		      $('#'+goalprogress+' .progress-bar').css(
+		          'width',
+		          progress + '%'
+		      );
+
+		      if(progress == '100'){
+		          // setTimeout("location.reload()",2000); 
+		          // alert('上传成功');
+		   //        $(".block-wrapper").append(uploadSuccessTips);
+		   //        	setTimeout(function(){
+					// 	$("#action-tips").alert("close");
+					// },3000)
+		      }
+		  },
+		  fail:function(e,data){
+		  	$(".block-wrapper").append(uploadErrorTips);
+		  		console.log('error:  '+data);
+		  }
+		}).prop('disabled', !$.support.fileInput)
+		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+</script>
+
+<include file="Layout/footer"/>

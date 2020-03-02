@@ -1,0 +1,55 @@
+<div class="col-xs-12">
+                        <div class="navbar-custom">
+                            <ul>
+                                <li <if condition="ACTION_NAME eq 'task_item_parameter'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_parameter',array('appid'=>$_GET['appid']))}">任务信息概要</a>
+                                </li>
+                                <li <if condition="ACTION_NAME eq 'task_item_summary'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}">检测结果汇总</a>
+                                </li>
+                                <li <if condition="ACTION_NAME eq 'task_item_application'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_application',array('appid'=>$_GET['appid']))}" >应用代码安全</a>
+                                </li>
+                                <li <if condition="ACTION_NAME eq 'task_item_business'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_business',array('appid'=>$_GET['appid']))}">业务操作安全</a>
+                                </li>
+                                <li <if condition="ACTION_NAME eq 'task_item_communication'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_communication',array('appid'=>$_GET['appid']))}">数据通信安全</a>
+                                </li>
+                                <?php if(getSetMode() != 2):?>
+                                 <li <if condition="ACTION_NAME eq 'task_item_server'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_item_server',array('appid'=>$_GET['appid']))}">服务器端安全</a>
+                                </li>
+                                <?php endif;?>
+                                <if condition="$requesttemp neq null">
+                                <!--
+                                <li>
+                                    <a href="{:U('Mare/Task/task_console',array('appid'=>$_GET['appid']))}">网络调试</a>
+                                </li>
+                                -->
+                                </if>
+                                <if condition="$scanruledata neq null">
+                                <li <if condition="ACTION_NAME eq 'task_item_parameter'">
+            class="active"
+            </if>>
+                                    <a href="{:U('Mare/Task/task_custom_rule',array('appid'=>$_GET['appid']))}">自定义扫描规则</a>
+                                </li>
+                                </if>
+                                <li style="margin-right: 5%;">
+                                    <a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}">返回报告摘要</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>

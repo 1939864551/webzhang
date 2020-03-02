@@ -1,0 +1,19 @@
+.xxxx{
+	text-align: center;
+	margin-top: 200px;
+	font-style: 1px solid #bda369;
+}
+
+h1 font{ font-weight:5px; }
+b{ width:5px; }
+.childtitle{ font-size:30px;font-weight:7; }
+div .position{ font-size:20; } 
+.xiahuaxian{ text-decoration:underline;min-width: 400px; }
+.show td { cellspacing:0px;border:1px solid #cbcbcb;font-size:15px; }
+.show th{ cellspacing:0px;border:1px solid #cbcbcb;font-size:15px; }
+.show tr{	cellspacing:0px;border:0px;	}
+.grandtitle{ font-size:20px;font-weight:4; }
+
+/*.show td { cellspacing:0px;border:1px solid #cbcbcb;font-size:15px; }
+.show th{ cellspacing:0px;border:1px solid #cbcbcb;font-size:15px; }
+.show tr{	cellspacing:0px;border:0px;	}*/

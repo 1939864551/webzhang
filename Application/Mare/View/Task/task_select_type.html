@@ -1,0 +1,106 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="guide_title">
+					<h3 class="text-center" style="padding-left:50px;">请选择您准备进行安全检测的任务类型</h3>
+				</div>
+
+				<div class="clearfix center-block" style="min-height:300px;max-width:850px;">
+					<div class="clearfix type_group">
+						<div class="col-sm-6">
+							<a href="javascript:void(0)" class="nopadding guide_box">
+								<div class="guide_img" onclick="task_add('task_add')">
+									<img src="__PUBLIC__/mars/img/iconfont-app.png" class="img-responsive" />
+									<div class="guide_text">
+										<h4 class="text-center">移动应用安全检测</h4>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-sm-6">
+							<a href="javascript:void(0)" class="nopadding guide_box">
+								<div class="guide_img" onclick="task_add('task_weixin_add')">
+									<img src="__PUBLIC__/mars/img/iconfont-weixin.png" class="img-responsive" />
+									<div class="guide_text">
+										<h4 class="text-center">微信应用安全检测</h4>
+									</div>
+								</div>
+								
+							</a>
+						</div>
+					</div>
+					<div class="clearfix type_group">
+						<div class="col-sm-6">
+							<a href="javascript:void(0)" class="nopadding guide_box">
+								<div class="guide_img" onclick="task_add('task_awvs_add')">
+									<img src="__PUBLIC__/mars/img/iconfont-web-beidong.png" class="img-responsive" />
+									<div class="guide_text">
+										<h4 class="text-center">Web应用被动安全检测</h4>
+									</div>
+								</div>
+							</a>
+						</div>
+						
+						<div class="col-sm-6">
+							<a href="javascript:void(0)" class="nopadding guide_box">
+								<div class="guide_img" onclick="task_add('task_web_add')">
+									<img src="__PUBLIC__/mars/img/iconfont-web.png" class="img-responsive" />
+									<div class="guide_text">
+										<h4 class="text-center">Web应用主动安全检测</h4>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		<include file="Layout/script"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+		<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script>
+            function task_add(task_type){
+                $.ajax({
+                    "url":"{:U('check_task_add')}",
+                    "cache":false,
+                    "data":{'task_type':task_type},
+                    "async":true,
+                    "type":'post',
+                    "success":function(data){
+                        if(data.status == 'success'){
+                           var url = "{:U('"+task_type+"')}";
+                           window.location.href = url;
+                        } else if (data.status == 'error') {
+                            var errorNewTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.msg+'</div>';
+                            $(".block-wrapper").append(errorNewTips);
+                            setTimeout(function(){
+                                $("#action-tips").alert("close");
+                            },6000)                                       
+                        }
+                    }
+                });              
+            }
+        </script>
+	
+<include file="Layout/footer"/>

@@ -1,0 +1,241 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+
+			<div class="block-wrapper">
+				<div class="container-fluid">
+
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+								<li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  	<li><a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  	<li class="active">检测项详细结果</li>
+							</ol>
+						</div>
+					</div>
+
+					<div class="col-xs-12">
+						<div class="navbar-custom">
+							<ul>
+								<li>
+									<a href="{:U('Mare/Task/task_item_parameter',array('appid'=>$_GET['appid']))}">任务信息概要</a>
+								</li>
+								<li>
+									<a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}">检测结果汇总</a>
+								</li>
+								<!-- if($tasktype == 'wx' || $tasktype == 'web'){
+								business
+								communication
+								server
+								}elseif($tasktype == 'awvs'){
+								server
+								}else{
+								application
+								business
+								communication
+								server
+								} -->
+								<if condition="$goalAppinfo['tasktype'] eq 'android' or $goalAppinfo['tasktype'] eq 'ios'">
+								<li>
+									<a href="{:U('Mare/Task/task_item_application',array('appid'=>$_GET['appid']))}" >应用代码安全</a>
+								</li>
+								</if>
+								<if condition="$goalAppinfo['tasktype'] neq 'awvs'">
+								<li>
+									<a href="{:U('Mare/Task/task_item_business',array('appid'=>$_GET['appid']))}">业务操作安全</a>
+								</li>
+								<li>
+									<a href="{:U('Mare/Task/task_item_communication',array('appid'=>$_GET['appid']))}">数据通信安全</a>
+								</li>
+								</if>
+								<li>
+									<a href="{:U('Mare/Task/task_item_server',array('appid'=>$_GET['appid']))}">服务器端安全</a>
+								</li>
+								<if condition="$scanruledata neq null">
+								<li>
+									<a href="{:U('Mare/Task/task_custom_rule',array('appid'=>$_GET['appid']))}">自定义扫描规则</a>
+								</li>
+								</if>
+								<li style="margin-right: 5%;">
+									<a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}">返回报告摘要</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>检测项 << {$detecname} >> 的检测结果</h3>
+							</div>
+							<div class="block-body">
+
+								<?php  
+									//漏洞库表显示字段
+							        $hvshowtrans = array('standard'=>'风险编号','hvdid'=>'HVDID','cnvdid'=>'CNVD','cveid'=>'CVE','cweid'=>'CWE','cvss'=>'CVSS','owaspmobiltop10'=>'OWASP Mobil Top10','owaspwebtop10'=>'OWASP Web Top10','vulriskname'=>'用例名称','vulimpression'=>'影响范围','vulrisklevel'=>'风险等级','hvtype'=>'检测分类','hpoctype'=>'检测方法','vultype'=>'问题分类','vulrisktype'=>'利用方式','vuldescribe'=>'风险描述','vulreferurl'=>'参考URL','vulrepair'=>'修复建议','vulpatch'=>'修复补丁','detection_method'=>'检测方法');
+							        $sss = C('SERVER_TRANS_ZH');
+								?>
+								<div class="report-wrapper">									
+									<!-- 自动检测项检测信息 -->
+									<table class="table table-bordered">
+										<tbody>
+											<volist name="detec_item_detial_info" id="didi">
+											
+											<!-- 问题名称 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['vulriskname']}</td>
+												<td>{$didi['vulriskname']}</td>
+											</tr>
+											
+											<!-- 漏洞编号 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['standard']}</td>
+												<td>
+												{$didi['standard']}
+												</td>
+											</tr>
+											<!-- 风险描述 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['vuldescribe']}</td>
+												<td><php>echo str_replace(array("\r","\n","\r\n"),"<br/>",$didi['risk_description']);</php></td>
+											</tr>
+										
+											
+											<!-- 检测过程 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">检测过程</td>
+												<td>
+												<php>
+												if(is_array($didi['detection_process'])){
+													$output_table=$didi['detection_process_instruction'].' </td></tr></tbody></table><table  class="table table-bordered">
+		                                	 			<tr>
+					                                	<td width="6%">序号</td>
+		                                	 			<td style="width:10%;">域名</td>
+					                                	<td style="width:27%;">url</td>
+		                                	 			<td style="width:27%;">IP列表</td>
+		                                	 			<td style="width:17%;">注册域名商</td>
+		                                	 			<td style="width:16%;">DNS解析记录</td>
+					                                	</tr>';
+															$output_table_data='';
+															foreach ($didi['detection_process'] as $k=>$v){
+															$output_table_data.='<tr>
+															<td width="6%">'.($k+1).'</td>
+															<td style="width:10%;">'.$v->host.'</td>
+															<td style="width:27%;">';
+
+																foreach ($v->url as $k1=>$v1){
+																$output_table_data.=$v1."<br><br>";
+																}
+																$output_table_data.='</td>
+															<td style="width:27%;">';
+
+																foreach ($v->ip_list as $k1=>$v1){
+																$output_table_data.=$v1."<br>";
+																}
+																$output_table_data.='</td>
+															<td style="width:17%;">'.$v->register.'</td>
+															<td style="width:13%;">';
+
+																foreach ($v->dns_history as $k1=>$v1){
+																$output_table_data.=$v1."<br>";
+																}
+
+																$output_table_data.='</td></tr>';
+
+															}
+															if($didi['detection_process_str']) {
+																$output_table_data.='<tr ><td style="padding:20px;" colspan="6">'.$didi['detection_process_str'].'</td></tr>';
+															}
+					                                		echo $output_table.$output_table_data.'</table><table  class="table table-bordered">';
+
+												}else{
+													echo str_replace(array("[.]","[img]","[/img]","&lt;bbr&gt;",'&lt;bbr/&gt;'),array("\"","<img",">","<b>","</b>"),str_replace(array("\r","\n","\r\n"),"<br/>",htmlspecialchars($didi['detection_process'])));
+													}
+												</php>
+												</td>
+											</tr>
+											
+											
+												<!-- 风险等级 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['vulrisklevel']}</td>
+												<td>
+												{$didi['risk_level']}
+												</td>
+											</tr>
+											<!-- 修复建议 -->
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['vulrepair']}</td>
+												<td><php>echo str_replace(array("\r","\rn","\n"),"<br/>",$didi['suggestions']);</php></td>
+											</tr>
+											
+											<!-- 修复补丁 -->
+											<!-- <if condition="$didi['vulpatch'] neq null">
+											<tr>
+												<td class="td1" style="width: 15%;text-align: center;">{$hvshowtrans['vulpatch']}</td>
+												<td>{$didi['vulpatch']}</td>
+											</tr>
+											</if> -->
+										</tbody>
+									</table>
+							
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="fancy-img-wrapper">
+				<div class="fancy-img-box">
+					<img src="__PUBLIC__/mars/img/bg.jpg" class="img-responsive">
+				</div>
+				<div class="close-box">
+					<i class="fa fa-close fa-4x"></i>
+				</div>
+			</div>
+			<!-- 图片放大窗体 -->
+
+		</div>
+		<!--主体-->
+
+		<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function fancyImgBox(e){
+				var getImgUrl = $(this).find("img").attr("src");
+				$(".fancy-img-wrapper").find(".fancy-img-box img").attr("src",getImgUrl);
+				$(".fancy-img-wrapper").fadeIn();
+				closeFancyBox();
+			}
+			function closeFancyBox(){
+				$(".close-box").on("click",function(){
+					$(".fancy-img-wrapper").fadeOut();
+				});
+				$(".fancy-img-wrapper").on("click",function(){
+					$(".fancy-img-wrapper").fadeOut();
+				});
+			}
+			$(document).ready(function(){
+				$(".thumbnail-img-box").find(".thumbnail-img-wrapper").on("click",fancyImgBox);//点击显示大图
+			});
+		</script>
+<include file="Layout/footer"/>

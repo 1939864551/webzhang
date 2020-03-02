@@ -1,0 +1,123 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-5 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>{$data['user_title']}</h3>
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="#" method="post">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">登录的帐号</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['loginemail']}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">姓名</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['realname']}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phone">手机号码</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['phone']}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="email">邮箱</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['email']}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="rloename">用户角色</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['rolename']}</span>
+										</div>
+									</div> 
+									<!--
+									<div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="regtime">启用时间</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['regtime']}</span>
+										</div>
+									</div>
+									-->
+                                    <div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="lasttime">最后登录时间</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['lasttime']}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="ip">最后登录ip</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['ip']}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="status">用户状态</label>
+										</div>
+										<div class="col-sm-8">
+											<span style="line-height: 2.2;">{$userinfo['status']}</span>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<div class="col-xs-12">
+											<a href="{:U('Mare/User/user_edit',array('userid'=>$userinfo['userid'],'ldap' => $_GET['ldap']))}" class="btn btn-blue pull-left">修改用户</a>
+                                            <a onclick="history.go(-1)" class="btn btn-blue pull-right">返回</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="Layout/script"/>
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+
+	</script>
+<include file="Layout/footer"/>

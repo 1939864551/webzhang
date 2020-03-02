@@ -1,0 +1,169 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-5 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>个人信息</h3>
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="#" method="post">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">登录的帐号</label>
+										</div>
+										<div class="col-sm-8">
+											 <span style="line-height: 2.2;">{$personal['loginemail']}</span> 
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">姓名</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span style="line-height: 2.2;">{$personal['realname']}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phone">手机号码</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span style="line-height: 2.2;">{$personal['phone']}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="rloename">用户角色</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span style="line-height: 2.2;">{$personal['rolename']}</span>
+										</div>
+									</div> 
+									<!--
+									<div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="regtime">启用时间</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span style="line-height: 2.2;">{$personal['regtime']|date='Y-m-d H:i:s',###}</span>
+										</div>
+									</div>
+									-->
+                                    <div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="lasttime">最后登录时间</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span  style="line-height: 2.2;">{$personal['lasttime']|date='Y-m-d H:i:s',###}</span>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<div class="col-sm-3">
+                                            <label class="inputlabel" for="ip">最后登录ip</label>
+										</div>
+										<div class="col-sm-8">
+                                            <span  style="line-height: 2.2;">{$personal['ip']}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-xs-12">
+											<a href="{:U('User/user_peredit',array('userid'=>$personal['userid']))}" class="btn btn-blue pull-left">修改个人信息</a>
+                                            <a onclick="history.go(-1)" class="btn btn-blue pull-right">返回</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="Layout/script"/>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+//	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">更新成功</div>';
+//	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">服务器出错，请联系管理员</div>';
+//	
+        var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改用户信息成功</div>';
+	var errorTips = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">修改用户信息失败</div>';
+	var perror = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">密码与确定密码不一样</div>';
+        
+	var upgradeUserInfo = function(){
+		//var formData = $("form").serialize();
+		console.log(formData);
+                  
+                 var formData = {
+                           realname: $('input[name=realname]').val(),
+                           userid:$('input[name=userid]').val(),
+                         
+                           phone:$('input[name=phone]').val(),
+                        
+                           newpwd:$('input[name=newpwd]').val(),
+                           pwd:$('input[name=pwd]').val(),
+                         
+                       };
+                
+		$.ajax({
+			type:"post",
+			url:"{:U('User/modifyuser')}",
+			data:formData,
+			async:true,
+			success:function(data){
+                            console.log(formData);
+                              if(data=='success'){
+				$(".block-wrapper").append(successTips);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+                            }
+                            if(data=='perror'){
+                                $(".block-wrapper").append(perror);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+                               // alert('确定密码不一样');
+                            }
+                           if(data=='error'){
+                               $(".block-wrapper").append(errorTips);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+                            }
+                            
+				
+			},
+			error:function(){
+				$(".block-wrapper").append(errorTips);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+			}
+		});
+	};
+	
+	$(window).ready(function(){
+
+		$("#upgrade-info").on("click",upgradeUserInfo);
+	});
+	</script>
+<include file="Layout/footer"/>

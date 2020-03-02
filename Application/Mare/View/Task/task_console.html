@@ -1,0 +1,235 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+							  <li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  <li><a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  <li class="active">数据通信安全</li>
+							</ol>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="navbar-custom">
+							<ul>
+								<li>
+									<a href="{:U('Mare/Task/task_item_parameter',array('appid'=>$_GET['appid']))}">任务信息概要</a>
+								</li>
+								<li>
+									<a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}">检测结果汇总</a>
+								</li>
+								<if condition="$taskinfo['tasktype'] neq 'wx'">
+								<li >
+									<a href="{:U('Mare/Task/task_item_application',array('appid'=>$_GET['appid']))}" >应用代码安全</a>
+								</li>
+								</if>
+								<li>
+									<a href="{:U('Mare/Task/task_item_business',array('appid'=>$_GET['appid']))}">业务操作安全</a>
+								</li>
+								<li class="active">
+									<a href="{:U('Mare/Task/task_item_communication',array('appid'=>$_GET['appid']))}">数据通信安全</a>
+								</li>
+								<li >
+									<a href="{:U('Mare/Task/task_item_server',array('appid'=>$_GET['appid']))}">服务器端安全</a>
+								</li>
+								<if condition="$scanruledata neq null">
+								<li>
+									<a href="{:U('Mare/Task/task_custom_rule',array('appid'=>$_GET['appid']))}">自定义扫描规则</a>
+								</li>
+								</if>
+								<li style="margin-right: 5%;">
+									<a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}">返回报告摘要</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>检测项</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-md-6">
+										<table class="table table-striped" id="path">
+											<thead>
+												<tr>
+													<th>Path</th>
+													<th>Method</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="col-md-6">
+										<div class="get_url">
+											<span class="title_method"></span>
+											<span class="content_url"></span>
+										</div>
+										<form action="" method="post">
+										
+											<table class="table table-striped" id="request">
+												<thead>
+													<tr>
+														<th style="width: 160px;">Title</th>
+														<th>Content</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="head-name">HOST</td>
+														<td class="head-content">321</td>
+													</tr>
+													<tr>
+														<td class="head-name">User-Agent</td>
+														<td class="head-content">321</td>
+													</tr>
+													<tr>
+														<td class="head-name">Accept</td>
+														<td class="head-content">321</td>
+													</tr>
+													<tr>
+														<td class="head-name">Accept-Language</td>
+														<td class="head-content">321</td>
+													</tr>
+													<tr>
+														<td class="head-name">Accept-Encoding</td>
+														<td class="head-content">321</td>
+													</tr>
+												</tbody>
+											</table>
+											<button class="btn btn-blue" type="button" >提交</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	var thisData;
+	var thisName;
+	
+	$.ajax({
+		type:"get",
+		url:"__PUBLIC__/mars/test.json",
+		async:true,
+		dataType: "json",
+		success:function(data){
+			thisData = data;
+			
+			var pathTr = "";
+			for( var i=0; i< thisData.length; i++ ){
+				pathTr += "<tr data-pid='"+ thisData[i].appid +"'><td>" + thisData[i].url +"</td><td>"+ thisData[i].method +"</td></tr>";
+			}
+			$("#path tbody").append(pathTr);
+			
+			var onLoadTable =   '<tr>'+
+									'<td class="head-name"><input value="HOST" class="form-control hiddeninput" disabled /></td>'+
+									'<td class="head-content"><input value="'+thisData[0].head.Host+'" class="form-control hiddeninput" disabled /></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="head-name"><input value="User-Agent" class="form-control hiddeninput" disabled /></td>'+
+									'<td class="head-content"><input value="'+thisData[0].head.UserAgent+'" class="form-control hiddeninput" disabled /></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="head-name"><input value="Accept" class="form-control hiddeninput" disabled /></td>'+
+									'<td class="head-content"><input value="'+thisData[0].head.Accept+'" class="form-control hiddeninput" disabled /></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="head-name"><input value="Accept-Language" class="form-control hiddeninput" disabled /></td>'+
+									'<td class="head-content"><input value="'+thisData[0].head.AcceptLanguage+'" class="form-control hiddeninput" disabled /></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="head-name"><input value="Accept-Encoding" class="form-control hiddeninput" disabled /></td>'+
+									'<td class="head-content"><input value="'+thisData[0].head.AcceptEncoding+'" class="form-control hiddeninput" disabled /></td>'+
+								'</tr>';
+			$("#request tbody").html(onLoadTable);
+			
+			$("#path tbody tr").eq(0).addClass("on");
+			//第一次读取时，显示第一项			
+			
+			$("#path tbody").on("click","tr",function(e){
+				var thisTr = $(this).attr("data-pid");
+				$(this).siblings().removeClass("on");
+				$(this).addClass("on");
+				
+				for( var y=0; y< thisData.length; y++ ){
+					if ( thisTr == thisData[y].appid) {
+						var thisgroup = thisData[y];
+						var onChangeTable =   
+						'<tr>'+
+							'<td class="head-name"><input value="HOST" class="form-control hiddeninput" disabled /></td>'+
+							'<td class="head-content"<input value=">'+thisData[y].head.Host+'" class="form-control hiddeninput" disabled /></td>'+
+						'</tr>'+
+						'<tr>'+
+							'<td class="head-name"><input value="User-Agent" class="form-control hiddeninput" disabled /></td>'+
+							'<td class="head-content"<input value=">'+thisData[y].head.UserAgent+'" class="form-control hiddeninput" disabled /></td>'+
+						'</tr>'+
+						'<tr>'+
+							'<td class="head-name"><input value="Accept" class="form-control hiddeninput" disabled /></td>'+
+							'<td class="head-content"<input value=">'+thisData[y].head.Accept+'" class="form-control hiddeninput" disabled /></td>'+
+						'</tr>'+
+						'<tr>'+
+							'<td class="head-name"><input value="Accept-Language" class="form-control hiddeninput" disabled /></td>'+
+							'<td class="head-content"><input value="'+thisData[y].head.AcceptLanguage+'" class="form-control hiddeninput" disabled/></td>'+
+						'</tr>'+
+						'<tr>'+
+							'<td class="head-name"><input value="Accept-Encoding" class="form-control hiddeninput" disabled /></td>'+
+							'<td class="head-content"><input value="'+thisData[y].head.AcceptEncoding+'" class="form-control hiddeninput" disabled /></td>'+
+						'</tr>';
+						}
+				}
+				console.log(onChangeTable);
+				
+				$("#request tbody").html(onChangeTable);
+				
+			});
+			
+			$("#request tbody tr td").on("click","input",function(e){
+				var thisInput = $(this);
+				console.log(thisInput);
+				thisInput.removeClass("hiddeninput");
+				thisInput.prop("disabled",false);
+			});
+			
+		},
+		error:function(){
+			console.log("服务器出错");
+		}
+	});
+	
+	
+	</script>
+<include file="Layout/footer"/>

@@ -1,0 +1,243 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>日志审计</h4>
+							</div>
+							<div class="block-body">
+								<form class="form-vertical clearfix" id="exportfromdata" action="__CONTROLLER__/log_search" method="get">
+									<div class="form-group col-md-4 form-inline">
+										<div class="input-group">
+											<label for="starttime">开始时间</label>
+											<input class="form-control" name="starttime" type="text" value="{$Think.get.starttime}" id="starttime" placeholder="开始时间" />
+										</div>
+										<div class="input-group">
+											<label for="totime">结束时间</label>
+											<input class="form-control" name="totime" type="text" id="totime" value="{$Think.get.totime}" placeholder="结束时间" />
+										</div>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="">操作IP</label>
+										<select class="form-control" name="actionip">
+											<option value="">请选择IP</option>
+											<volist name="iplist" id='vip'>
+												<option value="{$vip['handleip']}" <?php if($vip['handleip'] == $_GET['actionip']): ?>selected="selected"<?php endif;?> > {$vip['handleip']}</option>
+											</volist>
+										</select>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="user">操作动作</label>
+										<select  name="handleaction"  id="bootstrap-duallistbox-nonselected-list_demo3" class="form-control" >
+											<option value="">请选择用户操作动作</option>
+											<volist name="handlecontentlist" id="vct">
+												<if condition="trim($vct['handlecontent']) neq ''">
+												<option value="{$vct['handlecontent']}"<?php if($vct['handlecontent'] == $_GET['handleaction']): ?>selected="selected"<?php endif;?>
+												>{$vct['handlecontent']}</option>
+												</if>
+											</volist>
+										</select>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group col-md-4">
+										<label for="user">操作动作结果</label>
+										<select  name="handleactionresult"  id="bootstrap-duallistbox-nonselected-list_demo2" class="form-control" >
+											<option value="">请选择用户操作结果</option>
+											<volist name="handleresultlist" id="vrt">
+												<if condition="trim($vrt['handleresult']) neq ''">
+												<option value="{$vrt['handleresult']}" <?php if($vrt['handleresult'] == $_GET['handleactionresult']): ?>selected="selected"<?php endif;?>
+												>{$vrt['handleresult']}</option>
+												</if>
+											</volist>
+										</select>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="user">用户</label>
+										<select  name="user"  id="bootstrap-duallistbox-nonselected-list_demo1" class="form-control" name="demo1_helper1">
+											<option value="">请选择用户</option>
+											<volist name="userlist" id="vus">
+												<if condition="trim($vus['realname']) neq ''">
+												<option value="{$vus['realname']}" 
+												<?php if($vus['realname'] == $_GET['user']): ?>selected="selected"<?php endif;?>
+												>{$vus['realname']}</option>
+												</if>
+											</volist>
+										</select>
+									</div>
+									<div class="form-group col-md-4" style="padding-top: 25px;">
+										<button type="submit" id="search" class="btn-sm btn-blue"><i class="fa fa-search"></i> 查询</button>
+										<button type="button" id="export" class="btn-sm btn-blue-border"><i class="fa fa-mail-forward"></i> 导出</button>
+										<button type="button" id="empty" onclick="truncatelog();" class="btn-sm btn-red-border"><i class="fa fa-trash-o"></i>清空</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-body">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>用户名</th>
+											<th>操作URL</th>
+											<th>操作动作</th>
+											<th>操作结果</th>
+											<th>操作IP</th>
+											<th>操作时间</th>
+											<th>删除</th>
+										</tr>
+									</thead>
+									<tbody>
+										<volist name="loglist" id="vg">
+											<tr>
+												<td>{$i + $star}</td>
+												<td>{$vg['username']}</td>
+												<td>{$vg['handleurl']}</td>
+												<td>{$vg['handlecontent']|substr=###,0,50}</td>
+												<td>{$vg['handleresult']}</td>
+												<td>{$vg['handleip']}</td>
+												<td>{$vg['handletime']}</td>
+												<td><a onclick="deletelog({$vg['logid']})" class="btn-sm btn-red-border" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-trash-o"></i></a></td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+								<div style='text-align:center;'>{$pageshow}</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+			
+		</div>
+		<!--主体-->
+
+		
+			<include file="Layout/script"/>
+	<script type="text/javascript" src="__PUBLIC__/mars/js/lib/timepicker/jquery-ui.min.js"></script>
+	<script src="__PUBLIC__/mars/js/lib/timepicker/jquery-ui-timepicker-addon.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="__PUBLIC__/mars/js/lib/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+	<script src="__PUBLIC__/mars/js/lib/timepicker/i18n/jquery-ui-timepicker-zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/timepicker/jquery-ui-sliderAccess.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">更新成功</div>';
+	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">服务器出错，请联系管理员</div>';
+	
+	// var upgradeUserInfo = function(){
+	// 	// var formData = $("form").serialize();
+	// 	$('form').submit();
+	// 	// $.ajax({
+	// 	// 	type:"post",
+	// 	// 	url:"{:U('Mare/Log/log_search')}",
+	// 	// 	data:formData,
+	// 	// 	async:true,
+	// 	// 	success:function(data){
+	// 	// 		console.log(data);
+	// 	// 		// $(".block-wrapper").append(successTips);
+	// 	// 		// setTimeout(function(){
+	// 	// 		// 	$("#action-tips").alert("close");
+	// 	// 		// },3000)
+	// 	// 	},
+	// 	// 	error:function(){
+	// 	// 		$(".block-wrapper").append(errorTips);
+	// 	// 		setTimeout(function(){
+	// 	// 			$("#action-tips").alert("close");
+	// 	// 		},3000)
+	// 	// 	}
+	// 	// });
+	// };
+	// $("#search").on("click",upgradeUserInfo);
+	$(window).ready(function(){
+		$("#starttime").datetimepicker();
+		$("#totime").datetimepicker();
+		$('#export').click(function(){
+			var fromdata = $('#exportfromdata').serialize();
+			location.href="__MODULE__/Log/exportexcel?"+fromdata;
+		});
+	});
+
+	//删除某一条日志记录
+	function deletelog(id){
+		var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">删除日志成功</div>';
+		var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">删除日志失败</div>';
+		$.ajax({
+			type:"post",
+			url:"{:U('Mare/Log/deletelog')}",
+			data:{id:id},
+			async:true,
+			success:function(data){
+				if(data.code == 'success'){
+					$(".block-wrapper").append(successTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+						location.reload();
+					},3000)
+				}else{
+					$(".block-wrapper").append(errorTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+					},3000)
+				}
+			},
+			error:function(){
+				$(".block-wrapper").append(errorTips);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+			}
+		});
+	}
+	//清空日志表
+	function truncatelog(){
+		var first 	= confirm('确定清空日志?');
+		var two  	= confirm('确定?');
+		if(first == true){
+			if(two == true){
+				$.ajax({
+					type:"post",
+					url:"{:U('Mare/Log/clearedOut')}",
+					async:true,
+					success:function(data){
+						if(data.code == 'success'){
+							$(".block-wrapper").append(successTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+								location.reload();
+							},3000)
+						}else{
+							$(".block-wrapper").append(errorTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+							},3000)
+						}
+					}
+				});
+			}
+		}
+	}
+	</script>
+<include file="Layout/footer"/>

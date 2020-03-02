@@ -1,0 +1,388 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+				
+				<div class="col-sm-6">
+
+					<div class="block-content">
+						<div class="block-head">
+							<h4>License更新</h4>
+						</div>
+						
+						<div class="block-body">
+							<div class="form-group">
+			                  <div class="input-group input-group-file">
+			                  	<span class="input-group-btn">
+			                      <span class="btn btn-primary btn-file">
+			                        <i class="fa fa-upload" aria-hidden="true"></i>
+			                        <input type="file" name="licupgradefile" multiple="">
+			                      </span>
+			                    </span>
+			                     <div id="licupgradefileprogress" class="form-control">
+					                <div class="progress-bar progress-bar-success" > </div>
+					          	</div>
+			                    <span class="input-group-btn">
+			                    	<input type="hidden" name="licupgradefilepath"/>
+									<span class="btn btn-primary" id="licupgradefile" onclick="upgrade($(this).attr('id'));">
+										上传&更新
+									</span>
+			                    </span>
+			                  </div>
+							</div>
+							<?php $lastday =  (strtotime(date('Ymd',$timeinfo['end_date'])) - strtotime(date('Ymd',time()))) / (24*60*60); ?>
+									<?php if($lastday < 30): ?>
+								<div class="form-group">
+									
+									<table class="table table-striped">
+										<tbody>
+											<tr>
+												<td>
+													距离LICENSE结束时间
+												</td>
+												<td>
+													<?php if($lastday < 0): ?>
+														已过期
+													<?php else: ?>
+														{$lastday}天
+													<?php endif;?>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<?php endif; ?>
+							</div>
+						</div>
+						
+						<div class="block-content">
+							<div class="block-head">
+								<h4>规则库更新</h4>
+							</div>
+							
+							<div class="block-body">
+								<div class="form-group">
+				                  <div class="input-group input-group-file">
+				                  	<span class="input-group-btn">
+				                      <span class="btn btn-primary btn-file">
+				                        <i class="fa fa-upload" aria-hidden="true"></i>
+				                        <input type="file" name="virusupgradefile" multiple="">
+				                      </span>
+				                    </span>
+				                    <div id="virusupgradefileprogress" class="form-control">
+						                <div class="progress-bar progress-bar-success" > </div>
+						          	</div>
+				                    <span class="input-group-btn">
+				                      	<input type="hidden" name="virusupgradefilepath" />
+										<span class="btn btn-primary" id="virusupgradefile" onclick="upgrade($(this).attr('id'));">
+											上传&更新
+										</span>
+				                    </span>
+				                  </div>
+								</div>
+								<div class="form-group">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>软件名称</th>
+												<th>版本</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="authorizationmessage" id="vau">
+											<tr>
+												<td>{$vau['vuldb_name']}</td>
+												<td>{$vau['vuldb_version']}</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="clearfix"></div> -->
+					<div class="col-sm-6" style="float: left;">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>系统更新</h4>
+							</div>
+							<div class="block-body">
+								<div class="form-group">
+				                  <div class="input-group input-group-file">
+				                  	<span class="input-group-btn">
+				                      <span class="btn btn-primary btn-file">
+				                        <i class="fa fa-upload" aria-hidden="true"></i>
+				                        <input type="file" name="sysupgradefile" multiple="">
+				                      </span>
+				                    </span>
+				                    <div id="sysupgradefileprogress" class="form-control">
+						                <div class="progress-bar progress-bar-success" > </div>
+						          	</div>
+				                    <span class="input-group-btn">
+				                      	<input type="hidden" name="sysupgradefilepath" />
+										<span class="btn btn-primary" id="sysupgradefile" onclick="upgrade($(this).attr('id'));">
+											上传&更新
+										</span>
+				                    </span>
+				                  </div>
+								</div>
+								<div class="form-group">
+									<table class="table table-striped">
+										<tr>
+											<td>
+												当前系统版本
+											</td>
+											<td>
+												{$licinfo['product_ver']}
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						<div class="block-content">
+							<div class="block-head">
+								<h4>安测宝客户端更新
+									<!-- <span class="tool-icon adduser"><a href="#" onclick="resetClientData()" class="btn-sm btn-blue-border"><i class="fa fa-close"></i> 清空</a></span> -->
+								</h4>
+							</div>
+							<div class="block-body">
+								
+								<div class="form-group row" style="margin-bottom: 0;">
+									
+									<div class="col-md-3">
+										<div class="form-group clearfix">
+										 <select name="phone_type" class="form-control text-center">
+										 	<option value="0">Android</option>
+										 	<option value="1">iOS</option>
+										 </select>
+										</div>
+									</div>
+									
+									<div class="col-md-9">
+										<div class="form-group">
+											<div class="input-group input-group-file">
+							                  	<span class="input-group-btn">
+							                      <span class="btn btn-primary btn-file">
+							                        <i class="fa fa-upload" aria-hidden="true"></i>
+							                        <input type="file" name="clientupgradefile" multiple="">
+							                      </span>
+							                    </span>
+							                    <div id="clientupgradefileprogress" class="form-control">
+									                <div class="progress-bar progress-bar-success"> </div>
+									          	</div>
+									          	<span class="input-group-btn">
+							                      	<input type="hidden" name="sysupgradefilepath" />
+													<span class="btn btn-primary" id="sysupgradefile" onclick="uploadClient()">
+														上传&更新
+													</span>
+							                    </span>
+									          	<input type="hidden" name="clientupgradefilepath" />
+							                </div>
+						                </div>
+									</div>
+									
+								</div>
+								
+								
+								<!--<div class="form-group clearfix" style="text-align: center;">
+									<div class="col-sm-5" style="text-align: center;">
+										<button class="btn btn-primary" onclick="uploadClient()">提交</button>
+									</div>
+									<div class="col-sm-5">
+										<button class="btn btn-primary" onclick="resetClientData()">清空</button>
+									</div>
+								</div>-->
+								<div class="form-group">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>平台</th><th>当前版本</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Android</td><td>{$client['0']['versioncode']}</td>
+											</tr>
+											<tr>
+												<td>iOS</td><td>{$client['1']['versioncode']}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+									
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+	<include file="Layout/script"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+		var uploadErrorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">上传失败，请重试</div>';
+		var uploadSuccessTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">上传成功</div>';
+		var url = "{:U('Mare/Setting/fileUpload')}";
+		// $('#fileupload').fileupload({
+		$('input[type=file]').fileupload({
+			url: url,
+			// dataType: 'json',
+			autoUpload:true,
+			sequentialUploads: true,
+			done: function (e, data) {
+				if(data.result.code == 'false'){
+					alert(data.result.info);
+				}
+				if(data.result.code == 'success'){
+					$(".block-wrapper").append(uploadSuccessTips);
+			      	setTimeout(function(){
+						$("#action-tips").alert("close");
+						// location.reload();
+					},3000)
+					var filepath = $(this).attr('name')+'path';
+					$('input[name='+filepath+']').val(data.result.info);
+				}
+			},
+			progressall: function (e, data) {
+			  var progress = parseInt(data.loaded / data.total * 100, 10);
+			  var goalprogress  = $(this).attr('name')+'progress';
+
+			  $('#'+goalprogress+' .progress-bar').css(
+			      'width',
+			      progress + '%'
+			  );
+
+			  if(progress == '100'){
+			      // setTimeout("location.reload()",2000); 
+			      // alert('上传成功');
+			//        $(".block-wrapper").append(uploadSuccessTips);
+			//        	setTimeout(function(){
+					// 	$("#action-tips").alert("close");
+					// },3000)
+			  }
+			},
+			fail:function(e,data){
+				$(".block-wrapper").append(uploadErrorTips);
+					console.log('error:  '+data);
+			}
+		}).bind('fileuploadadd',function(e,data){
+			data.url  = url.substr(0,url.length-5) + "/updategoal/"+$(this).attr('name')+'.html';
+		  
+		}).prop('disabled', !$.support.fileInput)
+		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+		function upgrade(id){
+			var filepath = $('#'+id).prev('input').val();
+			var postdata = {filepath:filepath,upgrade:id};
+			$.ajax({
+		        type: "post",
+		        url: "{:U('Mare/Setting/dataUpgrade')}",
+		        async: true,
+		        data: postdata,
+		        dataType: "json",
+		        success: function (data1) {
+		            if(data1.code == 'success'){
+		            	var upgradeTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data1.info+'</div>';
+		            	$(".block-wrapper").append(upgradeTips);
+			          	setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+		            }else{
+		            	var upgradeTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data1.info+'</div>';
+		            	$(".block-wrapper").append(upgradeTips);
+			          	setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+		            }	
+		        },
+		        error: function () {
+		        	var upgradeTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">无权限更新,请联系管理员!</div>';
+		           	$(".block-wrapper").append(upgradeTips);
+		          	setTimeout(function(){
+						$("#action-tips").alert("close");
+						location.reload();
+					},3000)
+	        	}
+		    });
+		}
+
+		//上传更新客户端文件
+		function uploadClient(){
+			var clientupgradefilepath 	= $('input[name=clientupgradefilepath]').val();
+			var phone_type 				= $('select[name=phone_type]').val();
+			//if( clientupgradefilepath.length > 0 ){
+			if (true) {
+				var postdata = {'clientupgradefile':clientupgradefilepath,'phone_type':phone_type};
+				$.ajax({
+			        type: "post",
+			        url: "{:U('Mare/Setting/clientfileadd')}",
+			        async: true,
+			        data: postdata,
+			        dataType: "json",
+			        success: function (data1) {
+			            if(data1.code == 'success'){
+			            	var upgradeTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data1.info+'</div>';
+			            	$(".block-wrapper").append(upgradeTips);
+				          	setTimeout(function(){
+								$("#action-tips").alert("close");
+							},3000)
+			            }else{
+			            	var upgradeTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data1.info+'</div>';
+			            	$(".block-wrapper").append(upgradeTips);
+				          	setTimeout(function(){
+								$("#action-tips").alert("close");
+								// location.reload();
+							},3000)
+			            }
+			            $('input[name=clientupgradefilepath]').val('');	
+			            location.reload();
+			        },
+			        error: function () {
+			        	var upgradeTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">无权限更新,请联系管理员!</div>';
+			           	$(".block-wrapper").append(upgradeTips);
+			          	setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.reload();
+						},3000)
+		        	}
+			    });
+			}else{
+				var upgradeTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">没有上传的客户端文件</div>';
+            	$(".block-wrapper").append(upgradeTips);
+	          	setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+			}
+		}
+		//
+		function resetClientData(){
+			$('input[name=clientupgradefilepath]').val('');
+			$("#clientupgradefileprogress .progress-bar").css({width:0});
+		}
+
+	</script>
+<include file="Layout/footer"/>

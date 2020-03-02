@@ -1,0 +1,235 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-5 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>修改个人信息</h3>
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="#" method="post">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">登录的帐号</label>
+										</div>
+										<div class="col-sm-8">
+											<!-- <input class="input" type="text" name="name" id="name" value="" placeholder="输入姓名" /> -->
+											<span class="input" style="margin-top: 3px;"><font size="5">{$personal['loginemail']}</font></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">姓名</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="realname" id="name" value="{$personal['realname']}" placeholder="输入修改姓名" />
+										        <input class="input" type="hidden" name="userid"  value="{$personal['userid']}"  />
+                                                                                </div>
+									</div>
+									<!-- <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="companyname">公司名</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="companyname" id="companyname" value=""  placeholder="输入公司名" />
+										</div>
+									</div> -->
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phone">手机号码</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="phone" id="phone" value="{$personal['phone']}" placeholder="输入手机号码" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phones">用户地址</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="address" id="address" value="{$personal['address']}"  />
+										</div>
+									</div>
+									
+									<!-- <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="email">电子邮箱</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="email" id="email" value="" placeholder="输入邮箱" />
+										</div>
+									</div> -->
+                                    <if condition="$personal['ldap'] neq 1">
+                                        <div class="form-group">
+                                            <div class="col-sm-3">
+                                                <label class="inputlabel" for="pwd">原密码<span style='color:red'>(*留空不修改)</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="input" type="password" name="oldpwd" id="pwd" value="" placeholder="输入原密码" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-3">
+                                                <label class="inputlabel" for="newpwd">新密码<span style='color:red'>(*留空不修改)</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="input" type="password" name="newpwd" id="pwd" value="" placeholder="输入新密码" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-3">
+                                                <label class="inputlabel" for="pwd2">确认密码</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="input" type="password" name="pwd" id="pwd" value="" placeholder="确认密码" />
+                                            </div>
+                                        </div>
+                                    </if>
+									<div class="form-group">
+										<div class="col-xs-12">                                   
+											<button type="button" id="upgrade-info" class="btn btn-blue">确定修改</button>
+                                            <a href="{:U('User/user_perinfo')}" class="btn btn-blue pull-right">返回</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="Layout/script"/>
+		<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+//	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">更新成功</div>';
+//	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">服务器出错，请联系管理员</div>';
+//	
+    var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">修改用户信息成功</div>';
+	var errorTips = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">修改用户信息失败</div>';
+	
+	var olderror = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">原密码不正确</div>';
+	var err = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">如需修改用户密码,请填写原密码,新密码,和确认密码</div>';
+     /**
+      信息提示
+    */
+    function alert_msg(msg, obj = null, type = 'alert-danger'){
+        var mimaerr = '<div id="action-tips" class="alert fade in '+type+' global-tips" role="alert">'+msg+'</div>';
+        $(".block-wrapper").append(mimaerr);
+        setTimeout(function(){
+            $("#action-tips").alert("close");
+        },3000)
+        if(obj != null) {
+           obj.focus();        
+        }
+
+    }
+        
+	$(window).ready(function(){
+        var ldap = "{$personal['ldap']}";
+		$("#upgrade-info").on("click", function(){
+ 		var passwordreg = /^(?=.{6,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))(?=(1)(?=.*\d)|.*[A-Za-z0-9]).*$/;
+		var userReg = /[`~!@#$%^&*_+<>{}\/'[\]]/im;//检查是否有特殊字符
+		var phone = /^1\d{10}$/gi;//检测手机号码是否符合要求
+        if(ldap != 1){
+            if(($('input[name=oldpwd]').val().length >0 && $('input[name=newpwd]').val().length >0 && $('input[name=pwd]').val().length >0) || ($('input[name=oldpwd]').val().length == 0 && $('input[name=newpwd]').val().length == 0 && $('input[name=pwd]').val().length == 0)){
+                if(($('input[name=oldpwd]').val().length >0 && $('input[name=newpwd]').val().length >0 && $('input[name=pwd]').val().length >0)){
+
+                    var newpwd = 	$('input[name=newpwd]').val();
+                    var pwd = 		$('input[name=pwd]').val();
+
+                    if($.trim(newpwd) == ''){      
+                        alert_msg('新密码不能为空', $('input[name=newpwd]'));return false;
+                    } else if(newpwd.length < 8) {
+                        alert_msg('新密码处,请输入8位(含8位)以上的字符串', $('input[name=newpwd]'));return false;    
+                    }
+
+                    if($.trim(pwd) == ''){
+                        alert_msg('确认密码不能为空', $('input[name=pwd]'));return false;
+                    } else if(pwd.length < 8) {
+                        alert_msg('确认密码处,请输入8位(含8位)以上字符串', $('input[name=pwd]'));return false;      
+                    } else if(newpwd != pwd) {
+                        alert_msg('密码与确认密码不一致', $('input[name=newpwd]'));return false;      
+                    }
+                }
+            }else{
+                $(".block-wrapper").append(err);
+                setTimeout(function(){
+                    $("#action-tips").alert("close");
+                },5000)
+                return false;
+                //alert("如需修改用户密码,请填写原密码,新密码,和确认密码");
+            }   
+        }
+        var formData = {
+            'realname': $('input[name=realname]').val(),
+            'userid':$('input[name=userid]').val(),
+            'phone':$('input[name=phone]').val(),
+            'oldpwd':$('input[name=oldpwd]').val(),
+            'newpwd':$('input[name=newpwd]').val(),
+            'pwd':$('input[name=pwd]').val(),
+            'address':$('input[name=address]').val(),
+        }; 
+
+			$.ajax({
+				type:"post",
+				url:"{:U('User/modifyper')}",
+				data:formData,
+				async:true,
+				success:function(data){
+	                if(data.code =='success'){
+						$(".block-wrapper").append(successTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+							location.href = "{:U('Mare/User/user_perinfo')}";
+						},3000)
+		            }
+		            var perror = '<div id="action-tips"   class="alert fade in alert-danger global-tips" role="alert">'+data.info+'</div>';
+		            if(data.code =='perror'){
+		                $(".block-wrapper").append(perror);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+	                }
+                         if(data.code =='olderror'){
+		                $(".block-wrapper").append(olderror);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+	                }
+	                if(data.code =='error'){
+	                   	$(".block-wrapper").append(errorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+	                }
+				},
+				error:function(){
+					$(".block-wrapper").append(errorTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+					},3000)
+				}
+			});             
+        });
+	});
+	</script>
+<include file="Layout/footer"/>

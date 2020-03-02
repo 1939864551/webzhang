@@ -1,0 +1,340 @@
+<include file="Layout/header"/>
+<style>
+    .btn-no:hover,
+    .btn-no:focus {
+        background-color: #f7f7f7;
+        cursor: default;
+    }
+</style>
+<body>
+<!--边栏-->
+<div class="sidebar-container navbar-fixed-left">
+    <h3 class="navbar-brand-m">
+        {$Think.config.TOP_TEXT}
+    </h3>
+    <div class="clearfix"></div>
+    <include file="Layout/left_tab"/>
+</div>
+<!--边栏-->
+<!--主体-->
+<div class="wrapper">
+    <!--顶栏-->
+    <include file="Layout/header_container"/>
+    <!--顶栏-->
+
+    <div class="block-wrapper">
+        <div class="container-fluid">
+
+            <div class="col-xs-12">
+                <div class="block-content">
+                    <div class="block-head">
+                        <h4>数据库列表</h4>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="block-content">
+                        <div class="block-body">
+                            <div class="table-responsive">
+                                <a id="export" class="btn btn-sm btn-primary" href="javascript:;" autocomplete="off">立即备份</a>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+
+                                        <th width="100">
+                                            <input class="check-all checkbox pull-left" style="height: 18px;"
+                                                   type="checkbox"/>
+                                            <span class="pull-left" style="margin-top: 4px;">全选</span>
+                                        </th>
+                                        <th>备份名称</th>
+                                        <th>数据大小</th>
+                                        <th>备份时间</th>
+                                        <th style="width:400px;">状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <notempty name="list">
+                                        <volist name="list" id="data">
+                                            <tr>
+                                                <td><input class="ids checkbox pull-left" type="checkbox" name="ids[]"
+                                                           value="{$data['time']}"/></td>
+                                                <td>{$data.backup_name}</td>
+                                                <td>{$data.size|format_bytes}</td>
+                                                <td>{$key}</td>
+                                                <td>-</td>
+                                                <td class="action">
+                                                    <a href="{:U('import?time='.$data['time'])}"
+                                                       class="btn-sm btn-blue-border db-import" data-toggle="tooltip"
+                                                       data-placement="top" title="还原">
+                                                        <i class="fa fa-history"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)" onclick="del_backup({$data['time']})"
+                                                       class="btn-sm btn-red-border" data-toggle="tooltip"
+                                                       data-placement="top" title="删除">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </volist>
+                                        <else/>
+                                        <td colspan="8" class="text-center"> 暂时还没有备份内容!</td>
+                                    </notempty>
+                                    </tbody>
+                                </table>
+                                <button type="button" onclick="del_backup_all()" class="btn-sm btn-blue">执行删除</button>
+                            </div><!-- /.table-responsive -->
+                        </div><!-- /span -->
+                    </div><!-- /row -->
+                </div><!-- /.main-content -->
+
+            </div><!-- /.main-container-inner -->
+        </div><!-- /.main-container -->
+
+        <!-- basic scripts -->
+
+        <!---footer-->
+        <include file="Public/footer"/>
+        <!---footer-->
+        <include file="Layout/script"/>
+        <script type="text/javascript">
+        
+            var $export = $("#export");
+            /**
+             * 提示信息
+             * @param type alert-danger(1警告)， alert-success（2成功）
+             *@author qxn
+             * */
+            function alert_msg(msg, obj = null, type) {
+                if (type == 1) {
+                    var type_show = 'alert-danger';
+                } else {
+                    var type_show = 'alert-success';
+                }
+                var mimaerr = '<div id="action-tips" class="alert fade in ' + type_show + ' global-tips" role="alert">' + msg + '</div>';
+                $(".block-wrapper").append(mimaerr);
+                setTimeout(function () {
+                    $("#action-tips").alert("close");
+                }, 3000)
+                if (obj != null) {
+                    obj.focus();
+                }
+            }
+
+            /**
+             * 删除数据库备份
+             * @param time
+             * @author qxn
+             */
+            function del_backup(time) {
+                $.ajax({
+                    data: {'time': time},
+                    type: "post",
+                    url: "{:U('Database/del')}",
+                    async: true,
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            location.reload();
+                            alert_msg(data.msg.info, '', 2);
+                        } else if (data.status == 'error') {
+                            alert_msg(data.msg.info, '', 1);
+                        } else {
+                            alert_msg('操作异常!', '', 1)
+                        }
+                    }
+                });
+            }
+
+            /**
+             * 批量删除数据库备份
+             * @returns {boolean}
+             * @author qxn
+             */
+            function del_backup_all() {
+                var r = confirm("请确认删除数据库备份!");
+                if (r) {
+                    var ids_list = '';
+                    $('.ids:checked').each(function () {
+                        ids_list += $(this).val() + ',';
+                    });
+                    if (!ids_list) {
+                        alert_msg('请选择需要删除的备份数据!', '', 1);
+                        return;
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: "{:U('Database/del')}",
+                        data: {'ids': ids_list},
+                        async: true,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                location.reload();
+                                alert_msg(data.msg.info, '', 2);
+                            } else if (data.status == 'error') {
+                                alert_msg(data.msg.info, '', 1);
+                                return;
+                            } else {
+                                alert_msg('操作异常', '', 1);
+                            }
+                        }
+                    })
+                }
+            }
+             
+             
+             function del_backup_lock() {
+                 var r = confirm("请确认删除!");
+                 if (r) {
+                     $.ajax({
+                         type: "post",
+                         url: "{:U('Database/del_lock')}",
+                         async: true,
+                         dataType: "json",
+                         success: function (data) {
+                             if (data.status == 'success') {
+                                 location.reload();
+                                 alert_msg(data.msg.info, '', 2);
+                             } else if (data.status == 'error') {
+                                 alert_msg(data.msg.info, '', 1);
+                                 return;
+                             } else {
+                                 alert_msg('操作异常', '', 1);
+                             }
+                         }
+                     })
+                 }
+             }
+            /**
+             * 备份请求
+             * @param tab
+             * @param status
+             * @author qxn
+             */
+            function backup(tab) {
+                var url = 'export/id/' + tab.id + '/start/' + tab.start;
+                $.ajax({
+                    type: "get",
+                    url: '{:U("' + url + '")}',
+                    async: true,
+                    success: function (data) {
+                        if (data.status) {
+                            $export.html('正在备份中....');//data.info
+                            if (!data.tab) {
+                                $export.parent().children().removeClass("disabled");
+                                $export.html("备份完成，点击重新备份");
+                                location.reload();
+                                return;
+                            }
+                            $(this).parent().children().addClass("disabled");
+                            backup(data.tab);
+                        } else {
+                            $export.parent().children().removeClass("disabled");
+                            $export.html(data.info);
+                        }
+                    }
+                });
+            }
+            
+            
+            (function ($) {
+                /*****************点击备份***************************/
+                var $export = $("#export");
+                $('#export').click(function () {
+                    $(this).parent().children().addClass("disabled");
+                    $(this).html("正在发送备份请求...");
+                    $.ajax({
+                        type: "post",
+                        url: "{:U('Database/export')}",
+                        async: true,
+                        success: function (data) {
+                            if (data.status == 1) {
+                                $export.html(data.info + "开始备份，请不要关闭本页面！");
+                                backup(data.tab);
+                            } else {
+                            	if(data.status == '-2'){
+									var r = confirm(data.info);
+									if(r){
+										 $.ajax({ 
+						                        type: "post",
+						                        url: "{:U('Database/export')}",
+						                        data: {'del': 1},
+						                        async: true,
+						                        success: function (data) {
+						                            if (data.status == 1) {
+						                                $export.html(data.info + "开始备份，请不要关闭本页面！");
+						                                backup(data.tab);
+						                            } 
+						                        }
+										 });
+									}
+									$export.parent().children().removeClass("disabled");
+									$export.html('立即备份');
+									return ;
+                            	}
+                                $export.parent().children().removeClass("disabled");
+                                $export.html(data.info);
+                            }
+                        }
+                    });
+                    return false;
+                });
+                /*****************点击备份***************************/
+
+                /*******************还原****************************/
+                $(".db-import").click(function () {
+                    var self = this, status = ".";
+                    $.get(self.href, success, "json");
+                    window.onbeforeunload = function () {
+                        return "正在还原数据库，请不要关闭！"
+                    }
+                    return false;
+                    function success(data) {
+                        if (data.status) {
+                            if (data.gz) {
+                                data.info += status;
+                                if (status.length === 5) {
+                                    status = ".";
+                                } else {
+                                    status += ".";
+                                }
+                            }
+                            $(self).parent().prev().text(data.info);
+                            if (data.part) {
+                                $.get(self.href,
+                                    {"part": data.part, "start": data.start},
+                                    success,
+                                    "json"
+                                );
+                            } else {
+                                window.onbeforeunload = function () {
+                                    return null;
+                                }
+                            }
+                        } else {
+                            alert_msg(data.info, '', 1);
+                        }
+                    }
+                });
+                /*******************还原****************************/
+
+                /*****************复选框***************************/
+                $(".check-all").click(function () {
+                    $(".ids").prop("checked", this.checked);
+                });
+                $(".ids").click(function () {
+                    var option = $(".ids");
+                    option.each(function (i) {
+                        if (!this.checked) {
+                            $(".check-all").prop("checked", false);
+                            return false;
+                        } else {
+                            $(".check-all").prop("checked", true);
+                        }
+                    });
+                });
+                /*****************复选框*******************/
+
+            })(jQuery);
+        </script>
+        <include file="Layout/footer"/>

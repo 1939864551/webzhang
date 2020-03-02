@@ -1,0 +1,406 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+							  <li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  <li><a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  <li class="active">数据通信安全</li>
+							</ol>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="navbar-custom">
+							<ul>
+								<li>
+									<a href="{:U('Mare/Task/task_item_parameter',array('appid'=>$_GET['appid']))}">任务信息概要</a>
+								</li>
+								<li>
+									<a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}">检测结果汇总</a>
+								</li>
+								<if condition="$taskinfo['tasktype'] neq 'wx'">
+								<li >
+									<a href="{:U('Mare/Task/task_item_application',array('appid'=>$_GET['appid']))}" >应用代码安全</a>
+								</li>
+								</if>
+								<li>
+									<a href="{:U('Mare/Task/task_item_business',array('appid'=>$_GET['appid']))}">业务操作安全</a>
+								</li>
+								<li>
+									<a href="{:U('Mare/Task/task_item_communication',array('appid'=>$_GET['appid']))}">数据通信安全</a>
+								</li>
+								<li >
+									<a href="{:U('Mare/Task/task_item_server',array('appid'=>$_GET['appid']))}">服务器端安全</a>
+								</li>
+								<li class="active">
+									<a href="{:U('Mare/Task/task_console',array('appid'=>$_GET['appid']))}">网络调试</a>
+								</li>
+								<if condition="$scanruledata neq null">
+								<li>
+									<a href="{:U('Mare/Task/task_custom_rule',array('appid'=>$_GET['appid']))}">自定义扫描规则</a>
+								</li>
+								</if>
+								<li style="margin-right: 5%;">
+									<a href="{:U('Mare/Task/task_detial',array('appid'=>$_GET['appid']))}">返回</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>检测项</h4>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-md-6">
+										<table class="table table-striped" id="path">
+											<thead>
+												<tr>
+													<th>Path</th>
+													<th>Method</th>
+												</tr>
+											</thead>
+											<tbody>
+											<volist name="detecitme" id="item">
+												<tr data-pid="{$item['id']}" onclick="getneedconsole({$item['id']});">
+												<td>
+												<if condition="strlen($item['url']) gt 60">
+												{$item['url']|substr=###,0,60}...
+												<else/>
+												{$item['url']}
+												</if>
+												</td>
+												<td>{$item['method']}</td>
+												</tr>
+											</volist>
+											</tbody>
+										</table>
+										<div style="text-align: center;">{$pageshow}</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="get_url">
+											<span class="title_method"></span>
+											<span class="content_url"></span>
+										</div>
+										<table class="table table-striped" id="request">
+											<thead>
+												<tr>
+													<th style="width: 160px;">Title</th>
+													<th>Content</th>
+												</tr>
+											</thead>
+											<tbody>
+											<!-- 	<tr>
+													<td class="head-name">HOST</td>
+													<td class="head-content">321</td>
+												</tr>
+												<tr>
+													<td class="head-name">User-Agent</td>
+													<td class="head-content">321</td>
+												</tr>
+												<tr>
+													<td class="head-name">Accept</td>
+													<td class="head-content">321</td>
+												</tr>
+												<tr>
+													<td class="head-name">Accept-Language</td>
+													<td class="head-content">321</td>
+												</tr>
+												<tr>
+													<td class="head-name">Accept-Encoding</td>
+													<td class="head-content">321</td>
+												</tr> -->
+												<?php 
+												//处理html实体化的数据
+												$sss 			= htmlspecialchars_decode(explode("\n\n", $detecitme['0']['request_raw'])[0]);  
+												$ssarr 			= array_slice(explode("\n",trim($sss,"\n")),1);
+												foreach($ssarr as $key => $val){
+													$tmp = explode(": ",trim($val,"\n"));
+													$gggg[$key][1] = trim($tmp[1]);
+													$gggg[$key][0] = trim($tmp[0]);
+												}
+												?>
+												<from method="post" id="thisfrom">
+												<volist name="gggg" id="vgg">
+												<tr>
+												<td  class="head-name">{$vgg[0]}</td>
+												<td  class="head-content" 
+
+												<?php echo "onclick=\"shownexttd('showcontent_".strtolower(str_replace('-','',$vgg[0]))."','showcontent_input_".strtolower(str_replace('-','',$vgg[0]))."');\"";?>
+												id="showcontent_<?php echo strtolower(str_replace('-','',$vgg[0]));?>">{$vgg[1]|htmlspecialchars}</td>
+
+
+												<td class="head-content" style="display:none;"  id="showcontent_input_<?php echo strtolower(str_replace('-','',$vgg[0]));?>"><input class="input" type="text" name="host" 
+												<?php echo "onblur=\"showprevtd('showcontent_".strtolower(str_replace('-','',$vgg[0]))."','showcontent_input_".strtolower(str_replace('-','',$vgg[0]))."');\"";?> value="{$vgg[1]}"/></td>
+												<input type="hidden" name="header<?php echo strtolower(str_replace("-","",$vgg[0])); ?>" value="{$vgg[1]}"/>
+												</tr>
+												</volist>
+												<tr><td class="head-name">&nbsp;</td><td class="head-content"><button class="btn btn-blue pull-left" id="formsubmit" onclick="formsubmit({$detecitme[0]['id']});">提交</button></td></tr>
+												</from>
+											</tbody>
+										</table>
+									</div>
+									<div id="formbiaodan"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	var thisData;
+	var thisName;
+	//currentid 为前一个id
+	//nextid 	为后一个id
+	function shownexttd(currentid,nextid){
+		// console.log(currentid,nextid);
+		$('#'+currentid).hide();
+		$('#'+nextid).show();
+		$('#'+nextid+' input').val($('#'+currentid).text());
+		var goalname = currentid.substring(currentid.indexOf('_')+1);
+		goalname = goalname.replace('-','');
+		$('input[name=header'+goalname+']').val($('#'+currentid).text());
+		$('#'+nextid+' input').focus();
+	}
+	function showprevtd(currentid,nextid){
+		// console.log(currentid,nextid,'2222222222222');
+		$('#'+currentid).show();
+		$('#'+currentid).text($('#'+nextid+' input').val());
+		$('#'+nextid).hide();
+		var goalname = currentid.substring(currentid.indexOf('_')+1);
+		goalname = goalname.replace('-','');
+		$('input[name=header'+goalname+']').val($('#'+nextid+' input').val());
+		// console.log($('#'+nextid+' input').val());
+	}
+
+
+	function getneedconsole(id){
+		if(id){
+			var url = "__CONTROLLER__/task_getneedconsole/id/"+id;
+			$.ajax({
+				type:"get",
+				url:url,
+				async:true,
+				dataType: "json",
+				success:function(data){
+					if(data.code == 'success'){
+						var onChangeTable = '<from method="post" id="thisfrom">';
+						for (var i = 0; i < data.info.length; i++) {
+							var t0 = data.info[i][0];
+							var t1 = data.info[i][1];
+							// console.log(t0,t1);
+							onChangeTable += '<tr>'+
+						'<td class="head-name">'+t0+'</td>'+
+						'<td class="head-content" onclick="shownexttd(\'showcontent_'+t0.toLowerCase().replace("-","")+'\',\'showcontent_input_'+t0.toLowerCase().replace("-","")+'\');" id="showcontent_'+t0.toLowerCase().replace("-","")+'">'+t1+'</td>'+
+						'<td class="head-content" style="display:none;"  id="showcontent_input_'+t0.toLowerCase().replace("-","")+'"><input class="input" onblur="showprevtd(\'showcontent_'+t0.toLowerCase().replace("-","")+'\',\'showcontent_input_'+t0.toLowerCase().replace("-","")+'\');" type="text" name="'+t0.toLowerCase().replace("-","")+'" value="'+t1+'"/></td>'+
+							'<input type="hidden" name="header'+t0.toLowerCase().replace("-","")+'" value="'+t1+'"/></tr>';
+						}
+					}
+					onChangeTable  +=  '<tr><td class="head-name">&nbsp;</td><td class="head-content"><button class="btn btn-blue pull-left" id="formsubmit" onclick="formsubmit(\''+id+'\')">提交</button></td></tr></from>';
+					$("#request tbody").html(onChangeTable);
+				}
+			});
+		}else{
+			alert('没有对应的数据');
+		}		
+	}
+
+	function formsubmit(id){
+
+		var data  					= {};
+		if($('input[name=headerhost]').length >0 ){
+			data['headerhost'] 				= $('input[name=headerhost]').val();
+		}
+		if($('input[name=headeruseragent]').length >0 ){
+			data['headeruseragent'] 		= $('input[name=headeruseragent]').val();
+		}
+		if($('input[name=headeraccept]').length >0 ){
+			data['headeraccept'] 			= $('input[name=headeraccept]').val();
+		}
+		if($('input[name=headeracceptlanguage]').length >0 ){
+			data['headeracceptlanguage'] 	= $('input[name=headeracceptlanguage]').val();
+		}
+		if($('input[name=headeracceptencoding]').length >0 ){
+			data['headeracceptencoding'] 	= $('input[name=headeracceptencoding]').val();
+		}
+		if($('input[name=headerconnection]').length >0 ){
+			data['headerconnection'] 		= $('input[name=headerconnection]').val();
+		}
+		if($('input[name=headerproxyconnection]').length >0 ){
+			data['headerproxyconnection'] 	= $('input[name=headerproxyconnection]').val();
+		}
+		if($('input[name=headercontentlength]').length >0 ){
+			data['headercontentlength'] 	= $('input[name=headercontentlength]').val();
+		}
+		if($('input[name=headercontenttype]').length >0 ){
+			data['headercontenttype'] 		= $('input[name=headercontenttype]').val();
+		}
+		if($('input[name=headercookie]').length >0 ){
+			data['headercookie'] 			= $('input[name=headercookie]').val();
+		}
+
+		$.ajax({
+			type:"post",
+			url:"__CONTROLLER__/task_send_python_handle/id/"+id,
+			async:true,
+			data:data,
+			dataType: "json",
+			success:function(data){
+				if(data.code == 'success'){
+					console.log(data.info,data.get);
+				}
+			}
+		});
+
+		console.log(data);
+	}
+
+	// $.ajax({
+	// 	type:"get",
+	// 	url:"__PUBLIC__/mars/test.json",
+	// 	async:true,
+	// 	dataType: "json",
+	// 	success:function(data){
+	// 		thisData = data;
+			
+	// 		var pathTr = "";
+	// 		for( var i=0; i< thisData.length; i++ ){
+	// 			pathTr += "<tr data-pid='"+ thisData[i].appid +"'><td>" + thisData[i].url +"</td><td>"+ thisData[i].method +"</td></tr>";
+	// 		}
+	// 		$("#path tbody").append(pathTr);
+			
+	// 		var onLoadTable =   '<tr>'+
+	// 								'<td class="head-name">HOST</td>'+
+	// 								'<td class="head-content" onclick="shownexttd(\'showcontent_host\',\'showcontent_input_host\');" id="showcontent_host">'+thisData[0].head.Host+'</td>'+
+	// 								'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_host\',\'showcontent_input_host\');" id="showcontent_input_host"><input class="input" type="text" name="host" value="'+thisData[0].head.Host+'"/></td>'+
+	// 							'</tr>'+
+	// 							'<tr>'+
+	// 								'<td class="head-name">User-Agent</td>'+
+	// 								'<td class="head-content" onclick="shownexttd(\'showcontent_useragent\',\'showcontent_input_useragent\');" id="showcontent_useragent">'+thisData[0].head.UserAgent+'</td>'+
+	// 								'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_useragent\',\'showcontent_input_useragent\');" id="showcontent_input_useragent"><input class="input" type="text" name="useragent" value="'+thisData[0].head.UserAgent+'"/></td>'+
+	// 							'</tr>'+
+	// 							'<tr>'+
+	// 								'<td class="head-name">Accept</td>'+
+	// 								'<td class="head-content" onclick="shownexttd(\'showcontent_accept\',\'showcontent_input_accept\');" id="showcontent_accept">'+thisData[0].head.Accept+'</td>'+
+	// 								'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_accept\',\'showcontent_input_accept\');" id="showcontent_input_accept"><input class="input" type="text" name="accept" value="'+thisData[0].head.Accept+'"/></td>'+
+	// 							'</tr>'+
+	// 							'<tr>'+
+	// 								'<td class="head-name">Accept-Language</td>'+
+	// 								'<td class="head-content" onclick="shownexttd(\'showcontent_acceptlang\',\'showcontent_input_acceptlang\');" id="showcontent_acceptlang">'+thisData[0].head.AcceptLanguage+'</td>'+
+	// 								'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_acceptlang\',\'showcontent_input_acceptlang\');" id="showcontent_input_acceptlang"><input class="input" type="text" name="acceptlang" value="'+thisData[0].head.AcceptLanguage+'"/></td>'+
+	// 							'</tr>'+
+	// 							'<tr>'+
+	// 								'<td class="head-name">Accept-Encoding</td>'+
+	// 								'<td class="head-content" onclick="shownexttd(\'showcontent_acceptencode\',\'showcontent_input_acceptencode\');" id="showcontent_acceptencode">'+thisData[0].head.AcceptEncoding+'</td>'+
+	// 								'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_acceptencode\',\'showcontent_input_acceptencode\');" id="showcontent_input_acceptencode"><input class="input" type="text" name="acceptencode" value="'+thisData[0].head.AcceptEncoding+'"/></td>'+
+	// 							'</tr>'+
+	// 							'<tr><td class="head-name">&nbsp;</td><td class="head-content"><from method="post">'+
+	// 							'<input type="hidden" name="headerhost" value="'+thisData[0].head.Host+'"/>'+
+	// 							'<input type="hidden" name="headeruseragent" value="'+thisData[0].head.UserAgent+'" />'+
+	// 							'<input type="hidden" name="headeraccept" value="'+thisData[0].head.Accept+'" />'+
+	// 							'<input type="hidden" name="headeracceptlang" value="'+thisData[0].head.AcceptLanguage+'" />'+
+	// 							'<input type="hidden" name="headeracceptencode" value="'+thisData[0].head.AcceptEncoding+'" />'+
+	// 							'<button class="btn btn-blue pull-right" id="formsubmit" onclick="formsubmit(\'formsubmit\')">提交</button></from></td></tr>';
+	// 		$("#request tbody").html(onLoadTable);
+	// 		$("#path tbody").on("click","tr",function(e){
+	// 			var thisTr = $(this).attr("data-pid");
+				
+	// 			for( var y=0; y< thisData.length; y++ ){
+	// 				if ( thisTr == thisData[y].appid) {
+	// 					var thisgroup = thisData[y];
+	// 					var onChangeTable =   
+	// 					// '<tr>'+
+	// 					// 	'<td class="head-name">HOST</td>'+
+	// 					// 	'<td class="head-content">'+thisData[y].head.Host+'</td>'+
+	// 					// '</tr>'+
+	// 					// '<tr>'+
+	// 					// 	'<td class="head-name">User-Agent</td>'+
+	// 					// 	'<td class="head-content">'+thisData[y].head.UserAgent+'</td>'+
+	// 					// '</tr>'+
+	// 					// '<tr>'+
+	// 					// 	'<td class="head-name">Accept</td>'+
+	// 					// 	'<td class="head-content">'+thisData[y].head.Accept+'</td>'+
+	// 					// '</tr>'+
+	// 					// '<tr>'+
+	// 					// 	'<td class="head-name">Accept-Language</td>'+
+	// 					// 	'<td class="head-content">'+thisData[y].head.AcceptLanguage+'</td>'+
+	// 					// '</tr>'+
+	// 					// '<tr>'+
+	// 					// 	'<td class="head-name">Accept-Encoding</td>'+
+	// 					// 	'<td class="head-content">'+thisData[y].head.AcceptEncoding+'</td>'+
+	// 					// '</tr>';
+	// 					'<tr>'+
+	// 						'<td class="head-name">HOST</td>'+
+	// 						'<td class="head-content" onclick="shownexttd(\'showcontent_host\',\'showcontent_input_host\');" id="showcontent_host">'+thisData[y].head.Host+'</td>'+
+	// 						'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_host\',\'showcontent_input_host\');" id="showcontent_input_host"><input class="input" type="text" name="host" value="'+thisData[y].head.Host+'"/></td>'+
+	// 					'</tr>'+
+	// 					'<tr>'+
+	// 						'<td class="head-name">User-Agent</td>'+
+	// 						'<td class="head-content" onclick="shownexttd(\'showcontent_useragent\',\'showcontent_input_useragent\');" id="showcontent_useragent">'+thisData[y].head.UserAgent+'</td>'+
+	// 						'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_useragent\',\'showcontent_input_useragent\');" id="showcontent_input_useragent"><input class="input" type="text" name="useragent" value="'+thisData[y].head.UserAgent+'"/></td>'+
+	// 					'</tr>'+
+	// 					'<tr>'+
+	// 						'<td class="head-name">Accept</td>'+
+	// 						'<td class="head-content" onclick="shownexttd(\'showcontent_accept\',\'showcontent_input_accept\');" id="showcontent_accept">'+thisData[y].head.Accept+'</td>'+
+	// 						'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_accept\',\'showcontent_input_accept\');" id="showcontent_input_accept"><input class="input" type="text" name="accept" value="'+thisData[y].head.Accept+'"/></td>'+
+	// 					'</tr>'+
+	// 					'<tr>'+
+	// 						'<td class="head-name">Accept-Language</td>'+
+	// 						'<td class="head-content" onclick="shownexttd(\'showcontent_acceptlang\',\'showcontent_input_acceptlang\');" id="showcontent_acceptlang">'+thisData[y].head.AcceptLanguage+'</td>'+
+	// 						'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_acceptlang\',\'showcontent_input_acceptlang\');" id="showcontent_input_acceptlang"><input class="input" type="text" name="acceptlang" value="'+thisData[y].head.AcceptLanguage+'"/></td>'+
+	// 					'</tr>'+
+	// 					'<tr>'+
+	// 						'<td class="head-name">Accept-Encoding</td>'+
+	// 						'<td class="head-content" onclick="shownexttd(\'showcontent_acceptencode\',\'showcontent_input_acceptencode\');" id="showcontent_acceptencode">'+thisData[y].head.AcceptEncoding+'</td>'+
+	// 						'<td class="head-content" style="display:none;" onchange="showprevtd(\'showcontent_acceptencode\',\'showcontent_input_acceptencode\');" id="showcontent_input_acceptencode"><input class="input" type="text" name="acceptencode" value="'+thisData[y].head.AcceptEncoding+'"/></td>'+
+	// 					'</tr>'+
+	// 					'<tr><td class="head-name">&nbsp;</td><td class="head-content"><from method="post">'+
+	// 					'<input type="hidden" name="headerhost" value="'+thisData[y].head.Host+'"/>'+
+	// 					'<input type="hidden" name="headeruseragent" value="'+thisData[y].head.UserAgent+'" />'+
+	// 					'<input type="hidden" name="headeraccept" value="'+thisData[y].head.Accept+'" />'+
+	// 					'<input type="hidden" name="headeracceptlang" value="'+thisData[y].head.AcceptLanguage+'" />'+
+	// 					'<input type="hidden" name="headeracceptencode" value="'+thisData[y].head.AcceptEncoding+'" />'+
+	// 					'<button class="btn btn-blue pull-right" id="formsubmit" onclick="formsubmit(\'formsubmit\')">提交</button></from></td></tr>';
+
+	// 				}
+	// 			}
+	// 			$('#formbiaodan').html(tijiaobiaoidan);	
+	// 		});
+	// 	},
+	// 	error:function(){
+	// 		console.log("服务器出错");
+	// 	}
+	// });
+	</script>
+<include file="Layout/footer"/>

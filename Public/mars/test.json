@@ -1,0 +1,40 @@
+[
+	{
+	    "appid": "160",
+	    "userid": "1",
+	    "clientip": "192.168.199.147",
+	    "host": "www.nandmall.com111",
+	    "url": "http://www.nandmall.com/mobile/index.php?act=index&op=search_hot_info123",
+	    "method": "GET",
+	    "head": {
+			"Host": "www.nandmall.com",
+			"ProxyConnection": "keep-alive",
+			"Accept": "application/json",
+			"UserAgent": " Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 MicroMessenger/6.3.31.940 NetType/WIFI Language/zh_CN",
+			"Referer": "http://www.nandmall.com/wap/",
+			"AcceptEncoding": "",
+			"AcceptLanguage": "zh-CN,en-US;q=0.8",
+			"Cookie": "PHPSESSID=kha2k903bbl2lp8gfe4of5b352; 1497_cart_goods_num=0"
+		},
+	    "request_raw": "GET http://www.nandmall.com/mobile/index.php?act=index&op=search_hot_info HTTP/1.1\nHost: www.nandmall.com\r\nProxy-Connection: keep-alive\r\nAccept: application/json\r\nX-Requested-With: XMLHttpRequest\r\nUser-Agent: Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 MicroMessenger/6.3.31.940 NetType/WIFI Language/zh_CN\r\nReferer: http://www.nandmall.com/wap/\r\nAccept-Encoding: \r\nAccept-Language: zh-CN,en-US;q=0.8\r\nCookie: PHPSESSID=kha2k903bbl2lp8gfe4of5b352; 1497_cart_goods_num=0\r\n\n"
+	},
+	{
+	    "appid": "120",
+	    "userid": "2",
+	    "clientip": "192.168.199.147",
+	    "host": "www.nandmall.com",
+	    "url": "http://www.nandmall.com/mobile/index.php?act=index&op=search_hot_info321",
+	    "method": "POST",
+	    "head": {
+			"Host": "www.nandmall.com222",
+			"ProxyConnection": "keep-alive222",
+			"Accept": "application/json222",
+			"UserAgent": " Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 MicroMessenger/6.3.31.940 NetType/WIFI Language/zh_CN",
+			"Referer": "http://www.nandmall.com/wap/222",
+			"AcceptEncoding": "",
+			"AcceptLanguage": "zh-CN,en-US;q=0.8222333",
+			"Cookie": "PHPSESSID=kha2k903bbl2lp8gfe4of5b352; 1497_cart_goods_num=0222"
+		},
+	    "request_raw": "GET http://www.nandmall.com/mobile/index.php?act=index&op=search_hot_info HTTP/1.1\nHost: www.nandmall.com\r\nProxy-Connection: keep-alive\r\nAccept: application/json\r\nX-Requested-With: XMLHttpRequest\r\nUser-Agent: Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 MicroMessenger/6.3.31.940 NetType/WIFI Language/zh_CN\r\nReferer: http://www.nandmall.com/wap/\r\nAccept-Encoding: \r\nAccept-Language: zh-CN,en-US;q=0.8\r\nCookie: PHPSESSID=kha2k903bbl2lp8gfe4of5b352; 1497_cart_goods_num=0\r\n\n"
+	}
+]

@@ -1,0 +1,72 @@
+<div class="block-head">
+    <div class="row">
+        <div class="col-md-4"><h4>客户端规则配置</h4></div>
+        <div class="col-md-8" style="margin-top: 5px;">
+            <input class="checkbox" type="checkbox" name="set_client_rule_action" id="set_client_rule_action"/>
+        </div>
+    </div>
+
+</div>
+<div class="block-body">
+    <!--<div class="form-group row" style="margin-top: 15px;">-->
+        <!--<div class="col-md-3">-->
+            <!--<label class="inputlabel" for="set_client_rule">客户端规则配置选项</label>-->
+        <!--</div>-->
+        <!--<div class="col-md-9">-->
+            <!--<input class="checkbox" type="checkbox" name="set_client_rule_action" id="set_client_rule_action"/>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div id="set_client_rule" style="display: none">
+        <foreach name="client_rule_type" item="vo" key="k">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="inputlabel">{$vo}：</label>
+                </div>
+
+                <div class="col-md-2">
+                    <select class="form-control" name="client_rule_info_{$k}"
+                            id="client_rule_info_{$k}">
+                        <option value="">请选择规则</option>
+                        <volist name="client_rule_info[$k]" id="info">
+                            <option value="{$key}">{$info}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="col-md-7">
+                    <input class="input" type="text" name="{$k}"
+                           id="client_rule_detail_{$k}"/>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    var k = "{$k}";
+                    $('select[name=client_rule_info_' + k + ']').change(function () {
+                        var value = $(this).find("option:selected").val()
+                        $.ajax({
+                            type: "post",
+                            url: "{:U('Mare/Task/get_client_rule_detail')}",
+                            data: {'id': value},
+                            async: true,
+                            success: function (data) {
+                                if (data.status == "success") {
+                                    var id = '#client_rule_detail_' + data.info.rule_type;
+                                    $(id).val(data.info.rule_content);
+                                }
+                            }
+                        });
+                    });
+                    $("#set_client_rule_action").on("change",function(){
+                        if ($(this).is(":checked")) {
+                            $("#set_client_rule").fadeIn();
+                        } else{
+                            $("#set_client_rule").fadeOut();
+                        }
+                    });
+
+
+
+                });
+            </script>
+        </foreach>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<ol class="breadcrumb">
+							  <li><a href="{:U('Mare/Task/task_list')}">任务列表</a></li>
+							  <li><a href="{:U('Mare/Task/task_item_summary',array('appid'=>$_GET['appid']))}"><?php echo explode('_',$taskname)[0]; ?></a></li>
+							  <li class="active">应用安全</li>
+							</ol>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="navbar-custom">
+							<ul>
+								<li>
+									<a href="#">任务参数</a>
+								</li>
+								<li class="active">
+									<a href="#" >应用安全</a>
+								</li>
+								<li>
+									<a href="#">业务操作安全</a>
+								</li>
+								<li>
+									<a href="#">数据通信安全</a>
+								</li>
+								<li>
+									<a href="#">服务端安全</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>检测项</h4>
+							</div>
+							<div class="block-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>检测项名</th>
+											<th>危险等级</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>数据备份配置安全</td>
+											<td>低危</td>
+											<td><a href="{:U('Mare/Task/task_item_detial')}" class="btn-sm btn-blue-border">详情</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+	</script>
+<include file="Layout/footer"/>

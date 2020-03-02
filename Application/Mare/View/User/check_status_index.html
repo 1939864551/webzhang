@@ -1,0 +1,107 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>待审核用户</h4>
+							</div>
+							<div class="block-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>登陆账号</th>
+											<th>姓名</th>
+											<th>角色</th>
+											<th>用户类型</th>
+											<th>手机号码</th>
+											<th>邮箱</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<volist name="userlist" id="vu">
+										<tr>
+											<td>{$i}</td>
+											<td>{$vu['loginemail']}</td>
+											<td>{$vu['realname']}</td>
+											<td>{$vu['rolename']}</td>
+											<td>{$vu['platform']}</td>
+											<td>{$vu['phone']}</td>
+											<td>{$vu['email']}</td>
+											<td>
+												<a href="javascript:void(0)" onclick="do_user_status({$vu['userid']})" class="btn-sm btn-blue-border">通过</a>&nbsp;
+											</td>
+										</volist>
+									</tbody>
+								</table>
+							</div>
+							<div style="text-align: center;">{$pageshow}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id='tip' value="{$_GET['tip']}">
+		</div>
+		<!--主体-->
+		<include file="Layout/script"/>
+	<script type="text/javascript">
+        function alert_msg(msg, obj, type, url) {
+            //alert(arguments[0]); return;
+            // alert(arguments[1]);return;
+            if (type == 1) {
+                var type_show = 'alert-danger';
+            } else {
+                var type_show = 'alert-success';
+            }
+            var info = '<div id="action-tips" class="alert fade in ' + type_show + ' global-tips" role="alert">' + msg + '</div>';
+            $(".block-wrapper").append(info);
+            setTimeout(function () {
+                $("#action-tips").alert("close");
+                if (url) {
+                    location.reload();
+                }
+            }, 3000)
+            if (obj != '') {
+                obj.focus();
+            }
+        }
+
+        function do_user_status(userid, ldap) {
+            $.ajax({
+                data: {'userid': userid},
+                type: "post",
+                url: "{:U('User/check_pass')}",
+                async: true,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        alert_msg(data.msg.info, '', 2, 1);
+                    } else if (data.status == 'error') {
+                        alert_msg(data.msg.info, '', 1, 1);
+                    } else {
+                        alert_msg('操作异常!', '', 1)
+                    }
+                }
+            });
+        }
+          
+	
+	</script>
+<include file="Layout/footer"/>

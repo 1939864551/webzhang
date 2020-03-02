@@ -1,0 +1,27 @@
+{
+	"draw": 1,
+  "recordsTotal": 0,
+  "recordsFiltered": 0,
+  "data":[
+	{
+		"ID":"1",
+		"AppName":"AppName1",
+		"BagName":"BagName2applicationsafe",
+		"Version":"Version12applicationsafe",
+		"MD5":"1321321321132",
+		"UploadDate":"2016-05-08",
+		"LastUpgradDate":"2016-01-05",
+		"Operation":"<a href='../Info/detecinfo'>查看</a>"
+	},
+	{
+		"ID":"2",
+		"AppName":"AppName2a",
+		"BagName":"dsadsadsaBagName2",
+		"Version":"Version22applicationsafe",
+		"MD5":"1321321321132",
+		"UploadDate":"2016-05-08",
+		"LastUpgradDate":"2016-01-05",
+		"Operation":"<a href='../Info/detecinfo'>查看</a>"
+	}
+]
+}

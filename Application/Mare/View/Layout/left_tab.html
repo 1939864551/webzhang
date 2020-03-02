@@ -1,0 +1,289 @@
+<ul class="main-menu panel-group" id="main-menu" role="tablist" aria-multiselectable="true">
+	<?php $tid 	= $_SESSION[$_SESSION['randomstr']]['tid']; ?>
+	
+	<?php if($tid == 4):  ?>
+	<li class="panel" role="tab" id="heading1">
+		<a role="button" data-toggle="collapse" data-parent="#main-menu" href="#collapse1" aria-expanded="false" aria-controls="collapse1" 
+			<if condition="MODULE_NAME eq 'Mare' and (CONTROLLER_NAME eq 'Index' OR CONTROLLER_NAME eq 'Setting')">
+			class="active"
+			</if>
+		 >
+			<i class="fa fa-dashboard"></i>  系统设置 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+		
+		<if condition="MODULE_NAME eq 'Mare' and (CONTROLLER_NAME eq 'Index' OR CONTROLLER_NAME eq 'Setting')">
+		<ul id="collapse1" role="tabpanel" aria-labelledby="heading1" aria-expanded="true"  class="children-list panel-collapse collapse in active">
+		<else/>
+		<ul id="collapse1" role="tabpanel" aria-labelledby="heading1" aria-expanded="false"  class="children-list panel-collapse collapse">
+		</if>
+			<li>
+				<a href="{:U('Mare/Index/index')}"  
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Index' and ACTION_NAME eq 'index'">
+					class="active"
+					</if>
+				>
+					系统信息 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Mare/Setting/set_index')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_index'">
+					class="active"
+					</if>
+				>
+					网络配置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+
+			<li>
+				<a href="{:U('Mare/Setting/system_log')}"
+				<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'system_log'">
+					class="active"
+				</if>
+				>
+				日志设置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<?php endif; ?>
+	<?php if($tid ==5):  ?>
+	<li class="panel" role="tab" id="heading1">
+		<a role="button" data-toggle="collapse" data-parent="#main-menu" href="#collapse1" aria-expanded="false" aria-controls="collapse1" 
+			<if condition="MODULE_NAME eq 'Mare' and (CONTROLLER_NAME eq 'Index' OR CONTROLLER_NAME eq 'Setting' OR CONTROLLER_NAME eq 'Device')">
+			class="active"
+			</if>
+		 >
+			<i class="fa fa-dashboard"></i>  系统设置 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+		
+		<if condition="MODULE_NAME eq 'Mare' and (CONTROLLER_NAME eq 'Index' OR CONTROLLER_NAME eq 'Setting' OR CONTROLLER_NAME eq 'Device' )">
+		<ul id="collapse1" role="tabpanel" aria-labelledby="heading1" aria-expanded="true"  class="children-list panel-collapse collapse in active">
+		<else/>
+		<ul id="collapse1" role="tabpanel" aria-labelledby="heading1" aria-expanded="false"  class="children-list panel-collapse collapse">
+		</if>
+			<li>
+				<a href="{:U('Mare/Index/index')}"  
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Index' and ACTION_NAME eq 'index'">
+					class="active"
+					</if>
+				>
+					系统信息 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Mare/Setting/set_index')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_index'">
+					class="active"
+					</if>
+				>
+					网络配置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Mare/Setting/system_log')}"
+				<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'system_log'">
+					class="active"
+				</if>
+				>
+				日志设置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<!--  <li>
+				<a href="{:U('Mare/Setting/wifi_manager')}"
+				<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'wifi_manager'">
+					class="active"
+				</if>
+				>
+				WiFi管理 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			-->
+
+			<!--<li>-->
+				<!--<a href="{:U('Mare/Setting/set_proxy')}"-->
+				<!--<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_proxy'">-->
+					<!--class="active"-->
+				<!--</if>-->
+				<!--&gt;-->
+				<!--代理设置 <i class="menu-icon fa fa-angle-right"></i>-->
+				<!--</a>-->
+			<!--</li>-->
+
+			<li>
+				<a href="{:U('Mare/Setting/set_globalrule')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_globalrule'">
+					class="active"
+					</if>
+				>
+					扫描规则配置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+
+			<li>
+				<a href="{:U('Mare/Setting/set_client_rule')}"
+				<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_client_rule'">
+					class="active"
+				</if>
+				>
+				客户端自定义规则 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+
+			<li>
+				<a href="{:U('Mare/Setting/set_watermark')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and (ACTION_NAME eq 'set_watermark' OR ACTION_NAME eq 'set_lookwatermark')">
+					class="active"
+					</if>
+				>
+					报告模版设置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Mare/Setting/set_security')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_security'">
+					class="active"
+					</if>
+				>
+					安全设置 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			
+			<?php if($tid == 2 || $tid ==5):  ?>
+			<li>
+				<a href="{:U('Mare/Device/dev_index')}" 
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Device' and (ACTION_NAME eq 'dev_index' OR ACTION_NAME eq 'dev_view' )">
+					class="active"
+					</if>
+				>
+					 设备列表 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+			<?php endif; ?>
+				
+			<li>
+				<a href="{:U('Mare/Setting/set_service')}"
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Setting' and ACTION_NAME eq 'set_service'">
+					class="active"
+					</if>
+				>
+					系统升级 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<?php endif; ?>
+		
+
+		
+	<?php if($tid == 2 || $tid ==5):  ?>
+	<li>
+		<a href="{:U('Mare/Task/task_select_type')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Task' and (ACTION_NAME eq 'task_add' OR ACTION_NAME eq 'task_select_type' OR ACTION_NAME eq 'task_web_add' OR ACTION_NAME eq 'task_weixin_add' OR ACTION_NAME eq 'task_awvs_add')">
+			class="active"
+			</if>
+		>
+			<i class="fa fa-tasks"></i>  新建任务 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	<li>
+		<a href="{:U('Mare/Task/task_list')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Task' and (ACTION_NAME neq 'task_add' AND ACTION_NAME neq 'task_select_type' AND ACTION_NAME neq 'task_web_add' and ACTION_NAME neq 'task_weixin_add' and ACTION_NAME neq 'task_awvs_add')">
+			class="active"
+			</if>
+		>
+			<i class="fa fa-list-ol"></i>  任务管理 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	<?php endif; ?>
+
+	<?php if($tid == 2 || $tid ==5):  ?>
+	<li>
+		<a href="{:U('Mare/Report/rep_index')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Report'">
+			class="active"
+			</if>>
+			<i class="fa fa-list-alt"></i>  报告导出 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	<?php endif; ?>
+	<?php if($tid == 3 || $tid ==5):  ?>
+	<li>
+		<a href="{:U('Mare/Log/log_index')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Log'">
+			class="active"
+			</if>
+		>
+			<i class="fa fa-clipboard"></i>  日志审计 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	<?php endif; ?>
+		<?php if($tid ==5):  ?>
+	<li class="panel" role="tab" id="heading1">
+		<a role="button" data-toggle="collapse" data-parent="#main-menu" href="#collapse2" aria-expanded="false" aria-controls="collapse2" 
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'User' and (ACTION_NAME eq 'user_index' OR ACTION_NAME eq 'user_edit' OR ACTION_NAME eq 'user_add' OR ACTION_NAME eq 'user_view' OR ACTION_NAME eq 'ad_user' OR ACTION_NAME eq 'check_status_index')">
+			class="active"
+			</if>
+		 >
+			<i class="fa fa-users"></i>  用户管理 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+		
+		<if condition="MODULE_NAME eq 'Mare' and (CONTROLLER_NAME eq 'User') and (ACTION_NAME neq 'user_perinfo') and (ACTION_NAME neq 'user_peredit')">
+		<ul id="collapse2" role="tabpanel" aria-labelledby="heading1" aria-expanded="true"  class="children-list panel-collapse collapse in active">
+		<else/>
+		<ul id="collapse2" role="tabpanel" aria-labelledby="heading1" aria-expanded="false"  class="children-list panel-collapse collapse">
+		</if>
+			<li>
+				<a href="{:U('Mare/User/user_index')}"  
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'User' and (ACTION_NAME eq 'user_index' and $_GET['ldap'] eq '') OR (ACTION_NAME eq 'user_edit' and $_GET['ldap'] eq '') OR (ACTION_NAME eq 'user_add' and $_GET['ldap'] eq '') OR (ACTION_NAME eq 'user_view' and $_GET['ldap'] eq '')">
+					class="active"
+					</if>
+				>
+					管理用户 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+            <if condition="$Think.config.REGISTER_MODE eq 1">
+                    <li>
+                        <a href="{:U('Mare/User/check_status_index')}"
+                        <if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'User' and (ACTION_NAME eq 'check_status_index')">
+                            class="active"
+                        </if>
+                        >
+                        待审核用户 <i class="menu-icon fa fa-angle-right"></i>
+                        </a>
+                    </li>
+            </if>			
+			<if condition='$Think.config.ADUSER_MODE eq 1'>
+			<li>
+				<a href="{:U('Mare/User/user_index', ['ldap' => 1])}"  
+					<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'User' and (ACTION_NAME eq 'user_index' and $_GET['ldap'] eq 1) OR (ACTION_NAME eq 'user_edit' and $_GET['ldap'] eq 1) OR (ACTION_NAME eq 'user_add' and$_GET['ldap'] eq 1) OR (ACTION_NAME eq 'user_view' and $_GET['ldap'] eq 1)">
+					class="active"
+					</if>
+				>
+					域用户管理 <i class="menu-icon fa fa-angle-right"></i>
+				</a>
+			</li>
+		</if>
+		</ul>
+	</li>
+	<?php endif; ?>
+		<?php if($tid ==5):  ?>
+	<li>
+		<a href="{:U('Mare/Database/index')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'Database' and (ACTION_NAME eq 'index')">
+			class="active"
+			</if>>
+			<i class="fa fa-database"></i>  数据库管理 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	<?php endif; ?>
+	<li>
+		<a href="{:U('Mare/User/user_perinfo')}"
+			<if condition="MODULE_NAME eq 'Mare' and CONTROLLER_NAME eq 'User' and (ACTION_NAME eq 'user_perinfo' OR ACTION_NAME eq 'user_peredit')">
+			class="active"
+			</if>>
+			<i class="fa fa-user"></i>  个人信息 <i class="menu-icon fa fa-angle-right"></i>
+		</a>
+	</li>
+	
+</ul>

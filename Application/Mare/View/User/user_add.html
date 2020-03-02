@@ -1,0 +1,267 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-5 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>增加用户信息</h3>
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="#" method="post">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">登录的帐号<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+                                            <input class="input" type="text" name="loginemail" id="loginemail" value="" placeholder="请输入用户登录的帐号" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">姓名<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="realname" id="name" value="" placeholder="请输入用户姓名" />
+										      
+                                                                                </div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phone">手机号码<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="phone" id="phone" value="" placeholder="请输入用户手机号码" />
+										</div>
+									</div>
+                                           <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label class="inputlabel" for="email">邮箱地址<font color="red">*</font></label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input class="input" type="text" name="email" id="email" value="" placeholder="请输入用户邮箱地址" />
+                                        </div>
+                                    </div>                             
+                                    <div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="uid">用户角色<font color="red">*</font></label>
+										</div>
+
+										<div class="col-md-8">
+											<select class="form-control" name="tid" id ="test">
+												<option value="">请选择用户角色</option>
+                                                <foreach name="list" item="vo">
+												<option value="{$vo['id']}">{$vo.name}</option>
+                                                </foreach>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row" id="testerplatform" style="display: none;">
+										<div class="col-md-3">
+											<label class="inputlabel" for="uid1">测试手机平台</label>
+										</div>
+										<div class="col-md-8">
+											<select class="form-control" name="platform">
+												<option value="">请选择手机平台</option>
+												<option value="android">android</option>
+												<option value="ios">ios</option>
+											</select>
+										</div>
+									</div>
+                                 <if condition="$_GET['ldap'] neq 1">
+ 									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="pwd">密码<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="password" name="pwd" id="pwd" value="" placeholder="请输入用户密码" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="pwd2">确认密码<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="password" name="pwd2" id="pwd2" value="" placeholder="确认密码" />
+										</div>
+									</div>                                    
+                                 </if>
+									<div class="form-group">
+										<div class="col-xs-12">                                
+											<button type="button" id="upgrade-info" class="btn btn-blue">确定添加</button>
+                                            <a href="{:U('User/user_index', ['ldap' => $_GET['ldap']])}" class="btn btn-blue pull-right">返回</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="Layout/script"/>
+	<script src="__PUBLIC__/mars/js/lib/jquery/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/scrollreveal/scrollreveal.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/smoothsroll/SmoothScroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+//	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">更新成功</div>';
+//	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">服务器出错，请联系管理员</div>';
+        
+    /**
+     弹出信息提示错误
+    */    
+    function alert_msg(msg, obj, type){
+        var mimaerr = '<div id="action-tips" class="alert fade in '+type+' global-tips" role="alert">'+msg+'</div>';
+        $(".block-wrapper").append(mimaerr);
+        setTimeout(function(){
+            $("#action-tips").alert("close");
+        },3000)
+        if(obj != null) {
+           obj.focus();        
+        }
+
+    }
+
+	$('#test').change(function(){
+		if($('#test option:selected').val() == '1'){
+			$("#testerplatform").show();
+		} else {
+            $("#testerplatform").hide();
+        }
+	});
+	
+	$(window).ready(function(){
+        var ldap = "{:I('get.ldap')}";
+		$("#upgrade-info").on("click",function(){    
+        var passwordreg = /^(?=.{6,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))(?=(1)(?=.*\d)|.*[A-Za-z0-9]).*$/;
+		var userReg = /[`~!@#$%^&*_+<>{}\/'[\]]/im;//检查是否有特殊字符
+        var reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; //邮箱正则
+		var phone = /^1\d{10}$/gi;//检测手机号码是否符合要求   
+                var loginemail  =  $.trim($('input[name=loginemail]').val());
+                var realname    =  $.trim($('input[name=realname]').val());
+                if(!ldap){
+                    var pwd         =   $.trim($('input[name=pwd]').val());
+                    var pwd2        =  $.trim($('input[name=pwd2]').val());   
+                }
+                var phone2      =   $.trim($('input[name=phone]').val());
+                var email       =   $.trim($('input[name=email]').val());
+                var tid = $('#test').val();
+            
+                if(loginemail == ''){      
+                   alert_msg('登录帐号不能为空', $('input[name=loginemail]'),'alert-danger');return false;
+                }
+            
+                if(realname == ''){   
+                    alert_msg('姓名不能为空', $('input[name=realname]'),'alert-danger');return false;
+                } 
+            
+                if(phone2 == ''){      
+                    alert_msg('手机号码不能为空', $('input[name=phone]'),'alert-danger');return false;
+                } else if(phone.test(phone2) == false){
+                     alert_msg('手机号码的格式不正确', $('input[name=phone]'),'alert-danger');return false;
+                }
+            
+                if(email == ''){      
+                   alert_msg('邮箱不能为空', $('input[name=email]'),'alert-danger');return false;
+                } else if (!reg.test(email)){
+                   alert_msg('邮箱不合法', $('input[name=email]'),'alert-danger');return false;
+                }   
+
+                if(tid == ''){     
+                   alert_msg('请选择用户角', $('select[name=tid]'),'alert-danger');return false;
+                }  
+                
+                if(tid == 1 && $('select[name=platform]').val() == '') {
+                    alert_msg('请选择测试手机平台', $('select[name=platform]'),'alert-danger');return false;
+                }
+                if(!ldap){
+                    if($.trim(pwd) == ''){      
+                        alert_msg('密码不能为空', $('input[name=pwd]'),'alert-danger');return false;
+                    } else if(pwd.length < 8) {
+                        alert_msg('密码处,请输入8位(含8位)以上的字符串', $('input[name=pwd]'),'alert-danger');return false;
+                    }
+
+                    if($.trim(pwd2) == ''){
+                        alert_msg('确认密码不能为空', $('input[name=pwd2]'),'alert-danger');return false;
+                    } else if(pwd2.length < 8) {
+                        alert_msg('确认密码处,请输入8位(含8位)以上字符串', $('input[name=pwd2]'),'alert-danger');return false;
+                    } else if(pwd != pwd2) {
+                        alert_msg('密码与确认密码不一致', $('input[name=pwd]'),'alert-danger');return false;
+                    }
+                }
+            if(!ldap){
+               var formData = {
+                   'loginemail': loginemail,
+                   'realname': realname,
+                   'phone':phone2,
+                   'pwd':pwd,
+                   'pwd2':pwd2,
+                   'email':email,
+                   'tid':$('#test').val(),
+                   'platform':$('select[name=platform]').val(),
+               };                  
+            } else {
+                var formData = {
+                   'loginemail': loginemail,
+                   'realname': realname,
+                   'phone':phone2,
+                   'email':email,
+                   'tid':$('#test').val(),
+                   'ldap':ldap,
+               };                 
+            }
+      
+                
+		$.ajax({
+			type:"post",
+			url:"{:U('User/user_ad')}",
+			data:formData,
+			async:true,
+			success:function(data){
+ 				if(data.status =='success'){
+                    var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg.info+'</div>';                    
+					$(".block-wrapper").append(successTips);
+					setTimeout(function(){
+						$("#action-tips").alert("close");
+                        if(ldap ==1){
+                            location.href="{:U('Mare/User/user_index', ['ldap' =>1])}";  
+                        }else{
+                   			location.href="{:U('Mare/User/user_index')}";         
+                        }
+
+					},3000)
+				}
+                if(data.status =='error'){
+                    if(data.msg.obj) {
+                        if(data.msg.input_type == 'select') {
+                            alert_msg(data.msg.info, $('select[name='+data.msg.obj+']'), 'alert-danger');      
+                        } else {
+                            alert_msg(data.msg.info, $('input[name='+data.msg.obj+']'), 'alert-danger');    
+                        }
+           
+                    } else {
+                       alert_msg(data.msg.info, '', 'alert-danger');               
+                    }
+                }
+			}
+		});            
+        });
+	});
+	</script>
+<include file="Layout/footer"/>

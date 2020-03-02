@@ -1,0 +1,26 @@
+<div class="header-container">
+	<div class="container-fluid">
+		<div class="menu-btn pull-left">
+			<div class="line line-1"></div>
+			<div class="line line-2"></div>
+			<div class="line line-3"></div>
+		</div>
+		
+		<div class="user-info pull-right">
+			<ul class="info-group">
+                <li>
+                	<a >您好，&nbsp;
+	                    <span style='color: #2196F3;font-size: 14px;'> <php> echo $_SESSION[$_SESSION['randomstr']]['nickname']</php></span>
+	                    &nbsp;
+	                    <php> 
+	                       $authname = $_SESSION[$_SESSION['randomstr']]['authname'];
+	                        
+	                          echo $authname;
+	                   </php>
+                    </a>
+                </li>
+                <li><a href="{:U('Layout/logout')}">&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-size: 14px;'>登出</span>&nbsp;&nbsp;</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

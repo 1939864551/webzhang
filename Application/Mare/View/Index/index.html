@@ -1,0 +1,291 @@
+﻿<include file="Layout/header"/>
+<style type="text/css">
+	.title{
+		font-weight: bold;
+		font-size: 1.2rem;
+	}
+	.lead{
+		font-size: 1.2rem;
+		font-weight: normal;
+	}
+</style>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-6">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>系统信息</h3>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="clearfix">
+											<div class="col-md-3"><p class="title">品牌</p></div>
+											<div class="col-md-9"><p class="lead">{$authorizationmessage['product']}</p></div>
+										</div>
+										<div  class="clearfix">
+											<div class="col-md-3"><p class="title">产品名称</p></div>
+											<div class="col-md-9"><p class="lead">{$authorizationmessage['product_name']}</p></div>
+										</div>
+										<div  class="clearfix">
+											<div class="col-md-3"><p class="title">型号</p></div>
+											<div class="col-md-9"><p class="lead">{$authorizationmessage['product_mode']}</p></div>
+										</div>
+										<div  class="clearfix">
+											<div class="col-md-3"><p class="title">系统版本</p></div>
+											<div class="col-md-9"><p class="lead">{$authorizationmessage['product_ver']}</p></div>
+										</div>
+									</div>
+								</div>
+                            </div>                                                        
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>授权注册信息</h3>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">用户编号</p>
+											</div>
+											<div class="col-sm-9">
+												<p class="lead">{$authorizationmessage['customer_no']}</p>
+											</div>
+										</div>
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">授权范围</p>
+											</div>
+
+											<div class="col-sm-9">
+												<p class="lead">
+												<?php if($authorizationmessage['showaction'] == '100'):?>
+													APP<i class="fa fa-check success-color"></i>
+												<?php elseif($authorizationmessage['showaction'] == '110'):?>
+													APP<i class="fa fa-check success-color"></i>微信<i class="fa fa-check success-color"></i>
+												<?php elseif($authorizationmessage['showaction'] == '111'):?>
+													APP<i class="fa fa-check success-color"></i>微信<i class="fa fa-check success-color"></i>Web扫描<i class="fa fa-check success-color"></i>
+												<?php else: ?>
+													APP<i class="fa fa-check success-color"></i>Web扫描<i class="fa fa-check success-color"></i>
+												<?php endif;?>
+												</p>
+											</div>
+										</div>
+										<!--
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">服务起始日期</p>
+											</div>
+											<div class="col-sm-9">
+												<p class="lead">{$authorizationmessage['uptime']}</p>
+											</div>
+										</div>
+										-->
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">服务终止日期</p>
+											</div>
+											<div class="col-sm-9">
+												<p class="lead">
+												<if condition="strlen($authorizationmessage['end_date']) eq '10'">
+												{$authorizationmessage['end_date']|date="Y-m-d H:i:s",###}
+												<else/>
+												{$authorizationmessage['end_date']}
+												</if>
+												</p>
+											</div>
+										</div>
+										<?php $lastday =  (strtotime(date('Ymd',$authorizationmessage['end_date'])) - strtotime(date('Ymd',time()))) / (24*60*60); ?>
+										<?php if($lastday < 30): ?>
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">离服务结束</p>
+											</div>
+											<div class="col-sm-9">
+												<p class="lead">
+												<?php if($lastday < 0): ?>
+													已经过期
+												<?php else: ?>
+													{$lastday}天
+												<?php endif;?>
+												</p>
+											</div>
+										</div>
+										<?php endif;?>
+										<if condition="($check_list['none'] eq 1)">
+										<div class="clearfix">
+											<div class="col-sm-3">
+												<p class="title">剩余授权检测</p>
+											</div>
+											<div class="col-sm-9">
+												<p class="lead">
+													{$check_list['grand_appnumber_msg']} &ensp;&ensp;{$check_list['max_task_msg']}
+												</p>
+											</div>
+										</div>
+										</if>
+										<!--<div class="clearfix">-->
+											<!--<div class="col-sm-3">-->
+												<!--<p class="title">剩余APP检测次数</p>-->
+											<!--</div>-->
+											<!--<div class="col-sm-9">-->
+												<!--<p class="lead">-->
+													<!--{$check_list['max_task_msg']}-->
+												<!--</p>-->
+											<!--</div>-->
+										<!--</div>-->
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="col-md-6">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>系统操作</h3>
+							</div>
+							<div class="block-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="clearfix">
+											<div class="col-sm-6">
+												<a url="{:U('Layout/reboot')}" onclick="implement($(this).attr('url'))"><i class="fa fa-history btn btn-primary" style="font-style: #000;">重启系统</i></a>
+											</div>
+											<div class="col-sm-6">
+												<a url="{:U('Layout/poweroff')}" onclick="implement($(this).attr('url'))"><i class="fa fa-power-off btn btn-danger" style="font-style: #000;">关闭系统</i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+	            <!-- <div class="col-md-6">
+                                        <div class="block-content">
+                                            <div class="block-head">
+                                                <h3>清除缓存</h3>
+                                            </div>
+                                            <div class="block-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="clearfix">
+                                                            <div class="col-sm-6">
+                                                                <button url="javascript:void(0);" class="fa btn btn-primary" style="font-style: #000;" id="clear_cache" onclick="clear_cache();">确认清除</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->					
+					<div class="clearfix"></div>
+
+					
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		
+	<include file="Layout/script"/>
+<script type="text/javascript">
+	function implement(url){
+		var r = confirm("确定执行操作吗");
+		if(r){
+			$.ajax({
+	        	type:"get",
+				url:url,
+				success: function (data) { //表单提交后更新页面显示的数据
+				}
+			});
+		}
+	}
+
+
+var tip = $('#tip').val();
+    if(tip != ''){
+      if(tip="END_OF_GRANTS"){	 
+    	  
+    	 var errorNewTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">尊敬的用户，你的授权已到期，请联系系统管理员！</div>';
+    	///$('#codetip').append(errorNewTips);
+     	 $('#codetip').html("尊敬的用户，你的授权已到期，请联系系统管理员！");
+     	 //alert("尊敬的用户，你的授权已到期，请联系系统管理员！");
+	      }    
+	    }
+    
+    /**
+     * 提示信息
+     * @param type alert-danger(1警告)， alert-success（2成功）
+     *@author qxn
+     * */
+    function alert_msg(msg, obj, type) {
+        if (type == 1) {
+            var type_show = 'alert-danger';
+        } else {
+            var type_show = 'alert-success';
+        }
+        var mimaerr = '<div id="action-tips" class="alert fade in ' + type_show + ' global-tips" role="alert">' + msg + '</div>';
+        $(".block-wrapper").append(mimaerr);
+        setTimeout(function () {
+            $("#action-tips").alert("close");
+        }, 3000)
+        if (obj != '') {
+            obj.focus();
+        }
+    }
+
+    /**
+     * 清除缓存
+     */
+    function clear_cache() {
+        var info = confirm('请确认删除');
+        $("#clear_cache").attr('disabled',true);
+        $("#clear_cache").html("正在删除...");
+        if (info) {
+            $.ajax({
+                type: "post",
+                url: "{:U('Layout/clear_cache')}",
+                async:true,
+                success: function (data) {
+                    if(data.status == 'success') {
+                        alert_msg(data.msg.info, '', 2);
+                        $("#clear_cache").attr('disabled',false);
+                        $("#clear_cache").html("确认清除");
+                    } else if(data.status == 'error') {
+                        alert_msg(data.msg.info, '', 1);
+                        $("#clear_cache").attr('disabled',false);
+                        $("#clear_cache").html("确认清除");
+                    }
+                }
+            });
+        }
+    }    
+    
+</script>
+
+<include file="Layout/footer"/>

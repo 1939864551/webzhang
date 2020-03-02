@@ -1,0 +1,257 @@
+<include file="Layout/header"/>
+	<body>
+		<style type="text/css">
+		
+		</style>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="block-content" id="output-report">
+							<div class="block-head">
+								<h4>检测报告导出</h4>
+							</div>
+							<div class="block-body">
+								<form class="form-inline" action="{:U('Mare/Report/rep_down')}" id="downloadreport" method="post">
+									<div class="clearfix row-bottom">
+										<div class="col-md-3">
+											<div class="form-group">
+												<p>选择任务</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<!-- <div class="col-xs-12">
+												<div class="form-group">
+													<div class="radio-inline radio">
+														<input type="radio" name="task" id="normaltask" checked=""/>
+													</div>
+													<label for="normaltask">普通扫描任务</label>
+												</div>
+												<div class="form-group">
+													<div class="radio-inline radio">
+														<input type="radio" name="task" id="webtask"/>
+													</div>
+													<label for="webtask">Web应用扫描任务</label>
+												</div>
+												<div class="form-group">
+													<div class="radio-inline radio">
+														<input type="radio" name="task" id="iptask"/>
+													</div>
+													<label for="iptask">IP</label>
+												</div>
+											</div> -->
+											
+											<div class="form-group">
+												<div class="input-group">
+													<select class="mutipleselect" type="text" id="appid"  name="appid" style="width: 100%;" />
+														<option value="">请选择检测完成的任务</option>
+														<volist name="tasklist" id="vtl">
+															<option value="{$vtl['appid']}"><?php echo explode('_',$vtl['task_name'])[0]; ?></option>
+														</volist>
+													</select>
+												</div>
+												<span id="ftips" style="position: absolute;bottom: -25px;left: 15px;color:red;display: none;">请先选择任务</span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="clearfix row-bottom">
+										<div class="col-md-3">
+											<div class="form-group">
+												<p>报告格式</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<div class="form-group">
+												<label class="c-input c-input-radio" for="normaltask1">
+													<input class="c-radio" type="radio" name="task" id="normaltask1" checked="" value="pdf"/>
+													<span class="c-icon-radio"></span>
+													PDF
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-radio" for="webtask1">
+													<input class="c-radio" type="radio" name="task" id="webtask1" value="word" />
+													<span class="c-icon-radio"></span>
+													WORD
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-radio" for="htmltask">
+													<input class="c-radio" type="radio" name="task" id="htmltask" value="html"/>
+													<span class="c-icon-radio"></span>
+													HTML
+												</label>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+
+										<div class="col-md-3">
+											<div class="form-group">
+												<p>报告类型</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<div class="form-group">
+												<label class="c-input c-input-radio" for="normaltask">
+													<input class="c-radio" type="radio" name="reporttype" id="normaltask" <if condition='$Think.config.IS_PROPOSAL eq 0'>checked</if>  value="manage"/>
+													<span class="c-icon-radio"></span>
+													管理报告
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-radio" for="webtask">
+													<input class="c-radio" type="radio" name="reporttype" id="webtask" value="techreport" />
+													<span class="c-icon-radio"></span>
+													技术报告
+												</label>
+											</div>
+											<div class="form-group" style="display: <if condition='$Think.config.IS_PROPOSAL eq 1'>line-block<else/>none</if>">
+												<label class="c-input c-input-radio" for="proposal">
+													<input class="c-radio" type="radio" name="reporttype" id="proposal" <if condition='$Think.config.IS_PROPOSAL eq 1'>checked</if>  value="proposal" />
+													<span class="c-icon-radio"></span>
+													通报报告
+												</label>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										
+										<!-- <div class="col-md-3">
+											<div class="form-group">
+												<p>报表标题</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<div class="form-group">
+												<div class="input-group input-inline">
+													<input class="input" type="text" name="reporttitle" id="reporttitle" value="" placeholder="报表标题" />
+												</div>
+											</div>
+										</div>
+										
+										<div class="clearfix"></div> -->
+										
+										
+										<!-- <div class="col-md-3">
+											<div class="form-group">
+												<p>报表模板</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<div class="form-group">
+												<div class="radio-inline radio">
+													<input type="radio" name="model" id="fengxian" value="" checked="" value="risk" />
+												</div>
+												<label for="fengxian">风险模板</label>
+											</div>
+											<div class="form-group">
+												<div class="radio-inline radio">
+													<input type="radio" name="model" id="hegui" value="compliance" />
+												</div>
+												<label for="hegui">合规模板</label>
+											</div>
+										</div> -->
+										
+										<div class="clearfix"></div>
+										
+										<div class="col-md-3">
+											<div class="form-group">
+												<p>报告内容</p>
+											</div>
+										</div>
+										<div class="col-md-9 form-group-input">
+											<!-- <div class="form-group">
+												<div class="checkbox-inline checkbox">
+													<input type="checkbox" name="loudong" id="loudong" value="" />
+												</div>
+												<label for="loudong">漏洞</label>
+											</div> -->
+											<div class="form-group">
+												<label class="c-input c-input-checkbox" for="gaofengxian">
+													<input  class="c-checkbox" type="checkbox" name="riskgrade1" id="gaofengxian" checked value="4"  />
+													<span class="c-icon-checked"></span>
+													高风险
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-checkbox" for="zhongfengxian">
+													<input class="c-checkbox" type="checkbox" name="riskgrade2" id="zhongfengxian" checked value="3" />
+													<span class="c-icon-checked"></span>
+													中风险
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-checkbox" for="difengxian">
+													<input class="c-checkbox" type="checkbox" checked name="riskgrade3" id="difengxian" value="2" />
+													<span class="c-icon-checked"></span>
+													低风险
+												</label>
+											</div>
+											<div class="form-group">
+												<label class="c-input c-input-checkbox" for="safeitem">
+													<input class="c-checkbox" type="checkbox" name="riskgrade4" id="safeitem" value="1" />
+													<span class="c-icon-checked"></span>
+													通过
+												</label>
+											</div>
+										</div>	
+									</div>
+									<div class="form-group" style="margin-top: 15px;">
+										<button type="button" onclick="downloadreport()" class="btn btn-blue"> 导出检测报告 </button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+	<include file="Layout/script"/>
+	<script type="text/javascript">
+		var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">下载成功，3秒后自动跳转，若没跳转，点击：<a href="{:U('Mare/Report/rep_index')}">这里</a></div>';
+		var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">下载失败，请选择任务之后再点击下载</div>';
+		var uploadErrorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">上传失败，请重试</div>';
+		var uploadSuccessTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">上传成功</div>';
+		
+		function downloadreport(){
+			// console.log($('select[name=appid]').val() == '');return false;
+			if($('select[name=appid]').val() == ''){
+				$("#ftips").show();
+				//$(".block-wrapper").append(errorTips);
+				setTimeout(function(){
+					$("#action-tips").alert("close");
+				},3000)
+				return false;
+			}else{
+				$("#ftips").hide();
+				$('#downloadreport').submit();
+			}
+		}
+		
+		$("#appid").on("change",function(){
+			if($('select[name=appid]').val() == ''){
+				$("#ftips").show();
+				return false;
+			}else{
+				$("#ftips").hide();
+			}
+			
+		});
+		
+	</script>
+<include file="Layout/footer"/>

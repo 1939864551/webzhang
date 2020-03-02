@@ -1,0 +1,113 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="block-content">
+							<div class="block-head">
+								<h4>{$data['user_title']} <span class="tool-icon adduser"><a href="{:U('User/user_add',['ldap' => $_GET['ldap']])}" class="btn-sm btn-blue-border"><i class="fa fa-plus"></i> 增加</a></span></h4>
+							</div>
+							<div class="block-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>{$data['username']}</th>
+											<th>姓名</th>
+											<th>角色</th>
+											<th>用户类型</th>
+											<th>手机号码</th>
+											<th>邮箱</th>
+											<th>禁用状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<volist name="userlist" id="vu">
+										<tr>
+											<td>{$i}</td>
+											<td>{$vu['loginemail']}</td>
+											<td>{$vu['realname']}</td>
+											<td>{$vu['rolename']}</td>
+											<td>{$vu['platform']}</td>
+											<td>{$vu['phone']}</td>
+											<td>{$vu['email']}</td>
+											<td>
+											<if condition="$vu['status'] eq 0">
+												激活
+											<else/>
+												禁用
+											</if>
+											</td>
+											<td>
+                                        <a href="{:U('Mare/User/user_view',array('userid'=>$vu['userid'], 'ldap' => $_GET['ldap']))}" class="btn-sm btn-blue-border">查看</a>&nbsp;
+                                        <a href="{:U('Mare/User/user_edit',array('userid'=>$vu['userid'], 'ldap' => $_GET['ldap']))}" class="btn-sm btn-blue-border">修改</a>&nbsp;
+                                        <a href="{:U('Mare/User/user_forbidden',array('userid'=>$vu['userid'], 'ldap' => $_GET['ldap']))}" class="btn-sm btn-red-border">
+										<if condition="$vu['status'] eq 0">
+										禁用
+										<else/>
+										激活
+										</if>
+										 </a>&nbsp;
+											</td>
+										</tr>
+										</volist>
+									</tbody>
+								</table>
+							</div>
+							<div style="text-align: center;">{$pageshow}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id='tip' value="{$_GET['tip']}">
+		</div>
+		<!--主体-->
+		<include file="Layout/script"/>
+	<script type="text/javascript">
+       
+        var tip = $('#tip').val();
+        if(tip){
+        	var showstr;
+        	if(tip =='forbidden_user_false'){
+        		showstr = "禁用用户失败";
+                msg_type = 'alert-danger';
+        	}else if(tip =='forbidden_user_success'){
+        		showstr = "禁用用户成功";
+                msg_type = 'alert-success';
+        	}else if(tip =='activation_user_false'){
+        		showstr = "激活用户失败";
+                 msg_type = 'alert-danger';
+        	}else if(tip =='activation_user_success'){
+        		showstr = "激活用户成功";
+                 msg_type = 'alert-success';
+        	}
+
+        	
+        	var actiontip = '<div id="action-tips"   class="alert fade in '+msg_type+' global-tips" role="alert">'+showstr+'</div>';
+        	$(".block-wrapper").append(actiontip);
+			setTimeout(function(){
+			$("#action-tips").alert("close");
+				   // location.href = "{:U('Mare/User/user_index')}";
+			},3000)
+        }
+		
+          
+	
+	</script>
+<include file="Layout/footer"/>

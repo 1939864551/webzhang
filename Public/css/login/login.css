@@ -1,0 +1,200 @@
+html,body{
+	height: 100%;
+	width: 100%;
+	font-family: "Microsoft YaHei", "微软雅黑", 'Raleway', sans-serif
+	font-size:14px;
+	line-height: 1.4;
+}
+::-webkit-input-placeholder { 
+	color:#eeeeee; 
+	font-style:normal;
+}
+::-moz-placeholder { 
+	color:#eeeeee; 
+	font-style:normal;
+} /* firefox 19+ */
+:-ms-input-placeholder { 
+	color:#eeeeee; 
+	font-style:normal;
+} /* ie */
+input:-moz-placeholder { 
+	color:#eeeeee; 
+	font-style:normal;
+}
+.login-wrap{
+	position: absolute;
+    width: 100%;
+    margin: auto;
+    max-width: 525px;
+    min-height: 400px;
+    box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+    background-color: rgba(51,122,183,0.8);
+    z-index: 2;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+}
+.show-login{
+	animation: showlogin 1s ease forwards;
+	-webkit-animation: showlogin 1s ease forwards;
+	-moz-animation: showlogin 1s ease forwards;
+}
+@keyframes showlogin{
+	from{
+		transform: translateY(20%) rotateY(90deg);
+	}
+	to{
+		transform: translateY(20%) rotateY(0);
+	}
+}
+@-webkit-keyframes showlogin{
+	from{
+		-webkit-transform: translateY(20%) rotateY(90deg);
+	}
+	to{
+		-webkit-transform: translateY(20%) rotateY(0);
+	}
+}
+@-moz-keyframes name{
+	from{
+		-moz-transform: translateY(20%) rotateY(90deg);
+	}
+	to{
+		-moz-transform: translateY(20%) rotateY(0);
+	}
+}
+.login-wrap .login-content{
+	padding: 30px 30px;
+	color: #FFFFFF;
+}
+.login-wrap .login-content .form-group .input{
+	-webkit-appearance: none;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 2px solid #FFFFFF;
+	padding: 5px 10px;
+	background-color: transparent;
+	width: 100%;
+	transition: all .2s linear;
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+}
+.login-wrap .login-content .form-group .input:focus,.input:hover{
+	outline: none;
+	border-bottom: 2px solid #5AB8FB;
+}
+.login-wrap .login-content .btn{
+	display: inline-block;
+	color: #222222;
+	transition: all .2s linear;
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+}
+.btn-grey{
+	background-color: #E1E1E1;
+}
+.login-wrap .login-content .btn:hover,.login-wrap .login-content .btn:active,.login-wrap .login-content .btn:focus{
+	background-color: #FFFFFF;
+}
+
+.login-wrap .login-content h2{
+	text-align: center;
+}
+.login-wrap .login-content .form-group a{
+	color: #E7E7E7;
+}
+.login-container{
+	width: 100%;
+	height:100%;
+	background-image: url(../../mars/img/fullscreen-bg.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+}
+.login-container:before{
+	display: block;
+	content: "";
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: 0.5;
+}
+.btn-full{
+	width: 100%;
+}
+.center-block{
+	display: block !important;
+	margin: 0 auto;
+}
+.login-html{
+	overflow: hidden;
+}
+.user-login-html,.admin-login-html{
+	position: absolute;
+	-webkit-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: all .4s linear;
+    transition: all .4s linear;
+    width:100%;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: all .4s linear;
+    transition: all .4s linear;
+    z-index: 1;
+}
+.login-wrap .user-login,.login-wrap .admin-login{
+	display: none;
+}
+.login-wrap .tab{
+	color: #FFFFFF;
+	bottom: 0;
+}
+.login-wrap .tab{
+	padding: 30px;
+}
+
+.login-wrap .tab:after{
+	display: block;
+	background-color: #ffffff;
+	content: "";
+	width: 0;
+	height: 2px;
+	margin-top: 5px;
+	transition: width .3s linear;
+	-webkit-transition: width .3s linear;
+	-moz-transition: width .3s linear;
+}
+.login-wrap .user-login:checked + .tab:after{
+	width: 100%;
+}
+.login-wrap .admin-login:checked + .tab:after{
+	width: 100%;
+}
+.login-wrap .user-login:checked + .tab + .admin-login + .tab + .login-html .user-login-html{
+	-webkit-transform:rotate(0);
+    -ms-transform:rotate(0);
+    transform:rotate(0);
+}
+.login-wrap .admin-login:checked + .tab + .login-html .admin-login-html{
+	-webkit-transform:rotate(0);
+	    -ms-transform:rotate(0);
+	        transform:rotate(0);
+}
+.btn-large{
+	min-width: 200px;
+}
+.form-group {
+    padding: 5px 0;
+}

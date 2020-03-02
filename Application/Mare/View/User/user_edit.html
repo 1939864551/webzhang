@@ -1,0 +1,255 @@
+<include file="Layout/header"/>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<div class="col-md-5 col-md-offset-3">
+						<div class="block-content">
+							<div class="block-head">
+								<h3>{$data['user_title']}</h3>
+							</div>
+							<div class="block-body">
+								<form class="form-horizontal" action="#" method="post" id="user-edit-form">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">登录的帐号<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<!-- <input class="input" type="text" name="name" id="name" value="" placeholder="输入姓名" /> -->
+											<span class="input" style="margin-top: 3px;"><font size="5">{$userinfo['loginemail']}</font></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="name">姓名<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="realname" id="name" value="{$userinfo['realname']}" placeholder="输入修改姓名" required="required" />
+										        <input class="input" type="hidden" name="userid"  value="{$userinfo['userid']}"  />
+                                                                                </div>
+									</div>
+									<!-- <div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="companyname">公司名</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="companyname" id="companyname" value=""  placeholder="输入公司名" />
+										</div>
+									</div> -->
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="phones">手机号码<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="phone" id="phone" value="{$userinfo['phone']}" placeholder="输入手机号码" required="required"/>
+										</div>
+									</div>  
+ 									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="email">邮箱<font color="red">*</font></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="text" name="email" id="email" value="{$userinfo['email']}" placeholder="输入邮箱地址" required="required"/>
+										</div>
+									</div>                                     
+                                    <div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="tid">用户角色<font color="red">*</font></label>
+										</div>
+										<div class="col-md-8">
+											<select class="form-control" name="tid" id ="tid" required="required">	
+                                            <foreach name="type" item="vo">
+                                                <option  value="{$vo['id']}"  <if condition="$userinfo['tid'] eq $vo['id']">selected</if>>{$vo.name}</option>
+                                            </foreach>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group row" id="testerplatform" style="display: none;">
+										<div class="col-md-3">
+											<label class="inputlabel" for="uid1">测试手机平台</label>
+										</div>
+										<div class="col-md-8">
+											<select class="form-control" name="platform">
+												<option value="">请选择手机平台</option>
+												<option value="android" <if condition="$userinfo['platform'] eq 'android'">selected</if>>android</option>
+												<option value="ios" <if condition="$userinfo['platform'] eq 'ios'">selected</if>>ios</option>
+											</select>
+										</div>
+									</div>
+                                    <if condition="$_GET['ldap'] neq 1">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="pwd">密码<span style='color:red'>(*留空不修改)</span></label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="password"  name="newpwd" id="pwd" value="" placeholder="输入新密码" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-3">
+											<label class="inputlabel" for="pwd2">确认密码</label>
+										</div>
+										<div class="col-sm-8">
+											<input class="input" type="password" name="pwd" id="pwd" value="" placeholder="确认密码" />
+										</div>
+									</div>
+                                    </if>
+									<div class="form-group">
+										<div class="col-xs-12">
+                                                                                    
+											<button type="submit" id="upgrade-info" class="btn btn-blue">确定修改</button>
+                                                                                        <a href="{:U('User/user_index',['ldap' =>$_GET['ldap']])}" class="btn btn-blue pull-right">返回</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<include file="Layout/script"/>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+//	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">更新成功</div>';
+//	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">服务器出错，请联系管理员</div>';
+//	
+	$('#tid').change(function(){
+//		if($('#tid').val() == '1'){
+		if($('#tid option:selected').val() == '1'){
+			$("#testerplatform").show();
+		} else  {
+            $("#testerplatform").hide();
+		}
+	});       
+    /**
+      信息提示
+    */
+    function alert_msg(msg, obj, type){
+        var mimaerr = '<div id="action-tips" class="alert fade in '+type+' global-tips" role="alert">'+msg+'</div>';
+        $(".block-wrapper").append(mimaerr);
+        setTimeout(function(){
+            $("#action-tips").alert("close");
+        },3000)
+        if(obj != null) {
+           obj.focus();        
+        }
+
+    }
+        
+	$(window).ready(function(){
+        var ldap = "{:I('get.ldap')}";
+//		if($('#tid').val() == '1'){
+        if($('#tid option:selected').val() == '1'){
+            $("#testerplatform").show();
+        } else  {
+            $("#testerplatform").hide();
+        }
+
+      	$("#user-edit-form").validate({
+			onsubmit:true,// 是否在提交是验证
+			onfocusout:false,// 是否在获取焦点时验证
+			onkeyup :false,// 是否在敲击键盘时验证
+			debug:true,
+			rules: {
+				phone: true,
+				realname: true,
+                email: {  
+                    required: true,  
+                    email: true  
+               },  
+			},
+			messages:{
+				phone: {
+					required:"手机号码不能为空"
+				},
+				realname: {
+					required:"姓名不能为空"
+				},
+                email: {  
+                    required: "请输入Email地址",  
+                    email: "请输入正确的email地址"  
+                }, 
+			},
+                        
+
+			submitHandler:function(form){
+            	//密码大小写和数字混合表示至少6个字符，必须同时含有大写字母和小写字母；或者同时有大写字母和小写字母;或者同时有小写字母和数字
+                //  var passwordreg = /^(?=.{6,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))(?=(1)(?=.*\d)|.*[A-Za-z0-9]).*$/;
+                var passwordreg = /^(?=.{6,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))(?=(1)(?=.*\d)|.*[A-Za-z0-9]).*$/;
+
+				var userReg = /[`~!@#$%^&*_+<>{}\/'[\]]/im;//检查是否有特殊字符
+
+				var phone = /^1\d{10}$/gi;//检测手机号码是否符合要求
+               if(!ldap){
+                    var formData = {
+                       'realname': $('input[name=realname]').val(),
+                       'userid':$('input[name=userid]').val(),
+                       'tid': $('#tid').val(),
+                       'phone':$('input[name=phone]').val(),
+                       'platform': $('select[name=platform]').val(),
+                       'newpwd':$('input[name=newpwd]').val(),
+                       'pwd':$('input[name=pwd]').val(),
+                       'email':$('input[name=email]').val(),
+                    };
+               } else {
+                    var formData = {
+                       'realname': $('input[name=realname]').val(),
+                       'userid':$('input[name=userid]').val(),
+                       'tid': $('#tid').val(),
+                       'phone':$('input[name=phone]').val(),
+                       'email':$('input[name=email]').val(),
+                       'ldap':ldap,
+                    };                
+               }
+	            $.ajax({
+	            	type:"post",
+					url:"{:U('User/modifyuser')}",
+					data:formData,
+					async:true,
+					success: function (data) { //表单提交后更新页面显示的数据
+                        var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">'+data.msg.info+'</div>';
+						if(data.status == 'success'){
+							$(".block-wrapper").append(successTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+                                if(ldap ==1){
+                                    location.href="{:U('Mare/User/user_index', ['ldap' =>1])}";  
+                                }else{
+                                    location.href="{:U('Mare/User/user_index')}";         
+                                }
+							},3000)
+		                }
+                        if(data.status =='error'){
+                            if(data.msg.obj) {
+                                alert_msg(data.msg.info, $('input[name='+data.msg.obj+']'), 'alert-danger');               
+                            } else {
+                               alert_msg(data.msg.info, '', 'alert-danger');               
+                            }
+                        }
+					}
+				});
+
+	        }  
+		});
+
+	});
+	</script>
+<include file="Layout/footer"/>

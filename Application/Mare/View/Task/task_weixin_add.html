@@ -1,0 +1,694 @@
+<include file="Layout/header"/>
+<include file="Layout/script"/>
+<style>
+	#get_url li:hover{
+		background-color:#4d87ff
+	}
+</style>
+	<body>
+		<!--边栏-->
+		<div class="sidebar-container navbar-fixed-left">
+			<h3 class="navbar-brand-m">
+				{$Think.config.TOP_TEXT}
+			</h3>
+			<div class="clearfix"></div>
+			<include file="Layout/left_tab"/>
+		</div>
+		<!--边栏-->
+		
+		<!--主体-->
+		<div class="wrapper">
+			<!--顶栏-->
+			<include file="Layout/header_container" />
+			<!--顶栏-->
+			<div class="block-wrapper">
+				<div class="container-fluid">
+					<form id="addtaskform" class="form-vertical" action="#" method="post" enctype="multipart/form-data">
+						<div class="col-lg-6">
+							<div class="block-content">
+								<div class="block-head">
+									<h4>新建微信应用安全检测任务</h4>
+								</div>
+								<div class="block-body">
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="taskname">任务名称 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="taskname" id="taskname" value="微信应用检测-<?php echo date('YmdHis');?>" placeholder="输入任务名称" />
+										</div>
+									</div>
+
+									<div class="form-group row" id='imgupload'>
+										<div class="col-md-3">
+											<label class="inputlabel" for="uploadfile">上传微信应用二维码 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<div class="form-group">
+							                  	<div class="input-group input-group-file">
+							                  		<span class="input-group-btn">
+							                      		<span class="btn btn-primary btn-file">
+							                        	<i class="fa fa-upload" aria-hidden="true"></i> 只支持*.jpg，*.png，*.jpeg
+							                        	<input type="file" name="uploadfile" multiple accept=".jpg,.png,.jpeg" >
+							                      		</span>
+							                      		<input type="hidden" id='imgfilepath' name="imgfilepath" />
+							                      		<input type="hidden" id="sourcename" name="sourcename"/>
+							                      		<input type="hidden"  name="addtime" value="{$Think.session.addtime}"/>
+							                    	</span>
+													<p id="upload_tip">（请先在测试终端登陆后，再上传待二维码）</p>
+							                  	</div>
+							                </div>
+							                <div class="form-group">
+							                	<div id="progress" style="display:none;margin-top: 3px;" class="progress">
+									                <div class="progress-bar progress-bar-success" > </div>
+									          	</div>
+							                </div>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="tester">测试人员 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<select class="form-control" name="tester">
+												<option value="">请选择测试人员</option>
+												<!-- <volist name="testerlist" id="vt">
+													<option value="{$vt['userid']}">{$vt['realname']}</option>
+												</volist> -->
+											</select>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="test_phone">接收手机短信手机号码 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="test_phone" id="test_phone" value="无" placeholder="测试员手机号" required="required" autocomplete="off"/>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="test_username_pwd1">被测应用帐号A/密码 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="test_username_pwd1" id="test_username_pwd1" value="无/无" placeholder="被测应用帐号1/密码" required="required" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="test_username_pwd2">被测应用帐号B/密码 <font 	color="red">*</font> </label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="test_username_pwd2" id="test_username_pwd2" value="无/无" placeholder="被测应用帐号2/密码" required="required"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="test_domain">被测服务器域名（多个用|分开）</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="test_domain" id="test_domain" value="" placeholder="被测服务器域名" autocomplete="off"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-3">
+											<label class="inputlabel" for="test_serverip">被测服务器IP（多个用|分开）</label>
+										</div>
+										<div class="col-md-9">
+											<input class="input" type="text" name="test_serverip" id="test_serverip" value="" placeholder="被测服务器IP" autocomplete="off"/>
+										</div>
+									</div>
+
+									<div class="form-group row" id="hightestitem">
+										<div class="col-md-3">
+											<label class="inputlabel" for="cust_test">高级选项</label>
+										</div>
+										<div class="col-md-9">
+											<input class="checkbox" type="checkbox" name="cust_test" id="cust_test" />
+										</div>
+									</div>
+
+									<div class="form-group clearfix">
+										<!--<button class="btn btn-blue pull-right" type="button" id="addnew" onclick="$('.form-vertical').submit()">确认新建</button>-->
+										<button class="btn btn-blue pull-right" type="submit" id="addnew">确认新建</button>
+									</div>		
+									
+								</div>
+							</div>
+						</div>
+						
+					<!-- 	<div class="col-lg-6" id="high-test" style="margin-bottom: 50px;">
+							<div class="block-content">
+								<div class="block-head">
+									<h4>高级测试项</h4>
+								</div>
+								<div class="block-body">
+									<select name="test-items" class="selecttype">
+										<option value="">请选择测试项</option>
+										<option value="1">文件名检索</option>
+										<option value="2">内容检索</option>
+										<option value="3" class="apk">Dex检索</option>
+										<option value="4" class="apk">代码函数/关键字</option>
+										<option value="5" class="apk">AndroidManifest.xml</option>
+									</select>
+									<div class="row">
+										<div class="col-md-12 testoption" id="option1">
+											<label class="control-label">文件名检索</label>
+											<div class="test-list">
+												<div class="form-group has-feedback" id="filename_search">
+													<input type="text" class="input" name="filename_search[]" placeholder="请输入相关文字/代码">
+												</div>	
+											</div>
+											<a href="#" class="text-center center-block btn-increase"><i class="glyphicon glyphicon-plus"></i></a>
+										</div>
+										<div class="col-md-12 testoption" id="option2">
+											<label class="control-label">内容检索</label>
+											<div class="test-list">
+												<div class="form-group has-feedback" id="content_search">
+													<input type="text" class="input" name="content_search[]" placeholder="请输入相关文字/代码">
+												</div>
+											</div>
+											<a href="#" class="text-center center-block btn-increase"><i class="glyphicon glyphicon-plus"></i></a>
+										</div>
+										<div class="col-md-12 testoption apk" id="option3">
+											<label class="control-label">Dex检索</label>
+											<div class="test-list">
+												<div class="form-group has-feedback" id="dex_search">
+													<input type="text" class="input" name="dex_search[]" placeholder="请输入相关文字/代码">
+												</div>
+											</div>
+											<a href="#" class="text-center center-block btn-increase"><i class="glyphicon glyphicon-plus"></i></a>
+										</div>
+										<div class="col-md-12 testoption apk" id="option4">
+											<label class="control-label">代码函数/关键字</label>
+											<div class="test-list">
+												<div class="form-group has-feedback" id="code_function_keyword">
+													<input type="text" class="input" name="code_function_keyword[]" placeholder="请输入相关文字/代码">
+												</div>
+											</div>
+											<a href="#" class="text-center center-block btn-increase"><i class="glyphicon glyphicon-plus"></i></a>
+										</div>
+										<div class="col-md-12 testoption apk" id="option5">
+											<label class="control-label">AndroidManifest.xml</label>
+											<div class="test-list">
+												<div class="form-group has-feedback" id="xml_search">
+													<input type="text" class="input" name="xml_search[]" placeholder="请输入相关文字/代码">
+												</div>
+											</div>
+											<a href="#" class="text-center center-block btn-increase"><i class="glyphicon glyphicon-plus"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+						<div class="col-lg-6" id="high-test" style="margin-bottom: 50px;">
+							<div class="block-content">
+								<div class="block-head">
+									<h4>高级选项</h4>
+								</div>
+								<div class="block-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="clearfix">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label>弱口令扫描</label>
+													</div>
+												</div>
+												<div class="col-md-9 form-group-input form-inline">
+													<div class="form-group">
+														<label class="c-input c-input-radio" for="isuse1">
+															<input class="c-radio" type="radio" name="weaker_ciphers" id="isuse1" value="1">
+															<span class="c-icon-radio"></span>
+															启用
+														</label>
+													</div>
+													<div class="form-group">
+														<label class="c-input c-input-radio" for="isuse2">
+															<input class="c-radio" type="radio" name="weaker_ciphers" id="isuse2" checked="" value="0">
+															<span class="c-icon-radio"></span>
+															关闭
+														</label>
+													</div>
+													<div class="form-group">
+														<label class="col-md-30">
+															开启后可能会被防火墙或其他安全产品拦截导致测试无法正常进行
+														</label>
+													</div>
+												</div>
+												
+												<div class="clearfix"></div>
+											
+												<div class="col-md-3">
+													<div class="form-group">
+														<label class="inputlabel" for="scan_num">扫描并发</label>
+													</div>
+												</div>
+												
+												<div class="col-md-9 form-inline">
+													<div class="form-group">
+													
+														<input class="input" type="number" name="request_concurrency" id="scan_num" value="20" placeholder="输入并发数" required="required" aria-required="true">
+														
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-30">
+															并发数越大速度越快服务器压力越大
+														</label>
+													</div>
+														
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--客户端规则配置选项-->
+								<include file="Task/set_client_rule"/>
+
+								<!--URL匹配配置选项-->
+								<include file="Task/check_url"/>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+		</div>
+		<!--主体-->
+		<include file="Layout/script"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jqueryUpload/css/jquery.fileupload.css">
+		<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/vendor/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/plugins/jqueryUpload/js/jquery.fileupload.js"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/mars/js/lib/jqueryvalidate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+
+	
+	var successTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">新建成功，3秒后自动跳转，若没跳转，点击：<a href="{:U('Mare/Task/task_list')}">这里</a></div>';
+	var errorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">新建失败，请重试</div>';
+	var reporterrorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">新建失败，请不要重复提交</div>';
+	var uploadErrorTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">上传失败，请重试</div>';
+	var uploadSuccessTips = '<div id="action-tips" class="alert fade in alert-success global-tips" role="alert">上传成功</div>';
+		
+		var url = "{:U('Mare/Task/task_upload/testtype/weixin')}";
+		// $('#fileupload').fileupload({
+		$('input[name=uploadfile]').fileupload({
+		  url: url,
+		  // dataType: 'json',
+		  autoUpload:true,
+		  sequentialUploads: true,
+		  done: function (e, data) {
+		  	if(data.result.code == 'false'){
+		  		var errorNewTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.result.info+'</div>';
+		  		$(".block-wrapper").append(errorNewTips);
+	          	setTimeout(function(){
+					$("#action-tips").alert("close");
+					window.location.href = "{:U('Mare/Task/task_list')}";
+				},6000)
+		  	}
+		  	if(data.result.code == 'success'){
+                $("#addnew").prop("disabled", false);
+		  		$(".block-wrapper").append(uploadSuccessTips);
+		          	setTimeout(function(){
+						$("#action-tips").alert("close");
+					},3000)
+		  		// alert(data.result.info);
+		  		$('#sourcename').val(data.result.sourcename);
+		  		if(data.result.ext == 'png' || data.result.ext == 'jpeg' || data.result.ext == 'jpg' || data.result.ext == 'JPG' || data.result.ext == 'PNG' || data.result.ext == 'JPEG'){
+		  			var postdata = null;
+		  			$('input[name=imgfilepath]').val(data.result.info);
+		  		}else if(data.result.ext == 'ipa'){
+		  			var scanruleext 	= 'ipa';
+		  			var tester 			= 'ios';
+		  			$('#filepath').val(data.result.info);
+		  			var postdata = {"tester":tester};
+		  		}else{
+		  			var tester 			= 'android';
+		  			var scanruleext 	= 'apk';
+		  			$('#filepath').val(data.result.info);
+		  			var postdata = {"tester":tester};
+		  		}
+
+		  		$.ajax({
+			        type: "get",
+			        url: "{:U('Mare/Task/task_tester')}",
+			        async: true,
+			        data: postdata,
+			        dataType: "json",
+			        success: function (data1) {
+			            // data1.replace('\\','');
+			            var html ='';
+			            for(var i = 0; i < data1.length;i++){
+			            	html +="<option value="+data1[i]['userid']+">"+data1[i]['realname']+"</option>";
+			            }
+			            $('select[name=tester]').html(html);
+			        },
+			        error: function () {
+			            $("#ajax-content").html("暂无数据内容");
+			        }
+			    });
+
+			    if(scanruleext == 'ipa'){
+			    	$('.apk').hide();
+			    }
+		  	}
+		  },
+		  progressall: function (e, data) {
+		      var progress = parseInt(data.loaded / data.total * 100, 10);
+		      if(progress >0){
+		         $('#progress').show();
+		      }
+		      $('#progress .progress-bar').css(
+		          'width',
+		          progress + '%'
+		      );
+
+		      if(progress == '100'){
+		          // setTimeout("location.reload()",2000); 
+		          // alert('上传成功');
+		   //        $(".block-wrapper").append(uploadSuccessTips);
+		   //        	setTimeout(function(){
+					// 	$("#action-tips").alert("close");
+					// },3000)
+		      }
+		  },
+		  fail:function(e,data){
+		  	$(".block-wrapper").append(uploadErrorTips);
+		  		console.log('error:  '+data);
+		  }
+		}).bind('fileuploadadd',function(e,data){
+			// data.url  = url.substr(0,url.length-5) + "/action/"+$('#selectVocationtype').val()+'.html';
+		  
+		}).prop('disabled', !$.support.fileInput)
+		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+		
+
+		var phone = /^1\d{10}$/gi;//检测手机号码是否符合要求
+		var username_pass = /^[\w]+\/[\w]+/;
+
+		//获取微信的测试人员
+		function weixintester(){
+			$('#hightestitem').hide();
+			$.ajax({
+		        type: "get",
+		        url: "{:U('Mare/Task/task_tester')}",
+		        async: true,
+		        // data: {tester:tester},
+		        dataType: "json",
+		        success: function (data1) {
+		            var html ='';
+		            for(var i = 0; i < data1.length;i++){
+		            	html +="<option value="+data1[i]['userid']+">"+data1[i]['realname']+"</option>";
+		            }
+		            $('select[name=tester]').html(html);
+		        },
+		        error: function () {
+		            $("#ajax-content").html("暂无数据内容");
+		        }
+		    });
+		}
+
+		//获取测试应用的测试人员
+		function apptester(){
+			$('#hightestitem').show();
+			var file = $('#filepath').val();
+			// var file = '23432.xxx';
+			if(file != ''){
+				var ext = file.substr(file.length-3);
+				if(ext == 'ipa'){
+		  			var scanruleext 	= 'ipa';
+		  			var tester 			= 'ios';
+		  		}else{
+		  			var tester 			= 'android';
+		  			var scanruleext 	= 'apk';
+		  		}
+		  		var data = {"tester":tester};
+		  		$.ajax({
+			        type: "get",
+			        url: "{:U('Mare/Task/task_tester')}",
+			        async: true,
+			        data: data,
+			        dataType: "json",
+			        success: function (data1) {
+			        	// console.log(data1);
+			            // data1.replace('\\','');
+			            var html ='';
+			            for(var i = 0; i < data1.length;i++){
+			            	html +="<option value="+data1[i]['userid']+">"+data1[i]['realname']+"</option>";
+			            }
+			            $('select[name=tester]').html(html);
+			        },
+			        error: function () {
+			            $("#ajax-content").html("暂无数据内容");
+			        }
+			    });
+			}else{
+				$('select[name=tester]').html("<option value='null'>请选择测试人员</option>");
+			}
+			
+			
+		}
+
+		$("#addtaskform").validate({
+			onsubmit:true,// 是否在提交是验证
+			onfocusout:false,// 是否在获取焦点时验证
+			onkeyup :false,// 是否在敲击键盘时验证
+			debug:true,
+			rules: {
+				test_username_pwd1: true,
+				test_username_pwd2: true,
+				test_phone: true
+			},
+			messages:{
+				test_username_pwd1: {
+					required:"不能为空"
+				},
+				test_username_pwd2: {
+					required:"不能为空"
+				},
+				test_phone: {
+					required:"不能为空"
+				}
+			},
+			
+			submitHandler:function(form){
+				var getFormData = $("#addtaskform").serialize();
+				var url = "{:U('Mare/Task/task_add/testtype/weixin')}";
+	            $.ajax({
+	            	type:"post",
+					url:url,
+					data:getFormData,
+					async:true,
+					success: function (data) { //表单提交后更新页面显示的数据
+						console.log(data);
+						if (data.code == "success") {
+						$(".block-wrapper").append(successTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+								window.location.href = "{:U('Mare/Task/task_list')}";
+							},3000)
+						}else if(data.code == "false" && data.info != null && data.href == null){
+							var errorNewTips = '<div id="action-tips" class="alert fade in alert-danger global-tips" role="alert">'+data.info+'</div>';
+					  		$(".block-wrapper").append(errorNewTips);
+				          	setTimeout(function(){
+								$("#action-tips").alert("close");
+								window.location.href = "{:U('Mare/Task/task_list')}";
+							},6000)
+						}else if(data.info == 'reportsubmit'){
+							$(".block-wrapper").append(reporterrorTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+							},3000)
+						}else{
+							$(".block-wrapper").append(errorTips);
+							setTimeout(function(){
+								$("#action-tips").alert("close");
+							},3000)
+						}
+					},
+					error:function(){
+						$(".block-wrapper").append(errorTips);
+						setTimeout(function(){
+							$("#action-tips").alert("close");
+						},3000)
+					}
+				});
+	        }  
+		});
+		$.validator.addMethod("chrnum", function(value, element) {
+			var chrnum = /^([a-zA-Z0-9]+)$/;
+			return this.optional(element) || (chrnum.test(value));
+		}, "只能输入数字和字母(字符A-Z, a-z, 0-9)");
+		
+		var groupNumber = 1;
+		
+		var increaseInput = function(e){
+			e.preventDefault();
+			var limit = 10;
+			var thisInputGroup = $(this).prev().find(".form-group");
+			var thisGroupName = thisInputGroup[0].children[0].name;
+			var strMatch = "";
+			
+			$.each(thisInputGroup,function(i){
+				strMatch += $(this).attr("id");
+			});
+			// console.log(strMatch,321);
+			
+			var newId = thisGroupName + "-" + groupNumber;
+			
+			if ( newId.match(strMatch)==null || newId.match(strMatch).index==0 ) {
+				newId = newId.substring(0,newId.indexOf('-'));
+				var inputObject = '<div class="form-group has-feedback" id="'+ newId +'"><input type="text" class="input" name="'+ newId +'" placeholder="请输入相关文字/代码">'+
+								'<span class="deletebtn glyphicon glyphicon-minus form-control-feedback" aria-hidden="true"></span>'+
+								'</div>';
+				if ( $(this).prev().find(".form-group").length <= 10 ) {
+					thisInputGroup = $(this).prev().append(inputObject);
+				}
+				else{
+					alert("添加已经达到上限10个");
+				}
+				groupNumber++;
+			}
+			else{
+				
+				//当ID重复时，需要做的事情
+				console.log(String(newId),newId.match(strMatch));
+			}	
+		}
+		
+		var delItems = function(e){
+			e.preventDefault();
+			$(this).parent().remove();
+		}
+		
+		$(window).ready(function() {
+//            alert("{$Think.ACTION_NAME}");
+            $("#addnew").prop("disabled", true);
+		    $("#addtaskform").validate();
+		    $("#cust_test").on("change",function(){
+		    	if ($("#cust_test").is(":checked")) {
+		    		$("#high-test").fadeIn();
+		    	}
+		    	else{
+		    		$("#high-test").fadeOut();
+		    	}
+		    });
+
+
+            /**
+             * 表单输入触发操作
+             */
+
+
+            $("input").click(function () {
+                var arr = ['test_phone', 'test_domain', 'test_serverip']; //允许触发表单项
+                var check_url_info = '{$check_url_keys}';
+                if ( $.parseJSON(check_url_info)) {
+                    arr = arr.concat($.parseJSON(check_url_info)); //数组合并
+                }
+
+                var name = $(this).attr('name');
+                var testid = $("select[name=tester]").find("option:selected").val();
+
+                if ($.inArray(name, arr) != -1) {
+                    var value = $(this).val();
+                    // alert(value);
+                    $.ajax({
+                        type: "post",
+                        url: "{:U('Mare/Task/focus_form_input')}",
+                        data: {'field' : name, 'value' : value, 'testid' : testid},
+                        async: true,
+                        success: function (data) {
+                            if (data.status == "success") {
+                                $("select[name=tester]").trigger('change');
+                                if (data.info) {
+                                    var info = data.info[name];
+                                    console.log(info);
+                                    //var length = info.length;
+                                    if ($("input[name='"+name+"']").next('ul').length > 0) {
+                                        // $("input[name='"+name+"']").next('ul').remove();
+                                        var html = '';
+                                        $.each(info, function (index, value) {
+                                            html += "<li style=\"border-bottom: 1px solid #e6e6e6;padding: 2px 4px;\">"+value+"</li>";
+                                        })
+                                        $("input[name='"+name+"']").next('ul').appendTo(html);
+                                    } else {
+                                        var html = "<ul id=\"get_url\" style=\"border-radius: 6px;position: absolute;z-index: 10000;width: 96%;overflow: hidden;padding: 10px 0; background: white; border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;\">";
+                                        $.each(info, function (index, value) {
+                                            html += "<li style=\"border-bottom: 1px solid #e6e6e6;padding: 2px 4px;\">"+value+"</li>";
+                                        })
+                                        html += "</ul>";
+                                        $("input[name='"+name+"']").after(html);
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+                }
+            }).blur(function () {
+                var flag = false;
+                var testid = $("select[name=tester]").find("option:selected").val();
+                var prev_name = $("#get_url").prev().attr('name');
+                var arr = ['test_phone', 'test_domain', 'test_serverip'];
+                var check_url_info = '{$check_url_keys}';
+                if ( $.parseJSON(check_url_info)) {
+                    arr = arr.concat($.parseJSON(check_url_info));
+                }
+                if ($.inArray(prev_name, arr) != -1 && testid) {
+                    $("body").on('click','#get_url li',function(){
+                        flag = true;
+                        $("#get_url").prev().val($(this).text());
+                        $("#get_url").remove();
+                    });
+                }
+                setTimeout(function(){
+                    $("#get_url").remove();
+                },100)
+
+            });
+
+		    $(".container-fluid").on("change","select[name=test-items]",function(){
+		    	var selectType = $("select[name=test-items]").val();
+		    	if ( selectType==1 ) {
+		    		$("#option1").show();
+		    		$("#option1").siblings().hide();
+		    	}
+		    	else
+		    	if( selectType==2 ){
+		    		$("#option2").show();
+		    		$("#option2").siblings().hide();
+		    	}
+		    	else 
+		    	if( selectType==3 ){
+		    		$("#option3").show();
+		    		$("#option3").siblings().hide();
+		    	}
+		    	else 
+		    	if( selectType==4 ){
+		    		$("#option4").show();
+		    		$("#option4").siblings().hide();
+		    	}
+		    	else 
+		    	if( selectType==5 ){
+		    		$("#option5").show();
+		    		$("#option5").siblings().hide();
+		    	}
+		    	
+		    })
+		    
+		    $(".btn-increase").on("click",increaseInput);
+		    $(".container-fluid").on("click",".deletebtn",delItems);
+		    // $("#addnew").on("click",submitForm);
+		});
+	</script>
+<include file="Layout/footer"/>
